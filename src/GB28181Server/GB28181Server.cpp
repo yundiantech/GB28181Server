@@ -5,6 +5,8 @@
 
 //MD5
 #include "MD5/HTTPDigest.h"
+//xml
+#include <mxml.h>
 
 #if defined(WIN32)
     #include <winsock2.h>
@@ -13,6 +15,12 @@
     #include <pthread.h>
 #endif
 
+#if _MSC_VER
+#define snprintf _snprintf   //snprintf 找不到标识符
+#endif
+
+#define SERVER_SIP_ID "34020000001320000001"
+#define LOCAL_IP "192.168.0.222"
 #define LOCAL_PORT 5060
 #define APP_LOG printf
 
@@ -134,7 +142,7 @@ void GB28181Server::run()
 
                         if (pAlgorithm == NULL
                                 || pUsername == NULL
-                                || pRealm  == NULL
+                                || pRealm == NULL
                                 || pNonce == NULL)
                         {
                             RegisterFailed(eCtx,je); //认证失败
@@ -159,9 +167,22 @@ void GB28181Server::run()
                                 //发送注册成功的消息
                                 RegisterSuccess(eCtx, je);
 
+                                osip_via_t * s_via = NULL;
+                                osip_message_get_via(je->request,0,&s_via);
+                                char * ip = osip_via_get_host(s_via);
+                                char* port = osip_via_get_port(s_via);
+
+                                DeviceNode node;
+                                node.DeviceID = pUsername;
+                                node.IPAddress = ip;
+                                node.Port = atoi(port);
+                                mDeviceList.push_back(node);
+
+                                APP_LOG("Ip = %s %s \n", ip, port);
                                 APP_LOG("Camera Register Success!! userName=%s pUri=%s pcMethod=%s Response=%s\n",
                                         pUsername, pUri, pcMethod, Response);
 
+                                SendQueryCatalog(eCtx, node);
                             }
                             else  //认证失败
                             {
@@ -190,18 +211,134 @@ void GB28181Server::run()
                 }
                 else if (MSG_IS_MESSAGE(je->request))
                 {
-                    RegisterSuccess(eCtx, je);
+                    osip_body_t *body = NULL;
+                    osip_message_get_body(je->request, 0, &body);
+                    if (body != NULL)
+                    {
+                        APP_LOG("msg body is:%s\n", body->body);
+
+                        //从body->body中加载xml
+                        mxml_node_t *xml = mxmlLoadString(NULL,body->body,MXML_NO_CALLBACK);
+
+                        //从xml开始向下查找 name=CmdType attrr=""
+                        mxml_node_t * CmdTypeNode = mxmlFindElement(xml, xml,"CmdType",NULL,NULL,MXML_DESCEND);
+
+                        if(CmdTypeNode != NULL)
+                        {
+                            osip_via_t * s_via = NULL;
+                            osip_message_get_via(je->request,0,&s_via);
+                            char* ip = osip_via_get_host(s_via);
+                            char* port = osip_via_get_port(s_via);
+
+                            const char *CmdType = mxmlGetText(CmdTypeNode, NULL);
+
+                            APP_LOG("CmdType=%s \n", CmdType);
+
+                            ///心跳包
+                            if ( 0 == strcmp(CmdType, "Keepalive"))
+                            {
+
+                                bool isDeviceExist = false;
+
+                                mxml_node_t * DeviceIDNode = mxmlFindElement(xml,xml,"DeviceID",NULL,NULL,MXML_DESCEND);
+
+                                if(DeviceIDNode != NULL)
+                                {
+                                    const char *DeviceID = mxmlGetText(DeviceIDNode, NULL);
+
+                                    APP_LOG("Recv Keepalive DeviceId is:%s\n", DeviceID);
+
+                                    std::list<DeviceNode>::iterator iter;
+
+                                    for(iter = mDeviceList.begin(); iter != mDeviceList.end() ;iter++)
+                                    {
+                                        DeviceNode node = *iter;
+                                        if (node.DeviceID.compare(DeviceID) == 0 && node.IPAddress.compare(ip) == 0)
+                                        {
+                                            isDeviceExist = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (isDeviceExist)
+                                {
+                                    Response200(eCtx, je);
+                                }
+                                else
+                                {
+                                    Response403(eCtx, je); //设备没有记录，则答复403，让设备重新发起注册
+                                }
+
+                            }
+                            else if ( 0 == strcmp(CmdType, "Catalog"))
+                            {
+                                Response200(eCtx, je);
+
+                                mxml_node_t * DeviceListNode = mxmlFindElement(xml,xml,"DeviceList",NULL,NULL,MXML_DESCEND);
+
+                                if(DeviceListNode != NULL)
+                                {
+                                    int count = mxmlGetRefCount(DeviceListNode);
+
+                                    for (int i=0; i<count; i++)
+                                    {
+                                        mxml_node_t * OneItem = mxmlGetNextSibling(DeviceListNode);
+
+                                        if (OneItem == NULL) break;
+
+                                        mxml_node_t * ItemNode = mxmlFindElement(DeviceListNode, DeviceListNode,"Item",NULL,NULL,MXML_DESCEND);
+
+                                        if(ItemNode != NULL)
+                                        {
+                                            mxml_node_t * DeviceIDNode = mxmlFindElement(ItemNode, ItemNode,"DeviceID",NULL,NULL,MXML_DESCEND);
+                                            mxml_node_t * IPAddressNode = mxmlFindElement(ItemNode, ItemNode,"IPAddress",NULL,NULL,MXML_DESCEND);
+                                            mxml_node_t * PortNode = mxmlFindElement(ItemNode, ItemNode,"Port",NULL,NULL,MXML_DESCEND);
+                                            mxml_node_t * StatusNode = mxmlFindElement(ItemNode, ItemNode,"Status",NULL,NULL,MXML_DESCEND);
+
+                                            const char *DeviceID = mxmlGetText(DeviceIDNode, NULL);
+                                            const char *IPAddress = mxmlGetText(IPAddressNode, NULL);
+                                            const char *Port = mxmlGetText(PortNode, NULL);
+                                            const char *Status = mxmlGetText(StatusNode, NULL);
+
+                                            APP_LOG("Recv Catalog DeviceInfo is:%s %s %s %s\n", DeviceID, IPAddress, Port, Status);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // APP_ERR("get body failed");
+                    }
                 }
                 else if (strncmp(je->request->sip_method, "BYE", 4) != 0)
                 {
+                    Response200(eCtx, je);
                     APP_LOG("msg BYE\n");
                 }
 
                 break;
             }
+            case EXOSIP_MESSAGE_ANSWERED:				//查询
+            {
+                APP_LOG("msg EXOSIP_MESSAGE_ANSWERED\n");
+
+                osip_body_t *body = NULL;
+                osip_message_get_body(je->request, 0, &body);
+                if (body != NULL)
+                {
+                    APP_LOG("msg body is:%s\n", body->body);
+                }
+
+                Response200(eCtx, je);
+
+                break;
+            }
             default:
                 APP_LOG("##test,%s:%d, unsupport type:%d\n", __FILE__, __LINE__, je->type);
-                RegisterSuccess(eCtx, je);
+                Response200(eCtx, je);
                 break;
         }
         eXosip_event_free(je);
@@ -298,4 +435,101 @@ void GB28181Server::RegisterFailed(struct eXosip_t * peCtx,eXosip_event_t *je)
         eXosip_message_send_answer (peCtx,je->tid,401, pSRegister);
         eXosip_unlock(peCtx);
     }
+}
+
+void GB28181Server::Response(struct eXosip_t * peCtx,eXosip_event_t *je, int value)
+{
+    int iReturnCode = 0 ;
+    osip_message_t * pSRegister = NULL;
+    iReturnCode = eXosip_message_build_answer (peCtx,je->tid, value, &pSRegister);
+
+    if ( iReturnCode == 0 && pSRegister != NULL )
+    {
+        eXosip_lock(peCtx);
+        eXosip_message_send_answer (peCtx,je->tid,value,pSRegister);
+        eXosip_unlock(peCtx);
+    }
+}
+
+//答复403
+void GB28181Server::Response403(struct eXosip_t * peCtx,eXosip_event_t *je)
+{
+    Response(peCtx, je, 403);
+}
+
+void GB28181Server::Response200(struct eXosip_t * peCtx,eXosip_event_t *je)
+{
+    Response(peCtx, je, 200);
+}
+
+static const char *whitespace_cb(mxml_node_t *node, int where)
+{
+    return NULL;
+}
+
+//发送请求catalog信息
+int GB28181Server::SendQueryCatalog(struct eXosip_t *peCtx, DeviceNode deviceNode)
+{
+    fprintf(stderr,"sendQueryCatalog\n");
+
+    char sn[32] = {0};
+    int ret;
+    mxml_node_t *tree, *query, *node;
+
+    const char *deviceId = deviceNode.DeviceID.c_str();
+    const char *platformSipId = SERVER_SIP_ID;
+
+    const char *platformIpAddr= deviceNode.IPAddress.c_str();
+    int platformSipPort = deviceNode.Port;
+
+    const char *localSipId = SERVER_SIP_ID;
+    const char *localIpAddr= LOCAL_IP;
+
+    tree = mxmlNewXML("1.0");
+    if (tree != NULL)
+    {
+        query = mxmlNewElement(tree, "Query");
+        if (query != NULL)
+        {
+            char buf[256] = { 0 };
+            char dest_call[256], source_call[256];
+            node = mxmlNewElement(query, "CmdType");
+            mxmlNewText(node, 0, "Catalog");
+            node = mxmlNewElement(query, "SN");
+            snprintf(sn, 32, "%d", SN++);
+            mxmlNewText(node, 0, sn);
+            node = mxmlNewElement(query, "DeviceID");
+            mxmlNewText(node, 0, deviceId);
+            mxmlSaveString(tree, buf, 256, whitespace_cb);
+
+            osip_message_t *message = NULL;
+            snprintf(dest_call, 256, "sip:%s@%s:%d", platformSipId, platformIpAddr, platformSipPort);
+            snprintf(source_call, 256, "sip:%s@%s:%d", localSipId, localIpAddr, LOCAL_PORT);
+            ret = eXosip_message_build_request(peCtx, &message, "MESSAGE", dest_call, source_call, NULL);
+            if (ret == 0 && message != NULL)
+            {
+                osip_message_set_body(message, buf, strlen(buf));
+                osip_message_set_content_type(message, "Application/MANSCDP");
+                eXosip_lock(peCtx);
+                eXosip_message_send_request(peCtx, message);
+                eXosip_unlock(peCtx);
+                APP_LOG("xml:%s, dest_call:%s, source_call:%s, ok", buf, dest_call, source_call);
+            }
+            else
+            {
+                APP_LOG("eXosip_message_build_request failed!\n");
+            }
+        }
+        else
+        {
+            APP_LOG("mxmlNewElement Query failed!\n");
+        }
+        mxmlDelete(tree);
+    }
+    else
+    {
+        APP_LOG("mxmlNewXML failed!\n");
+    }
+
+    return 0;
 }
