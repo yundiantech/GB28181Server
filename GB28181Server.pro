@@ -4,10 +4,14 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += src/main.cpp \
-    src/GB28181Server/GB28181Server.cpp
+    src/GB28181Server/GB28181Server.cpp \
+    src/MD5/HTTPDigest.cpp \
+    src/MD5/MD5.cpp
 
 HEADERS += \
-    src/GB28181Server/GB28181Server.h
+    src/GB28181Server/GB28181Server.h \
+    src/MD5/HTTPDigest.h \
+    src/MD5/MD5.h
 
 INCLUDEPATH += $$PWD/src
 

@@ -16,6 +16,7 @@ public:
 private:
     void run();
 
+    void Register401Unauthorized(struct eXosip_t * peCtx,eXosip_event_t *je);
     void RegisterSuccess(struct eXosip_t * peCtx,eXosip_event_t *je);
     void RegisterFailed(struct eXosip_t * peCtx,eXosip_event_t *je);
 
