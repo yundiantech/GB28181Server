@@ -292,16 +292,59 @@ void GB28181Server::run()
                                         if(ItemNode != NULL)
                                         {
                                             mxml_node_t * DeviceIDNode = mxmlFindElement(ItemNode, ItemNode,"DeviceID",NULL,NULL,MXML_DESCEND);
+                                            mxml_node_t * ParentIDNode = mxmlFindElement(ItemNode, ItemNode,"ParentID",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * IPAddressNode = mxmlFindElement(ItemNode, ItemNode,"IPAddress",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * PortNode = mxmlFindElement(ItemNode, ItemNode,"Port",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * StatusNode = mxmlFindElement(ItemNode, ItemNode,"Status",NULL,NULL,MXML_DESCEND);
 
                                             const char *DeviceID = mxmlGetText(DeviceIDNode, NULL);
+                                            const char *ParentID = mxmlGetText(ParentIDNode, NULL);
                                             const char *IPAddress = mxmlGetText(IPAddressNode, NULL);
                                             const char *Port = mxmlGetText(PortNode, NULL);
                                             const char *Status = mxmlGetText(StatusNode, NULL);
 
                                             APP_LOG("Recv Catalog DeviceInfo is:%s %s %s %s\n", DeviceID, IPAddress, Port, Status);
+
+                                            std::list<DeviceNode> deviceListTmp;
+
+                                            std::list<DeviceNode>::iterator iter;
+                                            for(iter = mDeviceList.begin(); iter != mDeviceList.end() ;iter++)
+                                            {
+                                                DeviceNode deviceNode = *iter;
+                                                if (deviceNode.DeviceID.compare(ParentID) == 0 && deviceNode.IPAddress.compare(ip) == 0)
+                                                {
+                                                    bool isExist = false;
+
+                                                    std::list<ChannelItem>::iterator iter;
+                                                    for(iter = deviceNode.channelList.begin(); iter != deviceNode.channelList.end() ;iter++)
+                                                    {
+                                                        ChannelItem cameraNode = *iter;
+                                                        if (cameraNode.DeviceID.compare(DeviceID) == 0 && cameraNode.IPAddress.compare(ip) == 0)
+                                                        {
+                                                            isExist = true;
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (!isExist)
+                                                    {
+                                                        ChannelItem item;
+                                                        item.DeviceID = DeviceID;
+                                                        item.IPAddress = IPAddress;
+                                                        item.Port = atoi(Port);
+                                                        item.Status = Status;
+
+                                                        deviceNode.channelList.push_back(item);
+                                                    }
+
+//                                                    break; //不退出，把剩下也加入列表
+                                                }
+
+                                                deviceListTmp.push_back(deviceNode);
+                                            }
+
+                                            mDeviceList = deviceListTmp;
+
                                         }
                                     }
                                 }
