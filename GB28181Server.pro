@@ -14,11 +14,13 @@ TEMPLATE = app
 
 SOURCES += src/main.cpp \
     src/MainWindow.cpp \
-    src/widget/DeviceTreeWidgetItem.cpp
+    src/widget/DeviceTreeWidgetItem.cpp \
+    src/widget/ChannelTreeWidgetItem.cpp
 
 HEADERS += \
     src/MainWindow.h \
-    src/widget/DeviceTreeWidgetItem.h
+    src/widget/DeviceTreeWidgetItem.h \
+    src/widget/ChannelTreeWidgetItem.h
 
 FORMS += \
     src/MainWindow.ui

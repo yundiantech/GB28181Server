@@ -26,6 +26,8 @@
 
 char *GB_NONCE = (char *)"6fe9ba44a76be22a";
 
+#define RTP_PORT 8000
+
 #if defined(WIN32)
 static DWORD WINAPI thread_Func(LPVOID pM)
 #else
@@ -388,10 +390,10 @@ void GB28181Server::run()
                                                 {
                                                     bool isExist = false;
 
-                                                    std::list<ChannelItem>::iterator iter;
+                                                    std::list<ChannelNode>::iterator iter;
                                                     for(iter = deviceNode.channelList.begin(); iter != deviceNode.channelList.end() ;iter++)
                                                     {
-                                                        ChannelItem cameraNode = *iter;
+                                                        ChannelNode cameraNode = *iter;
                                                         if (cameraNode.DeviceID.compare(DeviceID) == 0 && cameraNode.IPAddress.compare(ip) == 0)
                                                         {
                                                             isExist = true;
@@ -401,7 +403,7 @@ void GB28181Server::run()
 
                                                     if (!isExist)
                                                     {
-                                                        ChannelItem item;
+                                                        ChannelNode item;
                                                         item.DeviceID = DeviceID;
                                                         item.IPAddress = IPAddress;
                                                         item.Port = atoi(Port);
@@ -453,6 +455,70 @@ void GB28181Server::run()
 
                 break;
             }
+            case EXOSIP_CALL_ANSWERED:
+            {
+                APP_LOG("recv EXOSIP_CALL_ANSWERED %d %d %d %d %d\n",je->request,je->response,je->ack,je->cid,je->did);
+
+                osip_body_t *body = NULL;
+                osip_message_get_body(je->request, 0, &body);
+                if (body != NULL)
+                {
+                    APP_LOG("msg body is:%s\n", body->body);
+                }
+
+                osip_contact_t *contact = NULL;
+                osip_message_get_contact(je->request, 0, &contact);
+
+                receiveMessage(contact->url->username, MessageType_CallAnswer, body->body);
+
+                ResponseCallAck(eCtx, je);
+                break;
+            }
+            case EXOSIP_CALL_PROCEEDING:
+            {
+                APP_LOG("recv EXOSIP_CALL_PROCEEDING\n");
+                Response200(eCtx, je);
+                break;
+            }
+            case EXOSIP_CALL_REQUESTFAILURE:
+            {
+                APP_LOG("recv EXOSIP_CALL_REQUESTFAILURE\n");
+
+                osip_body_t *body = NULL;
+                osip_message_get_body(je->request, 0, &body);
+                if (body != NULL)
+                {
+                    APP_LOG("msg body is:%s\n", body->body);
+                }
+
+                osip_contact_t *contact = NULL;
+                osip_message_get_contact(je->request, 0, &contact);
+
+                receiveMessage(contact->url->username, MessageType_CallFailed, body->body);
+
+                Response200(eCtx, je);
+                break;
+            }
+            case EXOSIP_CALL_MESSAGE_ANSWERED:
+            {
+                APP_LOG("recv EXOSIP_CALL_MESSAGE_ANSWERED\n");
+                Response200(eCtx, je);
+                break;
+            }
+            case EXOSIP_CALL_RELEASED:         //请求视频流回复成功
+            {
+                APP_LOG("recv EXOSIP_CALL_RELEASED %d %d %d %d %d\n",je->request,je->response,je->ack,je->cid,je->did);
+                Response200(eCtx, je);
+                break;
+            }
+            case EXOSIP_CALL_CLOSED:
+                APP_LOG("recv EXOSIP_CALL_CLOSED\n");
+                Response200(eCtx, je);
+                break;
+            case EXOSIP_CALL_MESSAGE_NEW:
+                APP_LOG("recv EXOSIP_CALL_MESSAGE_NEW\n");
+                Response200(eCtx, je);
+                break;
             default:
                 APP_LOG("##test,%s:%d, unsupport type:%d\n", __FILE__, __LINE__, je->type);
                 Response200(eCtx, je);
@@ -583,6 +649,17 @@ void GB28181Server::Response200(struct eXosip_t * peCtx,eXosip_event_t *je)
     Response(peCtx, je, 200);
 }
 
+//答复相机开始发视频
+void GB28181Server::ResponseCallAck(struct eXosip_t * peCtx, eXosip_event_t *je)
+{
+    osip_message_t *ack = NULL;
+    eXosip_call_build_ack(eCtx, je->did, &ack);
+
+    eXosip_lock(eCtx);
+    eXosip_call_send_ack(eCtx, je->did, ack);
+    eXosip_unlock(eCtx);
+}
+
 static const char *whitespace_cb(mxml_node_t *node, int where)
 {
     return NULL;
@@ -591,6 +668,11 @@ static const char *whitespace_cb(mxml_node_t *node, int where)
 void GB28181Server::doSendCatalog(DeviceNode node)
 {
     SendQueryCatalog(eCtx, node);
+}
+
+void GB28181Server::doSendInvitePlay(ChannelNode node)
+{
+    SendInvitePlay(eCtx, node);
 }
 
 //发送请求catalog信息
@@ -658,4 +740,72 @@ int GB28181Server::SendQueryCatalog(struct eXosip_t *peCtx, DeviceNode deviceNod
     }
 
     return 0;
+}
+
+//请求视频信息，SDP信息
+int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, ChannelNode cameraNode)
+{
+    const char *playSipId = cameraNode.DeviceID.c_str();
+    int rtp_recv_port = RTP_PORT;
+
+    char dest_call[256] = {0};
+    char source_call[256] = {0};
+    char route[256] = {0};
+    char subject[128] = {0};
+
+    osip_message_t *invite = NULL;
+    int ret;
+
+    const char *platformIpAddr= cameraNode.IPAddress.c_str();
+    int platformSipPort = cameraNode.Port;
+
+    char *localSipId = SERVER_SIP_ID;
+    char *localIpAddr= LOCAL_IP;
+
+
+    snprintf(dest_call, 256, "sip:%s@%s:%d", playSipId, platformIpAddr, platformSipPort);
+    snprintf(source_call, 256, "sip:%s@%s", localSipId, localIpAddr);
+    snprintf(route, 256, "sip:%s@%s:%d", playSipId, platformIpAddr, platformSipPort);
+    snprintf(subject, 128, "%s:0,%s:0", playSipId, localSipId);
+
+    ret = eXosip_call_build_initial_invite(peCtx, &invite, dest_call, source_call, route, subject);
+
+    if (ret != 0)
+    {
+        fprintf(stderr,"eXosip_call_build_initial_invite failed, %s,%s,%s", dest_call, source_call, subject);
+        return -1;
+    }
+
+    osip_via_t *via = NULL;
+    osip_message_get_via(invite, 0, &via);
+
+    int mRtpSSRC = 0;
+    char ssrcStr[32]={0};
+    sprintf(ssrcStr,"0%d",mRtpSSRC+100000000);
+
+    //sdp
+    char body[500];
+    int bodyLen = snprintf(body, 500,
+        "v=0\r\n"
+        "o=%s 0 0 IN IP4 %s\r\n"
+        "s=Play\r\n"
+        "c=IN IP4 %s\r\n"
+        "t=0 0\r\n"
+        "m=video %d RTP/AVP 96 97 98\r\n"
+        "a=rtpmap:96 PS/90000\r\n"
+        "a=rtpmap:97 MPEG4/90000\r\n"
+        "a=rtpmap:98 H264/90000\r\n"
+        "a=recvonly\r\n"
+        "y=%s\r\n", localSipId, localIpAddr,
+        localIpAddr, rtp_recv_port, ssrcStr);
+
+    osip_message_set_body(invite, body, bodyLen);
+    osip_message_set_content_type(invite, "APPLICATION/SDP");
+    eXosip_lock(peCtx);
+    int call_id = eXosip_call_send_initial_invite(peCtx, invite);
+    eXosip_unlock(peCtx);
+
+    fprintf(stderr,"send invite %s \n call_id=%d\n", body, call_id);
+
+    return call_id;
 }

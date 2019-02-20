@@ -8,7 +8,7 @@
 #include <eXosip2/eXosip.h>
 
 ///通道数据，这个数据需要通过catalog后获取到的，基本上就是相机的一个通道
-struct ChannelItem
+struct ChannelNode
 {
     std::string DeviceID;
     std::string IPAddress;
@@ -23,7 +23,7 @@ struct DeviceNode
     std::string IPAddress;
     int Port;
 
-    std::list<ChannelItem> channelList; //一个通道对应一路视频流，一个相机可以有多个通道
+    std::list<ChannelNode> channelList; //一个通道对应一路视频流，一个相机可以有多个通道
 
     bool operator == (DeviceNode node)//重载运算符函数的具体实现
     {
@@ -43,7 +43,9 @@ enum MessageType
 {
     MessageType_Register = 0,
     MessageType_KeepAlive,
-    MessageType_Catalog
+    MessageType_Catalog,
+    MessageType_CallAnswer,
+    MessageType_CallFailed
 };
 
 class GB28181Server
@@ -58,6 +60,7 @@ public:
     void stop();
 
     void doSendCatalog(DeviceNode node);
+    void doSendInvitePlay(ChannelNode node);
 
     std::list<DeviceNode> getDeviceList(){return mDeviceList;}
 
@@ -92,7 +95,12 @@ private:
     void Response403(struct eXosip_t * peCtx,eXosip_event_t *je); //答复403
     void Response200(struct eXosip_t * peCtx,eXosip_event_t *je); //答复200OK
 
-    int SendQueryCatalog(struct eXosip_t *peCtx , DeviceNode deviceNode);
+    void ResponseCallAck(struct eXosip_t * peCtx, eXosip_event_t *je);
+
+    int SendQueryCatalog(struct eXosip_t *peCtx , DeviceNode deviceNode); //请求设备目录
+
+    //请求视频信息，SDP信息
+    int SendInvitePlay(struct eXosip_t *peCtx, ChannelNode cameraNode);
 
 };
 
