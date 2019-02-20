@@ -15,27 +15,85 @@
     #include <pthread.h>
 #endif
 
+#include <QDebug>
+
 #if _MSC_VER
 #define snprintf _snprintf   //snprintf 找不到标识符
 #endif
 
-#define SERVER_SIP_ID "34020000001320000001"
-#define LOCAL_IP "192.168.0.222"
-#define LOCAL_PORT 5060
-#define APP_LOG printf
+//#define APP_LOG printf
+#define APP_LOG qDebug
 
-char *GB_PASSWORD = (char *)"123456";
-char *GB_REALM = (char *)"34020000";
 char *GB_NONCE = (char *)"6fe9ba44a76be22a";
+
+#if defined(WIN32)
+static DWORD WINAPI thread_Func(LPVOID pM)
+#else
+static void *thread_Func(void *pM)
+#endif
+{
+    GB28181Server *pointer = (GB28181Server*)pM;
+
+    pointer->run();
+
+    return 0;
+}
 
 GB28181Server::GB28181Server()
 {
+    mIsStop = false;
+    mIsThreadRunning = false;
+}
 
+void GB28181Server::setLocalIp(char *ip, int port)
+{
+    strcpy(LOCAL_IP, ip);
+    LOCAL_PORT = port;
+}
+
+void GB28181Server::setGBServerInfo(char *sipId, char *passwd, char *realm)
+{
+    strcpy(SERVER_SIP_ID, sipId);
+    strcpy(GB_PASSWORD, passwd);
+    strcpy(GB_REALM, realm);
 }
 
 void GB28181Server::start()
 {
-    run();
+    mIsStop = false;
+#if defined(WIN32)
+     HANDLE handle = CreateThread(NULL, 0, thread_Func, this, 0, NULL);
+#else
+    pthread_t thread1;
+    pthread_create(&thread1,NULL,thread_Func,this);
+#endif
+}
+
+void GB28181Server::stop()
+{
+    mIsStop = true;
+    while(mIsThreadRunning)
+    {
+        Sleep(100);
+    }
+}
+
+///设备注册成功
+void GB28181Server::deviceRegisted(DeviceNode node)
+{
+
+}
+
+///设备更新，catalog请求返回的设备信息更新
+void GB28181Server::deviceUpdate(DeviceNode node)
+{
+
+}
+
+///接收到消息
+void GB28181Server::receiveMessage(const char *deviceID, MessageType type, char *msgBody)
+{
+
 }
 
 void GB28181Server::run()
@@ -66,10 +124,11 @@ void GB28181Server::run()
         exit(1);
     }
 
+    mIsThreadRunning = true;
 
     //与相机进行消息交换的主线程
     //监听并回复摄像机消息
-    while (1)
+    while (!mIsStop)
     {
         eXosip_event_t *je = NULL;
         //处理事件
@@ -140,6 +199,8 @@ void GB28181Server::run()
                             request_response = osip_strdup_without_quote(Sdest->response);
                         }
 
+                        receiveMessage(pUsername, MessageType_Register, NULL);
+
                         if (pAlgorithm == NULL
                                 || pUsername == NULL
                                 || pRealm == NULL
@@ -177,6 +238,8 @@ void GB28181Server::run()
                                 node.IPAddress = ip;
                                 node.Port = atoi(port);
                                 mDeviceList.push_back(node);
+
+                                deviceRegisted(node);
 
                                 APP_LOG("Ip = %s %s \n", ip, port);
                                 APP_LOG("Camera Register Success!! userName=%s pUri=%s pcMethod=%s Response=%s\n",
@@ -259,6 +322,8 @@ void GB28181Server::run()
                                             break;
                                         }
                                     }
+
+                                    receiveMessage(DeviceID, MessageType_KeepAlive, body->body);
                                 }
 
                                 if (isDeviceExist)
@@ -269,11 +334,19 @@ void GB28181Server::run()
                                 {
                                     Response403(eCtx, je); //设备没有记录，则答复403，让设备重新发起注册
                                 }
-
                             }
                             else if ( 0 == strcmp(CmdType, "Catalog"))
                             {
                                 Response200(eCtx, je);
+
+                                mxml_node_t * DeviceIDNode = mxmlFindElement(xml,xml,"DeviceID",NULL,NULL,MXML_DESCEND);
+
+                                if(DeviceIDNode != NULL)
+                                {
+                                    const char *DeviceID = mxmlGetText(DeviceIDNode, NULL);
+
+                                    receiveMessage(DeviceID, MessageType_Catalog, body->body);
+                                }
 
                                 mxml_node_t * DeviceListNode = mxmlFindElement(xml,xml,"DeviceList",NULL,NULL,MXML_DESCEND);
 
@@ -337,7 +410,8 @@ void GB28181Server::run()
                                                         deviceNode.channelList.push_back(item);
                                                     }
 
-//                                                    break; //不退出，把剩下也加入列表
+                                                    deviceUpdate(deviceNode);
+//                                                    break; //不要退出，把剩下的设备也加入新的列表
                                                 }
 
                                                 deviceListTmp.push_back(deviceNode);
@@ -364,7 +438,7 @@ void GB28181Server::run()
 
                 break;
             }
-            case EXOSIP_MESSAGE_ANSWERED:				//查询
+            case EXOSIP_MESSAGE_ANSWERED:			//查询
             {
                 APP_LOG("msg EXOSIP_MESSAGE_ANSWERED\n");
 
@@ -390,6 +464,10 @@ void GB28181Server::run()
     eXosip_quit(eCtx);
     osip_free(eCtx);
     eCtx = NULL;
+
+    APP_LOG("Finished!\n");
+
+    mIsThreadRunning = false;
 }
 
 void GB28181Server::Register401Unauthorized(struct eXosip_t * peCtx,eXosip_event_t *je)
@@ -508,6 +586,11 @@ void GB28181Server::Response200(struct eXosip_t * peCtx,eXosip_event_t *je)
 static const char *whitespace_cb(mxml_node_t *node, int where)
 {
     return NULL;
+}
+
+void GB28181Server::doSendCatalog(DeviceNode node)
+{
+    SendQueryCatalog(eCtx, node);
 }
 
 //发送请求catalog信息

@@ -1,34 +1,30 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2019-02-19T09:56:56
+#
+#-------------------------------------------------
+
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = GB28181Server
 TEMPLATE = app
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG -= qt
+
 
 SOURCES += src/main.cpp \
-    src/GB28181Server/GB28181Server.cpp \
-    src/MD5/HTTPDigest.cpp \
-    src/MD5/MD5.cpp
+    src/MainWindow.cpp \
+    src/widget/DeviceTreeWidgetItem.cpp
 
 HEADERS += \
-    src/GB28181Server/GB28181Server.h \
-    src/MD5/HTTPDigest.h \
-    src/MD5/MD5.h
+    src/MainWindow.h \
+    src/widget/DeviceTreeWidgetItem.h
+
+FORMS += \
+    src/MainWindow.ui
+
+### GB28181Server ### Begin
+    include($$PWD/GB28181Server/GB28181Server.pri)
+### GB28181Server ### End
 
 INCLUDEPATH += $$PWD/src
-
-win32{
-
-    #QMAKE_LFLAGS_DEBUG      = /DEBUG /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib
-    QMAKE_LFLAGS_RELEASE     = /RELEASE /NODEFAULTLIB:libc.lib /NODEFAULTLIB:libcmt.lib
-
-    INCLUDEPATH += $$PWD/lib/win32/exosip/include \
-                   $$PWD/lib/win32/mxml/include
-
-    LIBS += $$PWD/lib/win32/exosip/lib/eXosip.lib \
-            $$PWD/lib/win32/exosip/lib/osip2.lib \
-            $$PWD/lib/win32/exosip/lib/osipparser2.lib \
-            $$PWD/lib/win32/exosip/lib/libcares.lib \
-            $$PWD/lib/win32/mxml/lib/mxml1.lib
-
-    LIBS += WS2_32.lib Dnsapi.lib Iphlpapi.lib Qwave.lib delayimp.lib AdvAPI32.lib
-
-}
