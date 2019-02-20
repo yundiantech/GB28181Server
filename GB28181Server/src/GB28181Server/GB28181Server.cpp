@@ -388,10 +388,10 @@ void GB28181Server::run()
                                                 {
                                                     bool isExist = false;
 
-                                                    std::list<ChannelItem>::iterator iter;
+                                                    std::list<ChannelNode>::iterator iter;
                                                     for(iter = deviceNode.channelList.begin(); iter != deviceNode.channelList.end() ;iter++)
                                                     {
-                                                        ChannelItem cameraNode = *iter;
+                                                        ChannelNode cameraNode = *iter;
                                                         if (cameraNode.DeviceID.compare(DeviceID) == 0 && cameraNode.IPAddress.compare(ip) == 0)
                                                         {
                                                             isExist = true;
@@ -401,7 +401,7 @@ void GB28181Server::run()
 
                                                     if (!isExist)
                                                     {
-                                                        ChannelItem item;
+                                                        ChannelNode item;
                                                         item.DeviceID = DeviceID;
                                                         item.IPAddress = IPAddress;
                                                         item.Port = atoi(Port);

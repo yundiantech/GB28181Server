@@ -8,7 +8,7 @@
 #include <eXosip2/eXosip.h>
 
 ///通道数据，这个数据需要通过catalog后获取到的，基本上就是相机的一个通道
-struct ChannelItem
+struct ChannelNode
 {
     std::string DeviceID;
     std::string IPAddress;
@@ -23,7 +23,7 @@ struct DeviceNode
     std::string IPAddress;
     int Port;
 
-    std::list<ChannelItem> channelList; //一个通道对应一路视频流，一个相机可以有多个通道
+    std::list<ChannelNode> channelList; //一个通道对应一路视频流，一个相机可以有多个通道
 
     bool operator == (DeviceNode node)//重载运算符函数的具体实现
     {
