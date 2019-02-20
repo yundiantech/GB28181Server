@@ -45,16 +45,18 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
+    ///设备操作的弹出菜单
     QMenu* mDevicePopMenu;
     QAction *mCatalogAction;
 
+    ///设备通道操作的弹出菜单
     QMenu* mChannelPopMenu;
     QAction *mPlayVideoAction;
 
-
+    ///按下菜单的时候，当前选中的条目
     QTreeWidgetItem *mCurrentSelectedItem; //记录当前选中的条目
 
-    QList<MessageNode> mMessageList;
+    QList<MessageNode> mMessageList; //收到的消息列表
 
 private slots:
     void slotBtnClicked(bool isChecked);
