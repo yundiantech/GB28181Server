@@ -1,6 +1,8 @@
 # GB28181Server  
 # Qt+ffmpeg+exosip+jrtplib 实现的GB28181服务器代码  
 
+![Image text](https://raw.githubusercontent.com/yundiantech/GB28181Server/master/screenshot.jpg)
+
 更新日志：  
 【V1.8.0】  
 Qt5.6.2(vs2013) + ffmpeg4.1 + exosip2.5 + jrtplib  
