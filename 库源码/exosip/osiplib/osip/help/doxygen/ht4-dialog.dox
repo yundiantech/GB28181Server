@@ -1,0 +1,121 @@
+/**
+ * @ingroup libosip2 The GNU oSIP stack
+ * @defgroup howto_dialog How-To manage dialogs.
+
+ * @section howto_dialog1 Description.
+
+Full API is there:
+
+~~~~~~~{.c}
+#include <osip2/osip_dialog.h>
+~~~~~~~
+
+Dialog management is a powerful facility given by oSIP. This feature is
+needed by SIP end point who has the capability to answer calls. (i.e.
+answering 200 OK to an INVITE).
+
+A Dialog is a context for a call establishment in oSIP. It's not useless
+to say that ONE invite request can lead to several call establishment.
+This can happen if your call has been forked by a proxy and several
+user agent was contacted and replied at the same time. It is true that
+this case won't probably happen several times a month...
+
+There is two ways of creating a dialog. In one case, you are the CALLER
+and in the other case, you will be the CALLEE.
+
+ * @section howto_dialog2 Creating a dialog as a CALLER.
+
+In this case, you have to create a dialog each time you receive
+an answer with a code between 101 and 299. The best place in oSIP to
+actually create a dialog is of course in the callback that announce
+such SIP messages. Of course, each time you receive a response, you have
+to check for an existing dialog associated to this INVITE that can have
+been created by earlier SIP answer coming from the same User Agent. The
+code in the callback will look like the following:
+
+~~~~~~~{.c}
+  void cb_rcv1xx(osip_transaction_t *tr,osip_message_t *sip)
+  {
+    osip_dialog_t *dialog;
+    if (MSG_IS_RESPONSEFOR(sip, "INVITE")&&!MSG_TEST_CODE(sip, 100))
+    {
+      dialog = my_application_search_existing_dialog(sip);
+      if (dialog==NULL) //NO EXISTING DIALOG
+      {
+        i = osip_dialog_init_as_uac(&dialog, sip);
+        my_application_add_existing_dialog(dialog);
+      }
+    }
+    else
+    {
+      //no dialog establishment for other REQUEST
+    }
+  }
+~~~~~~~
+
+ * @section howto_dialog3 Creating a dialog as a CALLEE
+
+In this case, you will have to create a dialog upon receiving the first
+transmission of the INVITE request. The correct place to do that is inside
+the callback previously registered to announce new INVITE. First, you will
+build a SIP answer like 180 or 200 and you'll be able to create a dialog
+by calling the following code:
+
+~~~~~~~{.c}
+  osip_dialog_t *dialog;
+  osip_dialog_init_as_uas(&dialog, original_invite, response_that_you_build);
+~~~~~~~
+
+To make things working, you MUST create a VALID response: do not
+forget to create a new tag and put it in the 'To' header. The dialog
+management heavily depends on this tag.
+
+ * @section howto_dialog4 Matching REQUEST against existing dialog.
+
+~~~~~~~{.c}
+  if (osip_dialog_match_as_uas (jd->d_dialog, evt->sip) == 0)
+    break;
+~~~~~~~
+
+ * @section howto_dialog5 Matching cancel against an INVITE.
+
+Here is code that I use in eXosip2 to match incoming CANCEL against
+previous received INVITE. This is a bit different than dialog because
+CANCEL match a specific INVITE transaction, not a dialog:
+
+~~~~~~~{.c}
+static int
+_cancel_match_invite (osip_transaction_t * invite, osip_message_t * cancel)
+{
+  osip_generic_param_t *br;
+  osip_generic_param_t *br2;
+  osip_via_t *via;
+
+  osip_via_param_get_byname (invite->topvia, "branch", &br);
+  via = osip_list_get (&cancel->vias, 0);
+  if (via == NULL)
+    return OSIP_SYNTAXERROR;    // request without via?
+  osip_via_param_get_byname (via, "branch", &br2);
+  if (br != NULL && br2 == NULL)
+    return OSIP_UNDEFINED_ERROR;
+  if (br2 != NULL && br == NULL)
+    return OSIP_UNDEFINED_ERROR;
+  if (br2 != NULL && br != NULL) {      // compliant UA :)
+    if (br->gvalue != NULL && br2->gvalue != NULL && 0 == strcmp (br->gvalue, br2->gvalue))
+      return OSIP_SUCCESS;
+    return OSIP_UNDEFINED_ERROR;
+  }
+  /old backward compatibility mechanism
+  if (0 != osip_call_id_match (invite->callid, cancel->call_id))
+    return OSIP_UNDEFINED_ERROR;
+  if (0 != osip_to_tag_match (invite->to, cancel->to))
+    return OSIP_UNDEFINED_ERROR;
+  if (0 != osip_from_tag_match (invite->from, cancel->from))
+    return OSIP_UNDEFINED_ERROR;
+  if (0 != osip_via_match (invite->topvia, via))
+    return OSIP_UNDEFINED_ERROR;
+  return OSIP_SUCCESS;
+}
+~~~~~~~
+
+*/

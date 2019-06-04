@@ -1,0 +1,56 @@
+/**
+ * @ingroup libosip2 The GNU oSIP stack
+ * @defgroup howto_uri How-To parse URI.
+
+ * @section howto_uri1 URI Parser APIs
+
+To demonstrate how to use the libosip2 parser, the
+simplest way is to start playing with URI. (Uniform
+Resource Identifier)
+
+For each parser (headers, SIP message or URI), you'll
+always find something close to this minimal subset of
+methods:
+
+~~~~~~~{.c}
+	// allocation/release of memory.
+	xxxx_init(osip_xxx_t **el);
+	xxxx_free(osip_xxx_t *el);
+
+	xxxx_parse(osip_xxx_t *el, char *source);
+	xxxx_to_str(osip_xxx_t *el, char **dest);
+	
+~~~~~~~
+
+For the URI parser, the API is documented in osip_uri.h
+
+ * @section howto_uri2 Basic URI operations
+
++ Here is the sequence needed to parse a given buffer containing a sip URI:
+
+~~~~~~~{.c}
+        osip_uri_t *uri;
+	int i;
+
+	i=osip_uri_init(&uri);
+	if (i!=0) { fprintf(stderr, "cannot allocate\n"); return -1; }
+	i=osip_uri_parse(uri, buffer);
+	if (i!=0) { fprintf(stderr, "cannot parse uri\n"); }
+	osip_uri_free(uri);
+~~~~~~~
+
++ Here is the sequence needed to convert the URI into a printable
+string.
+
+**Note**: dest is allocated dynamically and must be released at the end
+of the call sequence to avoid memory leaks.
+
+~~~~~~~{.c}
+	char *dest;
+	i = osip_uri_to_str(uri, &dest);
+	if (i!=0) { fprintf(stderr, "cannot get printable URI\n"); return -1; }
+	fprintf(stdout, "URI: %s\n", dest);
+	osip_free(dest);
+~~~~~~~
+
+*/

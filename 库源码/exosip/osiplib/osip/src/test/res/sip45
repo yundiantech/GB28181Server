@@ -1,0 +1,33 @@
+INVITE sip:vivekg@chair.dnrc.bell-labs.com SIP/2.0
+TO :
+ <sip:vivekg@chair.dnrc.bell-labs.com > ;   tag    = 1918181833n
+From   : "J Rosenberg " <sip:jdrosen@lucent.com>
+  ;
+  tag = 98asjd8
+Call-ID
+ : 0ha0isndaksdj@10.1.1.1
+cseq: 8
+  INVITE
+Via  : SIP  /   2.0
+ /UDP
+    135.180.130.133
+Subject :
+NewFangledHeader:   newfangled value
+ more newfangled value
+Content-Type: application/sdp
+v:  SIP  / 2.0  / TCP     12.3.4.5   ;
+  branch  =   9ikj8  ,
+ SIP  /    2.0   / UDP  1.2.3.4   ; hidden
+m:"Quoted string " <sip:jdrosen@bell-labs.com> ; newparam =
+ newvalue ;
+  secondparam = secondvalue  ; q = 0.33
+  (((nested comments) and (more)))   ,
+ tel:4443322
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+

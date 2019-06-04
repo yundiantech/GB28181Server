@@ -1,0 +1,26 @@
+#
+# examples from the rfc
+#
+SIP/2.0/UDP my.ex.fr :4054 ;ttl=16; maddr=224.2.0.1; branch=a7c6a8dlze.1 (Acme server)
+SIP/2.0/UDP adk8
+SIP/2.0/UDP callerspc.univ.edu
+SIP/2.0/UDP 10.0.1.1:5061
+SIP/2.0/UDP 169.130.12.5
+SIP/2.0/UDP erlang.bell-telephone.com:5060
+SIP/2.0/UDP 128.59.16.1:5060 ;received=128.59.19.3
+SIP/2.0/UDP sip.example.com;branch=7c337f30d7ce.1
+;maddr=239.128.16.254;ttl=16
+SIP/2.0/UDP mouse.wonderland.com
+SIP/2.0/UDP kton.bell-tel.com
+SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.1
+SIP/2.0/UDP c.bell-tel.com
+#
+# torture valid cases
+#                                             Is this valid?: 'bob="'
+SIP/2.0/UDP my.ex.fr:4000;ttl=15;joe=tokenabc123-.!%* ; bob="
+#
+SIP/2.0/UDP my.ex.fr
+SIP/2.0/UDP my.ex.fr:4054
+SIP/2.0/UDP  my.ex.fr:4054
+SIP/ 2.0/UDP      my.ex.fr:4054
+SIP  /    2.0    /    UDP my.ex.fr

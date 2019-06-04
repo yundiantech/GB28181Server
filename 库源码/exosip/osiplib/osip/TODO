@@ -1,0 +1,8 @@
+TODO file for oSIP:
+
+Version 2.x to 3.x: 
+ * rename the MD5 API because it exists in windows and
+   lead to issue on wince.
+ * Improve the parser so it won't totally fail when a
+   few non-important heder are not valid.
+

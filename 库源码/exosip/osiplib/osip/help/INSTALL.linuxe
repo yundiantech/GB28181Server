@@ -1,0 +1,14 @@
+Install process for linux embedded
+----------------------------------
+
+The latest osip release tested on embedded linux was 3.0.1
+The target was an arm processor.
+
+
+$> ./configure --build=i686-pc-linux-gnu \
+               --host=arm-linux \
+               --target=arm-linux \
+               --prefix=/arm/usr/local
+
+$> make
+

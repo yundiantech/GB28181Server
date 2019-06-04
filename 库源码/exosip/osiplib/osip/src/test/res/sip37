@@ -1,0 +1,8 @@
+SIP/2.0 302 Moved temporarily
+From: Charlie <sip:charlie@caller.com>;tag=5
+To: Alice <sip:alice@wonderland.com> ;tag=2332462
+Call-ID: 27182@caller.com
+Contact: sip:bob@example.com
+Expires: Wed, 29 Jul 1998 9:00:00 GMT
+CSeq: 1 INVITE
+

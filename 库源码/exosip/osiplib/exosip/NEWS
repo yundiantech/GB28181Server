@@ -1,0 +1,45 @@
+Oct 2015    : 5.0.0
+  This file is not maintained. eXosip2 is stil under dev. Keep looking
+  at the git on http://savannah.gnu.org/git/?group=exosip and ChangeLog.
+
+Oct 2006    : 3.0.1
+  eXosip2 is now ported to macosx, linux, windows, windows Mobile (pocket PC
+  and smartphone). It's stable and mostly complete. Right now, it seems only
+  TLS is missing in this layer: next NEWS will probably announce it!
+
+Nov 2005    : 2.2.2
+  eXosip was first made to build a SIP interface for a PBX. Available
+  as a library, it appears soon that it was really difficult to use
+  the original version without changes in other kind of SIP applications.
+  Mainly, the API and the session negotiator was not providing enough
+  flexibility.
+
+  eXosip2 is an attempt to resolv those issues and at the time of
+  writing this NEWS file, it appears that I'm now close to the
+  initial goal: provide a flexible library for EndPoint control
+  with no limitation in terms of functionnalities and evolutions.
+
+  Main Changes:
+  1: the media/session information must now be handled by the application.
+      -> no negotiation issue any more
+      -> eXosip provide a basic API to quickly extract SDP information,
+         but this is kept optional.
+      -> no limitation about the attachment or the media to be supported.
+
+  2: the API has been refined to provide the flexibility you need. Thus,
+     you now have entire control on messages so that you can support a
+     lot of SIP extensions. Basically each action contains 3 steps:
+      -> Ask eXosip to build a default SIP message (request or answer)
+      -> Modify it (add body, session info, extra headers...)
+      -> Ask eXosip to send the message.
+
+Jun 2004    : 0.7.6
+  eXosip is now quite stable. However, eXosip is not as extensible
+  and powerfull as I was expecting at the beguining. This is why
+  you should be aware that this version and API will probably be
+  completely obselete and replaced with a future eXosip2 in some
+  time.
+
+Apr 2003    : 0.6.2
+  eXosip is an extension of osip. It won't be considered stable and safe
+  until this file mention it or until this notice is removed!!

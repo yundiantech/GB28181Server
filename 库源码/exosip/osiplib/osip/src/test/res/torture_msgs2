@@ -1,0 +1,1324 @@
+SIP/2.0 180 Ringing
+t: <sip:vijay@atosc.org>;tag=e18a3bd5
+f: <sip:amoizard@antisip.com>;tag=293a8
+i: 1960129851@one.ip.com
+CSeq: 1 INVITE
+v: SIP/2.0/UDP one.ip.com:5060;received=two.ip.org
+m: <sip:tcchiang@one.ip.com>
+Server: 3Com ICD 1.0.1.4.0
+l: 0
+
+|
+INVITE sip:bob@one.example.com SIP/2.0
+Via: SIP/2.0/UDP sip.example.com;branch=7c337f30d7ce.1
+  ;maddr=239.128.16.254;ttl=16
+Via: SIP/2.0/UDP mouse.wonderland.com
+From: "Alice, A," "Alice, A,"<sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com>
+Call-ID: 602214199@mouse.wonderland.com
+CSeq: 1 INVITE
+Contact: Alice <sip:alice@mouse.wonderland.com>
+Call-Info: <http://wwww.example2.com/alice/photo2.jpg> ;purpose=icon2,
+     <http://www.example2.com/alice/> ;purpose=info2
+Call-Info: <http://wwww.example.com/alice/photo.jpg> ;purpose=icon,
+     <http://www.example.com/alice/> ;purpose=info
+Alert-Info: <http://wwww.example.com/alice/photo.jpg> ;purpose=icon,
+     <http://www.example.com/alice/> ;purpose=info
+Accept-Language: da, en-gb;q=0.8, en;q=0.7
+Accept-Encoding: da, en-gb;q=0.8, en;q=0.7
+Subject: SIP will be discussed, too
+Accept: multipart/mixed; boundary=++,application/sdp
+Accept: text/plain; q=0.5, text/html,
+ text/x-dvi; q=0.8, text/x-c
+Accept: audio/*; q=0.2, audio/basic
+Allow: INVITE,  ACK , BYE,CANCEL,  SUBSCRIBE  , NOTIFY  
+content-type: multipart/mixed; boundary=++
+content-encoding: gzip, compress
+content-length: 320
+MIME-Version: 1.0
+
+--++
+Content-Type: application/sdp
+
+v=0
+o=user1 53655765 2353687637 IN IP4 128.3.4.5
+s=Mbone Audio
+t=3149328700 0
+i=Discussion of Mbone Engineering Issues
+e=mbone@somewhere.com
+c=IN IP4 224.2.0.1/127
+t=0 0
+m=audio 3456 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+--++
+Content-Type: application/x-osip-chat
+
+Hi guys, this is where i put my signature...just because I want to do it...
+--++--
+
+|
+REGISTER sip:bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP saturn.bell-tel.com
+From: <sip:watson@bell-tel.com>;tag=19
+To: sip:watson@bell-tel.com
+Call-ID: 70710@saturn.bell-tel.com
+CSeq: 2 REGISTER
+Expires: 0
+Contact: *
+
+|
+REGISTER sip:bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP saturn.bell-tel.com
+From: <sip:watson@bell-tel.com>;tag=19
+To: sip:watson@bell-tel.com
+Call-ID: 70710@saturn.bell-tel.com
+CSeq: 3 REGISTER
+Contact: sip:tawatson@example.com
+
+|
+REGISTER sip:bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP pluto.bell-tel.com
+From: <sip:jon.diligent@bell-tel.com>;tag=7
+To: sip:watson@bell-tel.com
+Call-ID: 17320@pluto.bell-tel.com
+CSeq: 1 REGISTER
+Contact: sip:tawatson@example.com
+
+|
+INVITE sip:bob@one.example.com SIP/2.0
+Via: SIP/2.0/UDP sip.example.com;branch=7c337f30d7ce.1
+  ;maddr=239.128.16.254;ttl=16
+Via: SIP/2.0/UDP mouse.wonderland.com
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com>
+Call-ID: 602214199@mouse.wonderland.com
+CSeq: 1 INVITE
+Contact: Alice <sip:alice@mouse.wonderland.com>
+Subject: SIP will be discussed, too
+Content-Type: application/sdp
+Content-Length: 187
+
+v=0
+o=user1 53655765 2353687637 IN IP4 128.3.4.5
+s=Mbone Audio
+t=3149328700 0
+i=Discussion of Mbone Engineering Issues
+e=mbone@somewhere.com
+c=IN IP4 224.2.0.1/127
+t=0 0
+m=audio 3456 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+
+|
+SIP/2.0 180 Ringing
+Via: SIP/2.0/UDP csvax.cs.caltech.edu;branch=7c337f30d7ce.1
+  ;maddr=239.128.16.254;ttl=16
+Via: SIP/2.0/UDP north.east.isi.edu
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com> ;tag=3141593
+Call-ID: 602214199@mouse.wonderland.com
+CSeq: 1 INVITE
+
+|
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP csvax.cs.caltech.edu;branch=7c337f30d7ce.1
+  ;maddr=239.128.16.254;ttl=16
+Via: SIP/2.0/UDP north.east.isi.edu
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com> ;tag=3141593
+Call-ID: 602214199@mouse.wonderland.com
+CSeq: 1 INVITE
+Contact: <sip:bob@one.example.com>
+
+|
+ACK sip:bob@one.example.com SIP/2.0
+Via: SIP/2.0/UDP north.east.isi.edu
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com> ;tag=3141593
+Call-ID: 602214199@mouse.wonderland.com
+CSeq: 1 ACK
+
+|
+INVITE sip:watson@boston.bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com>
+Call-ID: 662606876@kton.bell-tel.com
+CSeq: 1 INVITE
+Contact: <sip:a.g.bell@kton.bell-tel.com>
+Subject: Mr. Watson, come here.
+Content-Type: application/sdp
+Content-Length: 227
+
+v=0
+o=bell 53655765 2353687637 IN IP4 128.3.4.5
+s=Mr. Watson, come here.
+t=3149328600 0
+c=IN IP4 kton.bell-tel.com
+m=audio 3456 RTP/AVP 0 3 4 5
+a=rtpmap:0 PCMU/8000
+a=rtpmap:3 GSM/8000
+a=rtpmap:4 G723/8000
+a=rtpmap:5 DVI4/8000
+|
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 662606876@kton.bell-tel.com
+CSeq: 1 INVITE
+Content-Length: 0
+
+|
+SIP/2.0 180 Ringing
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 662606876@kton.bell-tel.com
+CSeq: 1 INVITE
+Content-Length: 0
+
+|
+SIP/2.0 182 Queued, 2 callers ahead
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 662606876@kton.bell-tel.com
+CSeq: 1 INVITE
+Content-Length: 0
+
+|
+SIP/2.0 182 Queued, 1 caller ahead
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 662606876@kton.bell-tel.com
+CSeq: 1 INVITE
+Content-Length: 0
+
+|
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 662606876@kton.bell-tel.com
+CSeq: 1 INVITE
+Contact: sip:watson@boston.bell-tel.com
+Content-Type: application/sdp
+Content-Length: 130
+
+v=0
+o=watson 4858949 4858949 IN IP4 192.1.2.3
+s=I'm on my way
+t=3149329600 0
+c=IN IP4 boston.bell-tel.com
+m=audio 5004 RTP/AVP 0 3
+a=rtpmap:0 PCMU/8000
+a=rtpmap:3 GSM/8000
+
+|
+ACK sip:watson@boston.bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 3298420296@kton.bell-tel.com
+CSeq: 1 ACK
+
+|
+BYE sip:watson@boston.bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. A. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 3298420296@kton.bell-tel.com
+CSeq: 2 BYE
+
+|
+INVITE sip:t.watson@ieee.org SIP/2.0
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:a.g.bell@c.bell-tel.com
+
+|
+INVITE sip:watson@h.bell-tel.com SIP/2.0
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.1
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:a.g.bell@c.bell-tel.com
+
+|
+SIP/2.0 404 Not Found
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.1
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>;tag=87454273
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+
+|
+ACK sip:watson@h.bell-tel.com SIP/2.0
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.1
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>;tag=87454273
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 ACK
+
+|
+INVITE sip:watson@acm.org SIP/2.0
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.2
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:a.g.bell@c.bell-tel.com
+
+|
+INVITE sip:t.watson@x.bell-tel.com SIP/2.0
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.3
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:a.g.bell@c.bell-tel.com
+
+|
+INVITE sip:watson@y.bell-tel.com SIP/2.0
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.4
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:a.g.bell@c.bell-tel.com
+
+|
+SIP/2.0 200 OK
+Via:      SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.3
+Via:      SIP/2.0/UDP c.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org> ;tag=192137601
+Call-ID:  31415@c.bell-tel.com
+CSeq:     1 INVITE
+Contact:  sip:t.watson@x.bell-tel.com
+
+|
+SIP/2.0 200 OK
+Via:      SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.4
+Via:      SIP/2.0/UDP c.bell-tel.com
+Contact:  sip:t.watson@y.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org> ;tag=35253448
+Call-ID:  31415@c.bell-tel.com
+CSeq:     1 INVITE
+
+|
+CANCEL sip:watson@acm.org SIP/2.0
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.2
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 CANCEL
+
+|
+SIP/2.0 200 OK
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.2
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 CANCEL
+
+|
+SIP/2.0 487 Request Terminated
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.2
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+
+|
+ACK sip:t.watson@x.bell-tel.com SIP/2.0
+Via:      SIP/2.0/UDP c.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org>;tag=192137601
+Call-ID:  31415@c.bell-tel.com
+CSeq:     1 ACK
+
+|
+ACK sip:watson@y.bell-tel.com SIP/2.0
+Via:      SIP/2.0/UDP c.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org>;tag=35253448
+Call-ID:  31415@c.bell-tel.com
+CSeq:     1 ACK
+
+|
+BYE sip:watson@y.bell-tel.com SIP/2.0
+Via:      SIP/2.0/UDP c.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org>;tag=35253448
+Call-ID:  31415@c.bell-tel.com
+CSeq:     2 BYE
+
+|
+SIP/2.0 200 OK
+Via:      SIP/2.0/UDP c.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org>;tag=35253448
+Call-ID:  31415@c.bell-tel.com
+CSeq:     2 BYE
+
+|
+SIP/2.0 302 Moved temporarily
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>;tag=72538263
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:watson@h.bell-tel.com,
+ sip:watson@acm.org, sip:t.watson@x.bell-tel.com,
+ sip:watson@y.bell-tel.com
+
+|
+SIP/2.0 302 Moved temporarily
+From: Charlie <sip:charlie@caller.com>;tag=5
+To: Alice <sip:alice@wonderland.com> ;tag=2332462
+Call-ID: 27182@caller.com
+Contact: sip:bob@example.com
+Expires: Wed, 29 Jul 1998 9:00:00 GMT
+CSeq: 1 INVITE
+
+|
+INVITE sip:bob@example.com SIP/2.0
+Via: SIP/2.0/UDP h.caller.com
+From: <sip:charlie@caller.com>;tag=5
+To: sip:alice@wonderland.com
+Call-ID: 27182@caller.com
+CSeq: 2 INVITE
+Contact: sip:charlie@h.caller.com
+
+|
+INVITE sip:alice@wonderland.com SIP/2.0
+Via: SIP/2.0/UDP h.caller.com
+From: <sip:charlie@caller.com>;tag=5
+To: Alice <sip:alice@wonderland.com>
+Call-ID: 27182@caller.com
+CSeq: 1 INVITE
+Contact: sip:charlie@h.caller.com
+
+|
+SIP/2.0 302 Moved temporarily
+Via: SIP/2.0/UDP h.caller.com
+From: <sip:charlie@caller.com>;tag=5
+To: Alice <sip:alice@wonderland.com>
+Call-ID: 27182@caller.com
+CSeq: 1 INVITE
+Contact: <sip:alice@wonderland.com:5080;maddr=spare.caller.com>
+
+|
+INVITE sip:alice@wonderland.com SIP/2.0
+Via: SIP/2.0/UDP h.caller.com
+From: <sip:charlie@caller.com>;tag=5
+To: Alice <sip:alice@wonderland.com>
+Call-ID: 27182@caller.com
+CSeq: 2 INVITE
+Contact: sip:charlie@h.caller.com
+
+|
+SIP/2.0 606 Not Acceptable
+Via: SIP/2.0/UDP c.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:t.watson@ieee.org> ;tag=7434264
+Call-ID: 14142@c.bell-tel.com
+CSeq: 1 INVITE
+Warning: 370 "Insufficient bandwidth (only have ISDN)",
+  305 "Incompatible media format",
+  330 "Multicast not available"
+Content-Type: application/sdp
+Content-Length: 130
+
+v=0
+o=c 3149329138 3149329165 IN IP4 38.245.76.2
+s=Let's talk
+t=3149328630 0
+b=CT:128
+c=IN IP4 x.bell-tel.com
+m=audio 3456 RTP/AVP 5 0 7
+a=rtpmap:5 DVI4/8000
+a=rtpmap:0 PCMU/8000
+a=rtpmap:7 LPC/8000
+m=video 2232 RTP/AVP 31
+a=rtpmap:31 H261/90000
+
+|
+OPTIONS sip:bob@example.com SIP/2.0
+Via: SIP/2.0/UDP cat.wonderland.com
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com>
+Call-ID: 6378@cat.wonderland.com
+CSeq: 1 OPTIONS
+Accept: application/sdp
+
+|
+SIP/2.0 200 OK
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com> ;tag=376364382
+Call-ID: 6378@cat.wonderland.com
+CSeq: 1 OPTIONS
+Content-Length: 81
+Content-Type: application/sdp
+
+v=0
+o=alice 3149329138 3149329165 IN IP4 24.124.37.3
+s=Security problems
+t=3149328650 0
+c=IN IP4 24.124.37.3
+m=audio 0 RTP/AVP 0 1 3 99
+a=rtpmap:0 PCMU/8000
+a=rtpmap:1 1016/8000
+a=rtpmap:3 GSM/8000
+a=rtpmap:99 SX7300/8000
+m=video 0 RTP/AVP 31 34
+a=rtpmap:31 H261/90000
+a=rtpmap:34 H263/90000
+
+|
+INVITE sip:vivekg@chair.dnrc.bell-labs.com SIP/2.0
+TO :
+ <sip:vivekg@chair.dnrc.bell-labs.com > ;   tag    = 1918181833n
+From   : "J Rosenberg " <sip:jdrosen@lucent.com>
+  ;
+  tag = 98asjd8
+Call-ID
+ : 0ha0isndaksdj@10.1.1.1
+cseq: 8
+  INVITE
+Via  : SIP  /   2.0
+ /UDP
+    135.180.130.133
+Subject :
+NewFangledHeader:   newfangled value
+ more newfangled value
+Content-Type: application/sdp
+v:  SIP  / 2.0  / TCP     12.3.4.5   ;
+  branch  =   9ikj8  ,
+ SIP  /    2.0   / UDP  1.2.3.4   ; hidden
+m:"Quoted string " <sip:jdrosen@bell-labs.com> ; newparam =
+ newvalue ;
+  secondparam = secondvalue  ; q = 0.33
+  (((nested comments) and (more)))   ,
+ tel:4443322
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+To: sip:j_user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.1.1.1
+Require: newfeature1, newfeature2
+Proxy-Require: newfeature3, newfeature4
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+
+|
+INVITE name:John_Smith SIP/2.0
+To: isbn:2983792873
+From: http://www.cs.columbia.edu
+Call-ID: 0ha0isndaksdj@10.1.2.3
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+|
+REGISTER sip:company.com SIP/2.0
+To: sip:user@company.com
+From: sip:user@company.com
+Contact: sip:user@host.company.com
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 REGISTER
+Via: SIP/2.0/UDP 135.180.130.133
+Expires: Sat, 01 Dec 2040 16:00:00 GMT
+
+|
+INVITE sip:user@company.com SIP/2.0
+To: sip:j_user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+Accept: text/newformat
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+
+v=0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@comapny.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/newformat
+
+<audio>
+ <pcmu port="443"/>
+</audio>
+
+|
+NEWMETHOD sip:user@comapny.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 NEWMETHOD
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+NEWMETHOD sip:user@comapny.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.1.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+REGISTER sip:company.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:j.user@company.com
+Call-ID: 0ha0isndaksdj@10.0.1.1
+CSeq: 8 REGISTER
+Via: SIP/2.0/UDP 135.180.130.133
+Authorization: Super-PGP ajsohdaosdh0asyhdaind08yasdknasd09asidhas0d8
+
+|
+REGISTER sip:company.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:j.user@company.com
+Call-ID: 0ha0isndaksdj@10.0.2.2
+Contact: sip:j.user@host.company.com
+CSeq: 8 REGISTER
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Length: 0
+
+|
+INVITE sip:joe@company.com SIP/2.0
+To: sip:joe@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isnda977644900765@10.0.0.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+CSeq: 0 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+Via: SIP/2.0/UDP 135.180.130.133
+CSeq: 0 INVITE
+Call-ID: 98asdh@10.1.1.1
+Call-ID: 98asdh@10.1.1.2
+From: sip:caller@university.edu
+From: sip:caller@organization.org
+To: sip:user@company.com
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+Via: SIP/2.0/UDP 135.180.130.133
+CSeq: 0 INVITE
+Call-ID: 98asdh@10.1.1.2
+Expires: Thu, 44 Dec 19999 16:00:00 EDT
+From: sip:caller@university.edu
+To: sip:user@company.com
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+SIP/2.0 200 OK
+Via: SIP/2.0/UDP 135.180.130.57;branch=0
+Via: SIP/2.0/UDP 255.255.255.255;branch=0
+Call-ID: 0384840201@10.1.1.1
+CSeq: 0 INVITE
+From: sip:user@company.com
+To: sip:user@university.edu;tag=2229
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 224.2.17.12/127
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133;;,;
+Contact: "" <> ;,"Joe" <sip:joe@org.org>;;,,;;
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 9999
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: -999
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|
+INVITE sip:user@company.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 138
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+asdpasd08asdsdk:;;asd
+ a0sdjhg8a0''...'';;;;
+
+|
+INVITE sip:user@company.com SIP/2.0
+To: "Mr. J. User <sip:j.user@company.com>
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.0.0.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 138
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+|INVITE request with a semicolon-separated parameter in the "user" part.
+INVITE sip:user;par=u%40h.com@company.com SIP/2.0
+To: sip:j_user@company.com
+From: sip:caller@university.edu
+Call-ID: 0ha0isndaksdj@10.1.1.1
+CSeq: 8 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+
+|is illegal because the Request-URI has been enclosed within in "<>".
+INVITE <sip:user@company.com> SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 1@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| This INVITE has illegal LWS within the SIP URL.
+INVITE sip:user@company.com; transport=udp SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 2@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| This INVITE has illegal >1 SP between elements of the Request-URI.
+INVITE sip:user@company.com  SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 3@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| INVITE with a legal SIP URL containing escaped characters
+INVITE sip:sip%3Auser%40example.com@company.com;other-param=summit SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 4@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| INVITE with the illegal use of escaped headers in Request-URI
+INVITE sip:user@company.com?Route=%3Csip:sip.example.com%3E SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 5@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| INVITE containing an unknown in the Request URI
+INVITE name:user SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 6@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| OPTIONS with no LWS between display name and <
+OPTIONS sip:user@company.com SIP/2.0
+To: sip:user@company.com
+From: "caller"<sip:caller@example.com>
+Call-ID: 1234abcd@10.0.0.1
+CSeq: 1 OPTIONS
+Via: SIP/2.0/UDP 135.180.130.133
+
+| OPTIONS with extran LWS between display name and <
+OPTIONS sip:user@company.com SIP/2.0
+To: sip:user@company.com
+From: "caller"    <sip:caller@example.com>
+Call-ID: 1234abcd@10.0.0.1
+CSeq: 2 OPTIONS
+Via: SIP/2.0/UDP 135.180.130.133
+
+| INVITE with an illegal SIP Date format.
+INVITE sip:user@company.com SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 7@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Expires: Fri, 01 Jan 2010 16:00:00 EST
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| INVITE with Passed Expries Time
+INVITE sip:user@company.com SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 8@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Expires: Thu, 01 Dec 1994 16:00:00 GMT
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| INVITE with Max-Forwards Set to Zero
+INVITE sip:user@company.com SIP/2.0
+To: sip:user@company.com
+From: sip:caller@university.edu
+Call-ID: 9@10.0.0.1
+CSeq: 1 INVITE
+Via: SIP/2.0/UDP 135.180.130.133
+Max-Forwards: 0
+Content-Type: application/sdp
+Content-Length: 165
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| REGISTER with a Escaped Header in a Legal SIP URL of a Contact
+REGISTER sip:company.com SIP/2.0
+To: sip:user@company.com
+From: sip:user@company.com
+Contact: sip:user@host.company.com
+Call-ID: k345asrl3fdbv@10.0.0.1
+CSeq: 1 REGISTER
+Via: SIP/2.0/UDP 135.180.130.133
+Contact: <sip:user@example.com?Route=%3Csip:sip.example.com%3E>
+
+| REGISTER with a Escaped Header in a Illegal SIP URL of a Contact
+REGISTER sip:company.com SIP/2.0
+To: sip:user@company.com
+From: sip:user@company.com
+Contact: sip:user@host.company.com
+Call-ID: k345asrl3fdbv@10.0.0.1
+CSeq: 1 REGISTER
+Via: SIP/2.0/UDP 135.180.130.133
+Contact: sip:user@example.com?Route=%3Csip:sip.example.com%3E
+
+| INVITE with Long Values in Headers
+INVITE sip:user@company.com SIP/2.0
+To: "I have a user name of extreme proportion"
+ <sip:user@company.com:6000;other-param=1234567890somethingelselong1234567890>
+From: sip:caller@university.edu
+Call-ID:
+ kl24ahsd546folnyt2vbak9sad98u23naodiunzds09a3bqw0sdfbsk34poouymnae004
+ 3nsed09mfkvc74bd0cuwnms05dknw87hjpobd76f
+CSeq: 1 INVITE
+My-State: sldkjflzdsfaret0803adgaasd0afds0asdaasd
+Via: SIP/2.0/UDP sip33.example.com
+Via: SIP/2.0/UDP sip32.example.com
+Via: SIP/2.0/UDP sip31.example.com
+Via: SIP/2.0/UDP sip30.example.com
+Via: SIP/2.0/UDP sip29.example.com
+Via: SIP/2.0/UDP sip28.example.com
+Via: SIP/2.0/UDP sip27.example.com
+Via: SIP/2.0/UDP sip26.example.com
+Via: SIP/2.0/UDP sip25.example.com
+Via: SIP/2.0/UDP sip24.example.com
+Via: SIP/2.0/UDP sip23.example.com
+Via: SIP/2.0/UDP sip22.example.com
+Via: SIP/2.0/UDP sip21.example.com
+Via: SIP/2.0/UDP sip20.example.com
+Via: SIP/2.0/UDP sip19.example.com
+Via: SIP/2.0/UDP sip18.example.com
+Via: SIP/2.0/UDP sip17.example.com
+Via: SIP/2.0/UDP sip16.example.com
+Via: SIP/2.0/UDP sip15.example.com
+Via: SIP/2.0/UDP sip14.example.com
+Via: SIP/2.0/UDP sip13.example.com
+Via: SIP/2.0/UDP sip12.example.com
+Via: SIP/2.0/UDP sip11.example.com
+Via: SIP/2.0/UDP sip10.example.com
+Via: SIP/2.0/UDP sip9.example.com
+Via: SIP/2.0/UDP sip8.example.com
+Via: SIP/2.0/UDP sip7.example.com
+Via: SIP/2.0/UDP sip6.example.com
+Via: SIP/2.0/UDP sip5.example.com
+Via: SIP/2.0/UDP sip4.example.com
+Via: SIP/2.0/UDP sip3.example.com
+Via: SIP/2.0/UDP sip2.example.com
+Via: SIP/2.0/UDP sip1.example.com
+Via: SIP/2.0/UDP
+ host.example.com;received=135.180.130.133;branch=C1C3344E2710000000E2
+ 99E568E7potato10potato0potato0
+Content-Type: application/sdp
+
+v=0
+o=mhandley 29739 7272939 IN IP4 126.5.4.3
+s=SIP Call
+t=3149328700 0
+c=IN IP4 135.180.130.88
+m=audio 492170 RTP/AVP 0 12
+m=video 3227 RTP/AVP 31
+a=rtpmap:31 LPC
+
+| OPTIONS with multiple headers.
+OPTIONS sip:135.180.130.133 SIP/2.0
+Via: SIP/2.0/UDP company.com:5604
+From: sip:iuser@company.com
+To: sip:user@135.180.130.133
+Call-ID: 1804928587@company.com
+CSeq: 1 OPTIONS
+Expires: 3600
+Contact: sip:host.company.com
+
+| INVITE with large number of SDP attributes and telephone subscriber Request-URI (the content-length is also wrong)
+INVITE sip:+1-972-555-2222;phone-context=name%40domain;new=user?%22Route%3a%20X%40Y%3bZ=W%22@gw1.wcom.com;user=phone SIP/2.0
+Via: SIP/2.0/UDP iftgw.there.com:5060
+From: sip:+1-303-555-1111@ift.here.com;user=phone
+To: sip:+1-650-555-2222@ss1.wcom.com;user=phone
+Call-ID: 1717@ift.here.com
+CSeq: 56 INVITE
+Content-Type: application/sdp
+Content-Length: 320
+
+v=0
+o=faxgw1 2890844527 2890844527 IN IP4 iftgw.there.com
+s=Session SDP
+c=IN IP4 iftmg.there.com
+t=0 0
+m=image 49172 udptl t38
+a=T38FaxVersion:0
+a=T38maxBitRate:14400
+a=T38FaxFillBitRemoval:0
+a=T38FaxTranscodingMMR:0
+a=T38FaxTranscodingJBIG:0
+a=T38FaxRateManagement:transferredTCF
+a=T38FaxMaxBuffer:260
+a=T38FaxUdpEC:t38UDPR
+
+| REGISTER with a contact parameter.
+
+REGISTER sip:bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP saturn.bell-tel.com
+From: sip:watson@bell-tel.com
+To: sip:watson@bell-tel.com
+Call-ID: 70710@saturn.bell-tel.com
+CSeq: 2 REGISTER
+Contact: sip:+1-972-555-2222@gw1.wcom.com;user=phone
+
+| REGISTER with a url parameter.
+REGISTER sip:bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP saturn.bell-tel.com
+From: sip:watson@bell-tel.com
+To: sip:watson@bell-tel.com
+Call-ID: 70710@saturn.bell-tel.com
+CSeq: 3 REGISTER
+Contact: <sip:+1-972-555-2222@gw1.wcom.com;user=phone>
+
+| INVITE with an Unquoted Display Name Containing Multiple Tokens (????)
+INVITE sip:t.watson@ieee.org SIP/2.0
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31414@c.bell-tel.com
+CSeq:    1 INVITE
+
+| INVITE with an Unquoted Display Name Containg Non-Token Characters (should fail...)
+INVITE sip:t.watson@ieee.org SIP/2.0
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    Bell, Alexander <sip:a.g.bell@bell-tel.com>
+To:      Watson, Thomas <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+
+| INVITE with Unknown (Higher) Protocol Version in Start Line
+INVITE sip:t.watson@ieee.org SIP/7.0
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31417@c.bell-tel.com
+CSeq:    1 INVITE
+
+| INVITE with record-route
+INVITE sip:+1-650-555-2222@iftgw.there.com;user=phone SIP/2.0
+Via: SIP/2.0/UDP ss1.wcom.com:5060; branch=2d007.1
+Via: SIP/2.0/UDP ift.here.com:5060
+Record-Route: <sip:+1-650-555-2222@iftgw.there.com;
+ maddr=ss1.wcom.com>
+From: <sip:+1-303-555-1111@ift.here.com;user=phone>
+To: <sip:+1-650-555-2222@ss1.wcom.com;user=phone>
+Call-ID: 1717@ift.here.com
+CSeq: 17 INVITE
+Contact: <sip:+1-303-555-1111@ift.here.com;user=phone>
+Content-Type: application/sdp
+Content-Length: 151
+
+v=0
+o=IFAXTERMINAL01 2890844527 2890844527 IN IP4 ift.here.com
+s=Session SDP
+c=IN IP4 iftmg.here.com
+t=0 0
+m=audio 3456 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+|
+SIP/2.0 407 Proxy Authorization Required
+Via: SIP/2.0/UDP here.com:5060
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>
+Call-ID: 12345600@here.com
+CSeq: 1 INVITE
+Proxy-Authenticate: Digest realm="MCI WorldCom SIP",
+ domain="sip:ss1.wcom.com", nonce="f84f1cec41e6cbe5aea9c8e88d359",
+ opaque="", stale=FALSE, algorithm=MD5
+Content-Length: 0
+
+|
+INVITE sip:UserB@there.com SIP/2.0
+Via: SIP/2.0/UDP here.com:5060
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>
+Call-ID: 12345601@here.com
+CSeq: 1 INVITE
+Contact: <sip:UserA@100.101.102.103>
+Authorization:Digest username="UserA",
+ realm="MCI WorldCom SIP",
+ nonce="wf84f1ceczx41ae6cbe5aea9c8e88d359", opaque="",
+ uri="sip:ss1.wcom.com", response="42ce3cef44b22f50c6a6071bc8"
+Content-Type: application/sdp
+Content-Length: 140
+
+v=0
+o=UserA 2890844526 2890844526 IN IP4 here.com
+s=Session SDP
+c=IN IP4 100.101.102.103
+t=0 0
+m=audio 49172 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+|
+SIP/2.0 407 Proxy Authorization Required
+Via: SIP/2.0/UDP here.com:5060
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>
+Call-ID: 12345600@here.com
+CSeq: 1 INVITE
+Proxy-Authenticate: Digest realm="WorldCom SIP",
+ domain="sip:ss1.wcom.com", nonce="wf84f1cczx41ae6cbeaea9ce88d359",
+ opaque="", stale=FALSE, algorithm=MD5
+Content-Length: 0
+
+|
+INVITE sip:UserB@there.com SIP/2.0
+Via: SIP/2.0/UDP here.com:5060
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>
+Call-ID: 12345600@here.com
+CSeq: 2 INVITE
+Contact: <sip:UserA@100.101.102.103>
+Proxy-Authorization:Digest username="UserA", realm="WorldCom SIP",
+ nonce="wf84f1ceczx41ae6cbe5aea9c8e88d359", opaque="",
+ uri="sip:ss1.wcom.com", response="42ce3cef44b22f50c6a6071bc8"
+Content-Type: application/sdp
+Content-Length: 140
+
+v=0
+o=UserA 2890844526 2890844526 IN IP4 here.com
+s=Session SDP
+c=IN IP4 100.101.102.103
+t=0 0
+m=audio 49172 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+|
+SIP/2.0 407 Proxy Authorization Required
+Via: SIP/2.0/UDP ss1.wcom.com:5060;branch=230f2.1
+Via: SIP/2.0/UDP here.com:5060
+Record-Route: <sip:UserB@there.com;maddr=ss1.wcom.com>
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>;tag=838209
+Call-ID: 12345600@here.com
+CSeq: 2 INVITE
+Proxy-Authenticate: Digest realm="MCI SIP",
+ domain="sip:ss2.mci.com", nonce="c1e22c41ae6cbe5ae983a9c8e88d359",
+ opaque="", stale=FALSE, algorithm=MD5
+Content-Length: 0
+
+|
+SIP/2.0 407 Proxy Authorization Required
+Via: SIP/2.0/UDP here.com:5060
+Record-Route: <sip:UserB@there.com;maddr=ss1.wcom.com>
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>;tag=2341d
+Call-ID: 12345600@here.com
+CSeq: 2 INVITE
+Proxy-Authenticate: Digest realm="MCI SIP",
+ domain="sip:ss2.mci.com", nonce="c1e22c41ae6cbe5ae983a9c8e88d359",
+ opaque="", stale=FALSE, algorithm=MD5
+Content-Length: 0
+
+|
+INVITE sip:UserB@there.com SIP/2.0
+Via: SIP/2.0/UDP here.com:5060
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>
+Call-ID: 12345600@here.com
+CSeq: 3 INVITE
+Contact: <sip:UserA@100.101.102.103>
+Proxy-Authorization:Digest username="UserA", realm="WorldCom SIP",
+ nonce="wf84f1ceczx41ae6cbe5aea9c8e88d359", opaque="",
+ uri="sip:ss1.wcom.com", response="42ce3cef44b22f50c6a6071bc8"
+Proxy-Authorization:Digest username="UserA", realm="MCI SIP",
+ nonce="c1e22c41ae6cbe5ae983a9c8e88d359", opaque="",
+ uri="sip:ss2.mci.com", response="f44ab22f150c6a56071bce8"
+Content-Type: application/sdp
+Content-Length: 140
+
+v=0
+o=UserA 2890844526 2890844526 IN IP4 here.com
+s=Session SDP
+c=IN IP4 100.101.102.103
+t=0 0
+m=audio 49172 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+|
+INVITE sip:UserB@there.com SIP/2.0
+Via: SIP/2.0/UDP ss1.wcom.com:5060;branch=230f2.1
+Via: SIP/2.0/UDP here.com:5060
+Record-Route: <sip:UserB@there.com;maddr=ss1.wcom.com>
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>
+Call-ID: 12345600@here.com
+CSeq: 3 INVITE
+Contact: <sip:UserA@100.101.102.103>
+Proxy-Authorization:Digest username="UserA", realm="MCI SIP",
+ nonce="c1e22c41ae6cbe5ae983a9c8e88d359", opaque="",
+ uri="sip:ss2.mci.com", response="f44ab22f150c6a56071bce8"
+Content-Type: application/sdp
+Content-Length: 140
+
+v=0
+o=UserA 2890844526 2890844526 IN IP4 here.com
+s=Session SDP
+c=IN IP4 100.101.102.103
+t=0 0
+m=audio 49172 RTP/AVP 0
+a=rtpmap:0 PCMU/8000
+|

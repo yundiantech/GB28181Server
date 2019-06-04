@@ -1,0 +1,11 @@
+SIP/2.0 407 Proxy Authorization Required
+Via: SIP/2.0/UDP here.com:5060
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>
+Call-ID: 12345600@here.com
+CSeq: 1 INVITE
+Proxy-Authenticate: Digest realm="MCI WorldCom SIP",
+ domain="sip:ss1.wcom.com", nonce="f84f1cec41e6cbe5aea9c8e88d359",
+ opaque="", stale=FALSE, algorithm=MD5
+Content-Length: 0
+

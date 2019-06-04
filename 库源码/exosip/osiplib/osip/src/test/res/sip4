@@ -1,0 +1,11 @@
+SIP/2.0 401 Unauthorized
+Via: SIP/2.0/UDP 80.11.86.76:5060
+To:sip:amoizard@antisip.com
+From: <sip:amoizard@antisip.com>;tag=75bd3
+Call-ID: 975799879@80.11.86.76
+CSeq: 1 REGISTER
+Supported: com.salut.amoi,100rel
+Content-Length: 0
+Server:  IMS1.0
+WWW-Authenticate: Digest realm="This is test realm",nonce="MTAwODc4ODQzNDIzMWI2MDY0OTBlNGJjMjJkZWNiMWRmOGUwNmIwMDVlMjZl",stale=false,algorithm=MD5,qop="auth,auth-int"
+

@@ -1,0 +1,13 @@
+#
+# exemples of content types
+#
+text/plain
+audio/basic
+applicatio/octet-stream
+application/multipart ;boundary="++"
+application/multipart ; boundary="gc0pJq0M08jU534c0p"
+application/multipart; boundary="gc0pJq0M:08jU534c0p"
+application/multipart ; boundary="simple boundary"
+application/multipart ;  boundary="simple boundary"  ; charset=us-ascii
+Message/partial;number=2; total=3; id="oc=jbpe0M2Yt4s@ok.atosc.org" ; name="u/nsb/Me.jpeg"
+

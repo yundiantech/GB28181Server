@@ -1,0 +1,130 @@
+﻿生成启动时间为 2019/5/14 15:48:18。
+     1>项目“E:\GB28181\lib-src\osiplib\osip\platform\vsnet\osipparser2.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\..\osip\include /nologo /W3 /WX- /O2 /Oy- /D ENABLE_TRACE /D SYSTEM_LOGGER_ENABLED /D _CRT_SECURE_NO_DEPRECATE /D WIN32 /D NDEBUG /D _LIB /D _VC80_UPGRADE=0x0710 /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"osipparser2\Win32\Release\\" /Fd"osipparser2\Win32\Release\osipparser2-vc80.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\..\osip\src\osipparser2\osip_accept.c ..\..\..\osip\src\osipparser2\osip_accept_encoding.c ..\..\..\osip\src\osipparser2\osip_accept_language.c ..\..\..\osip\src\osipparser2\osip_alert_info.c ..\..\..\osip\src\osipparser2\osip_allow.c ..\..\..\osip\src\osipparser2\osip_authentication_info.c ..\..\..\osip\src\osipparser2\osip_authorization.c ..\..\..\osip\src\osipparser2\osip_body.c ..\..\..\osip\src\osipparser2\osip_call_id.c ..\..\..\osip\src\osipparser2\osip_call_info.c ..\..\..\osip\src\osipparser2\osip_contact.c ..\..\..\osip\src\osipparser2\osip_content_disposition.c ..\..\..\osip\src\osipparser2\osip_content_encoding.c ..\..\..\osip\src\osipparser2\osip_content_length.c ..\..\..\osip\src\osipparser2\osip_content_type.c ..\..\..\osip\src\osipparser2\osip_cseq.c ..\..\..\osip\src\osipparser2\osip_error_info.c ..\..\..\osip\src\osipparser2\osip_from.c ..\..\..\osip\src\osipparser2\osip_header.c ..\..\..\osip\src\osipparser2\osip_list.c ..\..\..\osip\src\osipparser2\osip_md5c.c ..\..\..\osip\src\osipparser2\osip_message.c ..\..\..\osip\src\osipparser2\osip_message_parse.c ..\..\..\osip\src\osipparser2\osip_message_to_str.c ..\..\..\osip\src\osipparser2\osip_mime_version.c ..\..\..\osip\src\osipparser2\osip_parser_cfg.c ..\..\..\osip\src\osipparser2\osip_port.c ..\..\..\osip\src\osipparser2\osip_proxy_authenticate.c ..\..\..\osip\src\osipparser2\osip_proxy_authentication_info.c ..\..\..\osip\src\osipparser2\osip_proxy_authorization.c ..\..\..\osip\src\osipparser2\osip_record_route.c ..\..\..\osip\src\osipparser2\osip_route.c ..\..\..\osip\src\osipparser2\osip_to.c ..\..\..\osip\src\osipparser2\osip_uri.c ..\..\..\osip\src\osipparser2\osip_via.c ..\..\..\osip\src\osipparser2\osip_www_authenticate.c ..\..\..\osip\src\osipparser2\sdp_accessor.c ..\..\..\osip\src\osipparser2\sdp_message.c
+         osip_accept.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_accept_encoding.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_accept_language.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_alert_info.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_allow.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_authentication_info.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_authorization.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_body.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+     1>..\..\..\osip\src\osipparser2\osip_body.c(419): warning C4018: “<”: 有符号/无符号不匹配
+         osip_call_id.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_call_info.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_contact.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_content_disposition.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_content_encoding.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_content_length.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_content_type.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_cseq.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_error_info.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_from.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_header.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_list.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         正在生成代码...
+         正在编译...
+         osip_md5c.c
+         osip_message.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_message_parse.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_message_to_str.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_mime_version.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_parser_cfg.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_port.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+     1>..\..\..\osip\src\osipparser2\osip_port.c(85): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+     1>..\..\..\osip\src\osipparser2\osip_port.c(384): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_proxy_authenticate.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_proxy_authentication_info.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_proxy_authorization.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_record_route.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_route.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_to.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_uri.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_via.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_www_authenticate.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         sdp_accessor.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         sdp_message.c
+     1>..\..\..\osip\include\osipparser2/internal.h(71): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         正在生成代码...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\osipparser2.lib" /NOLOGO osipparser2\Win32\Release\osip_accept.obj
+         osipparser2\Win32\Release\osip_accept_encoding.obj
+         osipparser2\Win32\Release\osip_accept_language.obj
+         osipparser2\Win32\Release\osip_alert_info.obj
+         osipparser2\Win32\Release\osip_allow.obj
+         osipparser2\Win32\Release\osip_authentication_info.obj
+         osipparser2\Win32\Release\osip_authorization.obj
+         osipparser2\Win32\Release\osip_body.obj
+         osipparser2\Win32\Release\osip_call_id.obj
+         osipparser2\Win32\Release\osip_call_info.obj
+         osipparser2\Win32\Release\osip_contact.obj
+         osipparser2\Win32\Release\osip_content_disposition.obj
+         osipparser2\Win32\Release\osip_content_encoding.obj
+         osipparser2\Win32\Release\osip_content_length.obj
+         osipparser2\Win32\Release\osip_content_type.obj
+         osipparser2\Win32\Release\osip_cseq.obj
+         osipparser2\Win32\Release\osip_error_info.obj
+         osipparser2\Win32\Release\osip_from.obj
+         osipparser2\Win32\Release\osip_header.obj
+         osipparser2\Win32\Release\osip_list.obj
+         osipparser2\Win32\Release\osip_md5c.obj
+         osipparser2\Win32\Release\osip_message.obj
+         osipparser2\Win32\Release\osip_message_parse.obj
+         osipparser2\Win32\Release\osip_message_to_str.obj
+         osipparser2\Win32\Release\osip_mime_version.obj
+         osipparser2\Win32\Release\osip_parser_cfg.obj
+         osipparser2\Win32\Release\osip_port.obj
+         osipparser2\Win32\Release\osip_proxy_authenticate.obj
+         osipparser2\Win32\Release\osip_proxy_authentication_info.obj
+         osipparser2\Win32\Release\osip_proxy_authorization.obj
+         osipparser2\Win32\Release\osip_record_route.obj
+         osipparser2\Win32\Release\osip_route.obj
+         osipparser2\Win32\Release\osip_to.obj
+         osipparser2\Win32\Release\osip_uri.obj
+         osipparser2\Win32\Release\osip_via.obj
+         osipparser2\Win32\Release\osip_www_authenticate.obj
+         osipparser2\Win32\Release\sdp_accessor.obj
+         osipparser2\Win32\Release\sdp_message.obj
+         osipparser2.vcxproj -> E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\osipparser2.lib
+     1>已完成生成项目“E:\GB28181\lib-src\osiplib\osip\platform\vsnet\osipparser2.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:05.05

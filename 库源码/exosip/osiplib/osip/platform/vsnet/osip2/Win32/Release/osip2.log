@@ -1,0 +1,66 @@
+﻿生成启动时间为 2019/5/14 15:48:23。
+     1>项目“E:\GB28181\lib-src\osiplib\osip\platform\vsnet\osip2.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\..\osip\include /nologo /W3 /WX- /O2 /Oy- /D ENABLE_TRACE /D SYSTEM_LOGGER_ENABLED /D _CRT_SECURE_NO_DEPRECATE /D WIN32 /D NDEBUG /D _LIB /D _VC80_UPGRADE=0x0710 /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"osip2\Win32\Release\\" /Fd"osip2\Win32\Release\osip2-vc80.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\..\osip\src\osip2\fsm_misc.c ..\..\..\osip\src\osip2\ict.c ..\..\..\osip\src\osip2\ict_fsm.c ..\..\..\osip\src\osip2\ist.c ..\..\..\osip\src\osip2\ist_fsm.c ..\..\..\osip\src\osip2\nict.c ..\..\..\osip\src\osip2\nict_fsm.c ..\..\..\osip\src\osip2\nist.c ..\..\..\osip\src\osip2\nist_fsm.c ..\..\..\osip\src\osip2\osip.c ..\..\..\osip\src\osip2\osip_dialog.c ..\..\..\osip\src\osip2\osip_event.c ..\..\..\osip\src\osip2\osip_time.c ..\..\..\osip\src\osip2\osip_transaction.c ..\..\..\osip\src\osip2\port_condv.c ..\..\..\osip\src\osip2\port_fifo.c ..\..\..\osip\src\osip2\port_sema.c ..\..\..\osip\src\osip2\port_thread.c
+         fsm_misc.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         ict.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         ict_fsm.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         ist.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         ist_fsm.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         nict.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         nict_fsm.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         nist.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         nist_fsm.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_dialog.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_event.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_time.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         osip_transaction.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         port_condv.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         port_fifo.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         port_sema.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         port_thread.c
+     1>..\..\..\osip\include\osip2/internal.h(163): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+         正在生成代码...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\osip2.lib" /NOLOGO osip2\Win32\Release\fsm_misc.obj
+         osip2\Win32\Release\ict.obj
+         osip2\Win32\Release\ict_fsm.obj
+         osip2\Win32\Release\ist.obj
+         osip2\Win32\Release\ist_fsm.obj
+         osip2\Win32\Release\nict.obj
+         osip2\Win32\Release\nict_fsm.obj
+         osip2\Win32\Release\nist.obj
+         osip2\Win32\Release\nist_fsm.obj
+         osip2\Win32\Release\osip.obj
+         osip2\Win32\Release\osip_dialog.obj
+         osip2\Win32\Release\osip_event.obj
+         osip2\Win32\Release\osip_time.obj
+         osip2\Win32\Release\osip_transaction.obj
+         osip2\Win32\Release\port_condv.obj
+         osip2\Win32\Release\port_fifo.obj
+         osip2\Win32\Release\port_sema.obj
+         osip2\Win32\Release\port_thread.obj
+         osip2.vcxproj -> E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\osip2.lib
+     1>已完成生成项目“E:\GB28181\lib-src\osiplib\osip\platform\vsnet\osip2.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:07.74

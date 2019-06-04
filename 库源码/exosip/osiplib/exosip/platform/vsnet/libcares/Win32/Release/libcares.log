@@ -1,0 +1,116 @@
+﻿生成启动时间为 2019/5/14 15:48:19。
+     1>项目“E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\libcares.vcxproj”在节点 3 上(Rebuild 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\c-ares" /nologo /W3 /WX- /O2 /Oy- /D CARES_STATICLIB /D CARES_BUILDING_LIBRARY /D _CRT_SECURE_NO_DEPRECATE /D WIN32 /D NDEBUG /D _LIB /D _VC80_UPGRADE=0x0710 /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"libcares\Win32\Release\\" /Fd"libcares\Win32\Release\libcares-vc80.pdb" /Gd /TC /analyze- /errorReport:prompt "..\..\..\c-ares\ares_create_query.c" "..\..\..\c-ares\ares_platform.c" "..\..\..\c-ares\ares_strsplit.c" "..\..\..\c-ares\ares__close_sockets.c" "..\..\..\c-ares\ares__get_hostent.c" "..\..\..\c-ares\ares__read_line.c" "..\..\..\c-ares\ares__timeval.c" "..\..\..\c-ares\ares_cancel.c" "..\..\..\c-ares\ares_data.c" "..\..\..\c-ares\ares_destroy.c" "..\..\..\c-ares\ares_expand_name.c" "..\..\..\c-ares\ares_expand_string.c" "..\..\..\c-ares\ares_fds.c" "..\..\..\c-ares\ares_free_hostent.c" "..\..\..\c-ares\ares_free_string.c" "..\..\..\c-ares\ares_gethostbyaddr.c" "..\..\..\c-ares\ares_gethostbyname.c" "..\..\..\c-ares\ares_getnameinfo.c" "..\..\..\c-ares\ares_getopt.c" "..\..\..\c-ares\ares_getsock.c" "..\..\..\c-ares\ares_init.c" "..\..\..\c-ares\ares_library_init.c" "..\..\..\c-ares\ares_llist.c" "..\..\..\c-ares\ares_mkquery.c" "..\..\..\c-ares\ares_nowarn.c" "..\..\..\c-ares\ares_options.c" "..\..\..\c-ares\ares_parse_a_reply.c" "..\..\..\c-ares\ares_parse_aaaa_reply.c" "..\..\..\c-ares\ares_parse_mx_reply.c" "..\..\..\c-ares\ares_parse_ns_reply.c" "..\..\..\c-ares\ares_parse_ptr_reply.c" "..\..\..\c-ares\ares_parse_srv_reply.c" "..\..\..\c-ares\ares_parse_txt_reply.c" "..\..\..\c-ares\ares_process.c" "..\..\..\c-ares\ares_query.c" "..\..\..\c-ares\ares_search.c" "..\..\..\c-ares\ares_send.c" "..\..\..\c-ares\ares_strcasecmp.c" "..\..\..\c-ares\ares_strdup.c" "..\..\..\c-ares\ares_strerror.c" "..\..\..\c-ares\ares_timeout.c" "..\..\..\c-ares\ares_version.c" "..\..\..\c-ares\ares_writev.c" "..\..\..\c-ares\bitncmp.c" "..\..\..\c-ares\inet_net_pton.c" "..\..\..\c-ares\inet_ntop.c" "..\..\..\c-ares\windows_port.c"
+         ares_create_query.c
+         ares_platform.c
+         ares_strsplit.c
+         ares__close_sockets.c
+         ares__get_hostent.c
+     1>..\..\..\c-ares\ares__get_hostent.c(141): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+                 C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850) : 参见“inet_addr”的声明
+         ares__read_line.c
+         ares__timeval.c
+         ares_cancel.c
+         ares_data.c
+         ares_destroy.c
+         ares_expand_name.c
+         ares_expand_string.c
+         ares_fds.c
+         ares_free_hostent.c
+         ares_free_string.c
+         ares_gethostbyaddr.c
+         ares_gethostbyname.c
+     1>..\..\..\c-ares\ares_gethostbyname.c(275): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+                 C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850) : 参见“inet_addr”的声明
+         ares_getnameinfo.c
+         ares_getopt.c
+         ares_getsock.c
+         正在生成代码...
+         正在编译...
+         ares_init.c
+     1>..\..\..\c-ares\ares_init.c(2421): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+                 C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850) : 参见“inet_addr”的声明
+         ares_library_init.c
+         ares_llist.c
+         ares_mkquery.c
+         ares_nowarn.c
+         ares_options.c
+         ares_parse_a_reply.c
+         ares_parse_aaaa_reply.c
+         ares_parse_mx_reply.c
+         ares_parse_ns_reply.c
+         ares_parse_ptr_reply.c
+         ares_parse_srv_reply.c
+         ares_parse_txt_reply.c
+         ares_process.c
+         ares_query.c
+         ares_search.c
+         ares_send.c
+         ares_strcasecmp.c
+         ares_strdup.c
+         ares_strerror.c
+         正在生成代码...
+         正在编译...
+         ares_timeout.c
+         ares_version.c
+         ares_writev.c
+         bitncmp.c
+         inet_net_pton.c
+         inet_ntop.c
+         windows_port.c
+         正在生成代码...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\libcares.lib" /NOLOGO libcares\Win32\Release\ares_create_query.obj
+         libcares\Win32\Release\ares_platform.obj
+         libcares\Win32\Release\ares_strsplit.obj
+         libcares\Win32\Release\ares__close_sockets.obj
+         libcares\Win32\Release\ares__get_hostent.obj
+         libcares\Win32\Release\ares__read_line.obj
+         libcares\Win32\Release\ares__timeval.obj
+         libcares\Win32\Release\ares_cancel.obj
+         libcares\Win32\Release\ares_data.obj
+         libcares\Win32\Release\ares_destroy.obj
+         libcares\Win32\Release\ares_expand_name.obj
+         libcares\Win32\Release\ares_expand_string.obj
+         libcares\Win32\Release\ares_fds.obj
+         libcares\Win32\Release\ares_free_hostent.obj
+         libcares\Win32\Release\ares_free_string.obj
+         libcares\Win32\Release\ares_gethostbyaddr.obj
+         libcares\Win32\Release\ares_gethostbyname.obj
+         libcares\Win32\Release\ares_getnameinfo.obj
+         libcares\Win32\Release\ares_getopt.obj
+         libcares\Win32\Release\ares_getsock.obj
+         libcares\Win32\Release\ares_init.obj
+         libcares\Win32\Release\ares_library_init.obj
+         libcares\Win32\Release\ares_llist.obj
+         libcares\Win32\Release\ares_mkquery.obj
+         libcares\Win32\Release\ares_nowarn.obj
+         libcares\Win32\Release\ares_options.obj
+         libcares\Win32\Release\ares_parse_a_reply.obj
+         libcares\Win32\Release\ares_parse_aaaa_reply.obj
+         libcares\Win32\Release\ares_parse_mx_reply.obj
+         libcares\Win32\Release\ares_parse_ns_reply.obj
+         libcares\Win32\Release\ares_parse_ptr_reply.obj
+         libcares\Win32\Release\ares_parse_srv_reply.obj
+         libcares\Win32\Release\ares_parse_txt_reply.obj
+         libcares\Win32\Release\ares_process.obj
+         libcares\Win32\Release\ares_query.obj
+         libcares\Win32\Release\ares_search.obj
+         libcares\Win32\Release\ares_send.obj
+         libcares\Win32\Release\ares_strcasecmp.obj
+         libcares\Win32\Release\ares_strdup.obj
+         libcares\Win32\Release\ares_strerror.obj
+         libcares\Win32\Release\ares_timeout.obj
+         libcares\Win32\Release\ares_version.obj
+         libcares\Win32\Release\ares_writev.obj
+         libcares\Win32\Release\bitncmp.obj
+         libcares\Win32\Release\inet_net_pton.obj
+         libcares\Win32\Release\inet_ntop.obj
+         libcares\Win32\Release\windows_port.obj
+         libcares.vcxproj -> E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\libcares.lib
+     1>已完成生成项目“E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\libcares.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:12.65

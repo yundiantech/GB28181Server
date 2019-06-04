@@ -1,0 +1,145 @@
+<!doctype refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+
+
+  <!ENTITY dhfirstname "<firstname>Aymeric</firstname>">
+  <!ENTITY dhsurname   "<surname>MOIZARD</surname>">
+  <!ENTITY dhdate      "<date>Jan 15, 2016</date>">
+  <!ENTITY dhsection   "<manvolnum>1</manvolnum>">
+  <!ENTITY dhemail     "<email>amoizard at antisip.com</email>">
+  <!ENTITY dhusername  "Aymeric Moizard">
+  <!ENTITY dhucpackage "<refentrytitle>libosip</refentrytitle>">
+  <!ENTITY dhpackage   "libosip2">
+
+  <!ENTITY debian      "<productname>Debian</productname>">
+  <!ENTITY gnu         "<acronym>GNU</acronym>">
+]>
+
+<refentry>
+  <refentryinfo>
+    <address>
+      &dhemail;
+    </address>
+    <author>
+      &dhfirstname;
+      &dhsurname;
+    </author>
+    <copyright>
+      <year>2001-2016</year>
+      <holder>&dhusername;</holder>
+    </copyright>
+    &dhdate;
+  </refentryinfo>
+  <refmeta>
+    &dhucpackage;
+
+    &dhsection;
+  </refmeta>
+  <refnamediv>
+    <refname>&dhpackage;</refname>
+
+    <refpurpose>The GNU oSIP library is a low layer SIP implementation.
+    </refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_const.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_md5.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_list.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_uri.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_message.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_port.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/sdp_message.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_headers.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_body.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_rfc3264.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osipparser2/osip_parser.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>-losipparser2</command>
+      <arg><option>The uri, SIP and SDP parsers</option></arg>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osip2/osip.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osip2/osip_fifo.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osip2/osip_dialog.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osip2/osip_mt.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osip2/osip_condv.h&#62;</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>#include &#60;include/osip2/osip_negotiation.h&#62;  //OBSOLETE</command>
+      </cmdsynopsis>
+    <cmdsynopsis>
+      <command>-losip2</command>
+      <arg><option>The SIP transaction and the dialog API</option></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para>This manual page documents briefly the
+      <command>&dhpackage;</command> library.</para>
+
+  </refsect1>
+  <refsect1>
+    <title>API and Reference Documentation</title>
+
+    <para>API reference & Doxygen documentation is available for
+       osip at http://www.gnu.org/software/osip/</para>
+
+  </refsect1>
+  <refsect1>
+    <title>osip general overview.</title>
+
+    <para>The file help/man/osip.html in the source distribution
+       should give you a nice amount of informations about the
+       osip stack.</para>
+
+  </refsect1>
+  <refsect1>
+    <title>Free software projects -send me your project name-</title>
+    <para>antisip, linphone, bayonne</para>
+  </refsect1>
+
+  <refsect1>
+    <title>BUGS</title>
+    <para>Please use the mailing list osip-dev@gnu.org</para>
+
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+
+    <para>This manual page was written by &dhusername; &dhemail;.</para>
+
+  </refsect1>
+</refentry>
+
+
+

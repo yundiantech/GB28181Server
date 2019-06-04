@@ -1,0 +1,8 @@
+INVITE sip:alice@wonderland.com SIP/2.0
+Via: SIP/2.0/UDP h.caller.com
+From: <sip:charlie@caller.com>;tag=5
+To: Alice <sip:alice@wonderland.com>
+Call-ID: 27182@caller.com
+CSeq: 1 INVITE
+Contact: sip:charlie@h.caller.com
+

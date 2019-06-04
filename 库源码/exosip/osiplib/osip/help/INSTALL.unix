@@ -1,0 +1,8 @@
+
+Common Install process for linux/UNIX.
+
+  $> tar -xvzf libosip-x.x.x.tar.gz
+  $> mkdir bld-linux
+  $> CFLAGS="-I/usr/local/include/" ../configure
+  $> make
+  $> make install      (as root...)

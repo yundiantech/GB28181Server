@@ -1,0 +1,36 @@
+       History:
+       =======
+
+The oSIP stack project has been started in September 2000
+since the early days of the SIP protocol.
+
+The initial version was quite close to the actual one in
+terms of features. The SIP parser and the SIP state machines
+were already provided. At this point and till version 0.9.7,
+the API was not very clean but osip was already stable,
+portable, flexible and compliant with SIP.
+
+After rfc2543 were released, a lot of developments were made
+to follow the drafts that were produced prior to the final
+release of rfc3261. (around version 0.8.X).
+
+A lot of users were requesting help on the API and were
+reporting their difficulties to use it. I have decided
+to refine osip into a new osip2 version which would offer
+a simpler and nicer API. With a very few exception, only
+the API has been changed between 0.9.7 and 2.0.0. From
+this version, osip has been much readable.
+
+However, oSIP is still complex to use. There are reasons
+for that. oSIP was made to be flexible (which make the API
+quite large). oSIP is architecture free (but you need to
+understand how it works to use it correctly). oSIP is
+implementing only low layers of SIP (so you still can
+build malformed messages, or uncompliant ones). oSIP will
+not warn you about most errors that you can make.
+
+Be aware, that if you use osip, you still have to read
+carefully the rfc. oSIP is not easy to use, but I'm
+convinced there are benefits in terms of flexibility.
+If you find osip too complex to use, please look for
+another adequate solution.

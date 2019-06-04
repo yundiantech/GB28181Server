@@ -1,0 +1,7 @@
+ACK sip:t.watson@x.bell-tel.com SIP/2.0
+Via:      SIP/2.0/UDP c.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org>;tag=192137601
+Call-ID:  31415@c.bell-tel.com
+CSeq:     1 ACK
+

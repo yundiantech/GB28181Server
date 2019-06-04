@@ -1,0 +1,8 @@
+SIP/2.0 302 Moved temporarily
+Via: SIP/2.0/UDP h.caller.com
+From: <sip:charlie@caller.com>;tag=5
+To: Alice <sip:alice@wonderland.com>
+Call-ID: 27182@caller.com
+CSeq: 1 INVITE
+Contact: <sip:alice@wonderland.com:5080;maddr=spare.caller.com>
+

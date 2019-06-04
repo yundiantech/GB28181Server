@@ -1,0 +1,55 @@
+
+       Downloading:
+       ===========
+
+If you want the latest version, you can use the CVS:
+
+  $> git clone git://git.savannah.gnu.org/osip.git
+  $> ./autogen.sh
+     
+    Note that you must have libtool, autoconf & automake to be able
+    to run the autogen.sh script.
+
+If you have downloaded the archive, run the following command instead:
+
+  $> tar -xvzf libosip2-X.X.X.tar.gz
+
+
+       Compilation:
+       ===========
+
+As usual, run the following on unix platforms:
+
+  $> ./configure 
+  $> make
+  # make install
+
+A specific README located in the "./help" directory exists
+for each supported platforms. This is the definitive place
+to find informations about specific platforms.
+
+Note that osip is developped on a i386 linux and other architecture
+might be broken. Reports if one appears broken.
+
+A nice way would also be:
+
+  $> tar -xvzf libosip-0.X.X.tar.gz
+  $> mkdir linux-build
+  $> cd linux-build
+  $> ../libosip-0.X.X/configure
+  $> make
+  # make install
+
+Here is a list of options you can give to the 'configure' command line:
+
+configure --disable-mt             ==> disable any thread support,
+flags: "-DOSIP_MONOTHREAD"
+
+configure --disable-debug          ==> disable debug.
+
+configure --disable-trace          ==> disable the trace in the logfile.
+flags: "-UENABLE_TRACE"
+
+configure --prefix=/your/local     ==> install in '$prefix' (default is /usr/local)
+
+

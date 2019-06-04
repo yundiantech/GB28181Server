@@ -1,0 +1,7 @@
+ACK sip:watson@boston.bell-tel.com SIP/2.0
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 3298420296@kton.bell-tel.com
+CSeq: 1 ACK
+

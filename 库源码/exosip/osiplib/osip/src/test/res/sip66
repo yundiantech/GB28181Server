@@ -1,0 +1,29 @@
+INVITE sip:13039263142@Den1.level3.com SIP/2.0
+Via: SIP/2.0/UDP den3.level3.com
+From: sip:13034513355@den3.level3.com
+To: sip:13039263142@Den1.level3.com
+Call-ID: DEN1231999021712095500999@Den1.level3.com
+CSeq: 8348 INVITE
+Contact: <sip:jpeterson@level3.com>
+Content-Length: 562
+Content-Type: multipart/mixed; boundary=unique-boundary-1
+MIME-Version: 1.0
+
+--unique-boundary-1
+Content-Type: application/SDP; charset=ISO-10646
+
+v=0
+o=jpeterson 2890844526 2890842807 IN IP4 126.16.64.4
+s=SDP seminar
+c=IN IP4 MG122.level3.com
+t= 28733974962873404696
+m=audio 9092 RTP/AVP 0 3 4
+--unique-boundary-1
+Content-Type: application/ISUP; version=nxv3; base=etsi121
+Content-Disposition: signal; handling=optional
+
+01 00 49 00 00 03 02 00 07 04 10 00 33 63 21
+43 00 00 03 06 0d 03 80 90 a2 07 03 10 03 63
+53 00 10 0a 07 03 10 27 80 88 03 00 00 89 8b
+0e 95 1e 1e 1e 06 26 05 0d f5 01 06 10 04 00
+--unique-boundary-1--

@@ -1,0 +1,156 @@
+       Features:
+       ========
+
+oSIP is a not a complete SIP stack and will never implements
+all the specifications. Instead, the goal is to provide
+a limited set of features common to any kind of SIP Agents.
+Thus oSIP is not oriented towards any particular implementations
+and can be used for implementing SIP End-Point, Proxy
+or any kind of more specific SIP Agent such as B2BUA.
+
+The minimal common required features for any SIP Agent
+provided by osip are describe below.
+
+However, some extra facilities oriented towards SIP End-Points
+are provided.
+
+       SIP parser:
+       ==========
+
+The initial feature implemented in osip is a SIP parser. There
+is not much to say about it: it is capable of parsing and
+reformating SIP requests and answers.
+
+The details of the parsing tools available are listed below:
+
+ 1  SIP request/answer
+ 2  SIP uri
+ 3  specific headers
+ 4  Via
+ 5  CSeq
+ 6  Call-ID
+ 7  To, From, Route, Record-Route...
+ 8  Authentication related headers
+ 9  Content related headers
+ 10 Accept related headers
+ 11 ...
+ 12 Generic header
+ 13 Attachement parser (should support mime)
+ 14 SDP parser
+
+       SIP transaction state machines:
+       ==============================
+
+The interesting and somewhat complex feature implemented
+by osip is the 4 states machines that applied to the different
+transactions defined by the SIP rfc.
+
+SIP defines the following 4 state machines, abreviations
+used in osip are provided below:
+
+  * ICT : Invite Client Transaction (Section 17.1.1) 
+  * NICT: Non Invite Client Transaction (Section 17.1.2) 
+  * IST : Invite Server Transaction (Section 17.2.1) 
+  * NIST: Non Invite Server Transaction (Section 17.2.2) 
+
+As you can notice if you have read the rfc (do it!), those
+4 state machines are provided as drawings within the SIP
+rfc3261.txt (section 17.1 and 17.2)
+
+As an exemple of what you'll find in the rfc3261, here is the
+drawing that apply to the "Invite Client Transaction" (page 127)
+
+
+                               |INVITE from TU
+             Timer A fires     |INVITE sent
+             Reset A,          V                      Timer B fires
+             INVITE sent +-----------+                or Transport Err.
+               +---------|           |---------------+inform TU
+               |         |  Calling  |               |
+               +-------->|           |-------------->|
+                         +-----------+ 2xx           |
+                            |  |       2xx to TU     |
+                            |  |1xx                  |
+    300-699 +---------------+  |1xx to TU            |
+   ACK sent |                  |                     |
+resp. to TU |  1xx             V                     |
+            |  1xx to TU  -----------+               |
+            |  +---------|           |               |
+            |  |         |Proceeding |-------------->|
+            |  +-------->|           | 2xx           |
+            |            +-----------+ 2xx to TU     |
+            |       300-699    |                     |
+            |       ACK sent,  |                     |
+            |       resp. to TU|                     |
+            |                  |                     |      NOTE:
+            |  300-699         V                     |
+            |  ACK sent  +-----------+Transport Err. |  transitions
+            |  +---------|           |Inform TU      |  labeled with
+            |  |         | Completed |-------------->|  the event
+            |  +-------->|           |               |  over the action
+            |            +-----------+               |  to take
+            |              ^   |                     |
+            |              |   | Timer D fires       |
+            +--------------+   | -                   |
+                               |                     |
+                               V                     |
+                         +-----------+               |
+                         |           |               |
+                         | Terminated|<--------------+
+                         |           |
+                         +-----------+
+
+                 Figure 5: INVITE client transaction
+
+
+As you can expect, with osip an Invite Client Transaction may be
+in the CALLING, PROCEEDING, COMPLETED or TERMINATED state. To
+"execute" the state machine, you will build events, provide them
+to the correct transaction context and the the state of the
+transaction will be updated if the event is allowed in the current
+state.
+
+Events are divided in three categories:
+
+* SIP messages
+* Timers
+* transport errors
+
+       Other features:
+       ==============
+
+To ease development of SIP portable application, osip
+provide abstractions methods for threads, semaphore,
+and mutex.
+
+You still have the choice to compile osip without thread
+support which you may be required on some embedded platforms.
+
+Please report any porting issue to the mailing list <osip-dev@gnu.org>
+(subscribe first!) or directly to me <amoizard@antisip.com>.
+
+If you are building a new port, I'll certainly think about merging
+it.
+
+       Other Facilities:
+       ================
+
+oSIP also give small facilities which are completly optional.
+
+Among them, the dialog facility(osip_dialog.h), mainly to
+be used by SIP End-Points, is a stable extra feature. It will
+allow you to build a structure described in the rfc3261 (Section
+12: Dialogs). Once built, you can reuse this information to match
+received requests with a particular SIP call or to build a new
+request within a particular SIP call.
+
+*** An old feature has been implemented in osip: a SDP negotiator.
+*** I advise you to not use this old facility which is not powerfull
+*** often uncompliant and not flexible enough. It's also quite
+*** unreadable and poorly written (by me!). I'll delete it anyway in
+*** future version of osip. I have warned you...
+
+   ->>> UPDATE 27/11/2005: the SDP negotiator have been removed
+
+oSIP finaly contains a MD5 implementation (osip_md5.h) which
+you'll find usefull when implementing SIP Digest authentication.

@@ -1,0 +1,31 @@
+
+Install process for wince.
+_________________________
+
+latest tested:
+libosip2-3.0.1
+Windows XP.
+
+Installing Required Tools
+-------------------------
+
+You should install all programs required for windows dev.
+Among them, you need:
+
+Visual Studio .NET 2003 (or 2005)
+
+
+Downloading Required Library
+----------------------------
+1.  oSIP    
+Donwload Latest tested version: 3.0.1
+
+Compiling
+---------
+
+Create a new project file and add the 2 existing projects:
+
+   platform/vsnet/osipparser2.vcproj
+   platform/vsnet/osip2.vcproj
+
+

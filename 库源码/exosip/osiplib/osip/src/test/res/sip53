@@ -1,0 +1,8 @@
+REGISTER sip:company.com SIP/2.0
+To: sip:j.user@company.com
+From: sip:j.user@company.com
+Call-ID: 0ha0isndaksdj@10.0.1.1
+CSeq: 8 REGISTER
+Via: SIP/2.0/UDP 135.180.130.133
+Authorization: Digest username="j.user" realm="My Cool Domain" nonce="1234567890abcdef1234567890abcdef" response="1234567890abcdef1234567890abcdef" digest="1234567890abcdef1234567890abcdef"
+

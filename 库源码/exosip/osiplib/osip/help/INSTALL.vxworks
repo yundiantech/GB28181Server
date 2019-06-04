@@ -1,0 +1,13 @@
+
+Install process for VxWorks. (latest tested 0.8.8)
+____________________________
+
+From a tornado user:
+
+   I built them in tornado GUI, and just test them in the simulate.
+   1. Create a bootable vxworks image project.
+   2. Add all files in the new project.
+   3. Include the networks componets.
+   4. Add the  compiler parameter as follows:
+        -D__VXWORKS_OS__ -DTHREAD_PTHREAD -D_REENTRANT -DOSIP_MT
+        -DHAVE_SIGNAL_H -DENABLE_DEBUG -DENABLE_TRACE -DSHOW_MESSAGE

@@ -1,0 +1,129 @@
+MESSAGE sip:ominjeonaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@165.213.114.67 SIP/2.0
+Via: SIP/2.0/UDP 165.213.114.66:10507; viaparm
+Via: SIP/2.0/UDP 165.213.114.66:10507; viaparm
+Via: SIP/2.0/UDP 165.213.114.66:10507; viaparm
+Accept:     
+Content-Type:
+Content-Type:   
+www-authenticate:   
+Via:   
+to:   
+route:   
+record-route:   
+Call-ID:   
+User-Agent:   
+Proxy-Authorization:   
+CSeq:   
+Contact:   
+Supported:   
+Accept:
+Content-Type:
+Content-Type:
+www-authenticate:
+Via:
+to:
+route:
+record-route:
+Call-ID:
+User-Agent:
+Proxy-Authorization:
+CSeq:
+Contact:
+Supported:
+Accept: 
+Content-Type: 
+Content-Type: 
+www-authenticate: 
+Via: 
+to: 
+route: 
+record-route: 
+Call-ID: 
+User-Agent: 
+Proxy-Authorization: 
+CSeq: 
+Contact: 
+Supported: 
+From: "\"\"" <sip:foo@foo.com>;tag=f9ac1478-d316-4bf4-b3a1-6fec6c89e1b2
+Record-Route: <sip:oleaa@aa.there.com;
+ maddr=ssaa.wcom.com>
+To: <sip:ominjeon@165.213.114.67>
+Call-ID: de6d4b92-603e-4f84-a26c-3428d69e4da6@165.213.114.66
+CSeq: 1 MESSAGE
+Contact: <sip:165.213.114.66:10507>
+User-Agent: Windows RTC/1.0
+Proxy-Authorization: Digest username="user", realm="siproxd", nonce="3df0ac66000ef8d0327b23c66b8b4567",uri="sip:soekris1",cnonce="abcdefghi", nc=00000001,response="b31c4fca724852835c704bc395b3f49e", opaque=""
+Proxy-Authorization: Digest 
+ username="me@other.domain.example.com",realm="other.domain.example.com",
+ uri="sip:192.168.1.10",response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ cnonce="555698a3",qop=auth,
+ nc=00000001,algorithm=md5,opaque=""
+Proxy-Authorization: Digest 
+     username="me@other.domain.example.com"     ,realm="other.domain.example.com",
+ uri="sip:192.168.1.10",     response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ opaque="0788cb7106dd0d9214a3dfcd7f11aff7"    ,   	 cnonce="555698a3",qop=auth,
+ nc=00000001,algorithm=md5
+Proxy-Authorization: Digest 
+ username="me@other.domain.example.com",	realm="other.domain.example.com",
+ uri="sip:192.168.1.10"	,response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ cnonce="555698a3"		,		qop=auth,
+ nc=00000001,algorithm=md5,opaque=""
+Proxy-Authorization: Digest 
+ username="me@other.domain.example.com" 	, 	realm="other.domain.example.com",
+ uri="sip:192.168.1.10" , response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ opaque="0788cb7106dd0d9214a3dfcd7f11aff7",cnonce="555698a3",qop=auth,
+ nc=00000001,algorithm=md5
+Proxy-Authorization: Digest 
+	 	username="1me@other.domain.example.com",realm="other.domain.example.com",
+	 uri="sip:192.168.1.10",response="15d2e3a1b3af1e3e4cac32e60ec45116",
+	nonce="6acda19788645eb8ee3f991d8d5b1367",
+ cnonce="555698a3" ,qop=auth, 
+ nc=00000001,algorithm=md5,opaque=""	
+Proxy-Authorization: Digest 	
+ username="2me@other.domain.example.com" , 	realm="other.domain.example.com"
+ ,	 uri="sip:192.168.1.10",response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ algorithm=md5,nonce="6acda19788645eb8ee3f991d8d5b1367"	,
+ opaque="0788cb7106dd0d9214a3dfcd7f11aff7",      cnonce="555698a3",qop=auth,
+ nc=123456
+Proxy-Authorization: Digest 
+ username="3me@other.domain.example.com",realm="other.domain.example.com",
+ uri="sip:192.168.1.10",response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ cnonce="555698a3",qop=auth,
+ nc=00000001,algorithm=md5,opaque=""
+Proxy-Authorization: Digest 
+ username="4me@other.domain.example.com",realm="other.domain.example.com",
+ uri="sip:192.168.1.10",response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ opaque="0788cb7106dd0d9214a3dfcd7f11aff7",cnonce="555698a3",qop=auth,
+ nc=00000001,algorithm=md5
+Proxy-Authorization: Digest 
+ username="5me@other.domain.example.com",realm="other.domain.example.com",
+ uri="sip:192.168.1.10",response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ cnonce="555698a3",qop=auth,
+ nc=00000001,algorithm=md5,opaque=""
+Proxy-Authorization: Digest 
+ username="6me@other.domain.example.com",realm="other.domain.example.com",
+ uri="sip:192.168.1.10",response="15d2e3a1b3af1e3e4cac32e60ec45116",
+ nonce="6acda19788645eb8ee3f991d8d5b1367",
+ opaque="0788cb7106dd0d9214a3dfcd7f11aff7",cnonce="555698a3",qop=auth,
+ nc=00000001,algorithm=md5
+Proxy-Authenticate: Digest realm="Ole SIP realm1",
+ domain="sip:ss1.wcom.com", nonce="f84f1cec41e6cbe5aea9c8e88d359",
+ opaque="", stale=FALSE, algorithm=MD5
+Proxy-Authenticate: Digest realm="Ole SIP realm2",
+ domain="sip:ss2.wcom.com", nonce="bbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ opaque="", stale=FALSE, algorithm=MD5, qop="auth"
+Content-Type: text/plain; charset=UTF-8;msgr=WAAtAE0ATQBTAC0ASQBNAC0ARgBvAHIAbQBhAHQAOgAgAEYATgA9ACUARQBBACUAQgA1ACUAQgA0ACUARQBCACUAQQA2ACUAQgBDADsAIABFAEYAPQA7ACAAQwBPAD0AOAAwADAAMAAwADAAOwAgAEMAUwA9ADgAMQA7ACAAUABGAD0AMwAyAA0ACgANAAoA
+Accept-Encoding: da;jhsqddsq, en-gb;sqdsqd=0.343555;q=0.8 ;q=0.8 ;q=0.8 ;q=0.8;q=0.8;q=0.8, en;q=0.7
+Call-Info: <http://wwww.example2.com/alice/photo2.jpg> ;purpose2; purpose=icon2,
+     <http://www.example2.com/alice/> ;purpose=info2
+Content-Length: 5
+
+hello
+

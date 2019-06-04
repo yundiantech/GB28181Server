@@ -1,0 +1,9 @@
+SIP/2.0 180 Ringing
+Via: SIP/2.0/UDP csvax.cs.caltech.edu;branch=7c337f30d7ce.1
+  ;maddr=239.128.16.254;ttl=16
+Via: SIP/2.0/UDP north.east.isi.edu
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com> ;tag=3141593
+Call-ID: 602214199@mouse.wonderland.com
+CSeq: 1 INVITE
+

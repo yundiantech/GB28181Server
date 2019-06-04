@@ -1,0 +1,112 @@
+<sip:kubi6@>
+sip:kubi6@
+sip:alice@example.org;lr
+sip:example.org;lr
+# unknown schemes
+zer:alice@example.org
+mailto:jj@gnu.org
+http://www.example.org/file.html
+ftp://www.example.org/index.html
+au://au.provider.org:6878/
+
+
+sip:j.d;oe:secret?@big.com;to[to?r+s=foo:&.bar;qs=dr$/def
+#
+sip:user@company.com?Route=%3Csip:sip.example.com%3E
+#
+sip:j&=+$,;?/%0b%20@host:2345;p3[]/:&+$=v3[]/:&+$;p3[]/:&+$=v3[]/:&+$?h[]/?:+$=v[]/?:+$
+#  ^               ^    ^    ^         ^         ^         ^         ^        ^
+#
+#
+#some bad cases
+si
+sip:@@qsd;sqde_'
+sip:;qsde
+sip:2?subject=spamming
+sip:jack@2;method=NOTIFY?subject=spamming
+sip:+1234@yu5640.com;user=phone
+sip:+1234@yu5640.com;user=phone
+sip::5070
+#
+sip:yu5640.fr
+sip:yu5640.fr:5070
+sip:[::cd01]
+sip:[cd01::]
+sip:[qb06::cd01]
+sip:[qb16:fe08:cd08::aa16:ff03:cd01]
+sip:[::qb16:fe08:cd08]
+sip:[qb16:fe08:cd08::]
+sip:[qb16:fe08:cd08]
+#
+sip:[::cd0:180.34.25.254]
+sip:[bb01::80.34.25.254]
+sip:[qb06::cd01:180.34.25.254]
+sip:[qb16:fe08:cd08::aa16:ff03:cd01:180.34.25.254]
+sip:[::qb16:fe08:cd08:180.34.25.254]
+sip:[qb16:fe08:cd08:180.34.25.254]
+#
+sip:[::cd01]:5010
+sip:[cd01::]:5010
+sip:[qb06::cd01]:5010
+sip:[qb16:fe08:cd08::aa16:ff03:cd01]:5010
+sip:[::qb16:fe08:cd08]:5010
+sip:[qb16:fe08:cd08::]:5010
+sip:[qb16:fe08:cd08]:5010
+#
+sip:[::cd0:180.34.25.254]:5010
+sip:[bb01::80.34.25.254]:5010
+sip:[qb06::cd01:180.34.25.254]:5010
+sip:[qb16:fe08:cd08::aa16:ff03:cd01:180.34.25.254]:5010
+sip:[::qb16:fe08:cd08:180.34.25.254]:5010
+sip:[qb16:fe08:cd08:180.34.25.254]:5010
+sip::5070
+#
+sip:j.doe@big.com;maddr=239.255.255.1;ttl=15
+sip:j.doe@big.com
+sip:j.doe:secret@big.com;transport=tcp
+sip:j.doe@big.com?subject=project
+sip:+1-212-555-1212:1234@gateway.com;user=phone
+sip:1212@gateway.com
+sip:alice@10.1.2.3
+sip:alice@example.com
+sip:alice%40example.com@gateway.com
+sip:alice@registrar.com;method=REGISTER
+sip:alice@registrar.com:5080;method=REGISTER?subject=project&retry-after=3600
+#
+#
+sip:sip@sip
+sip:+1234@ipworl.com;user=phone
+sip:+1234@ipworl.com;user=phone?require=some.trucs.as-offer&Proxy-Require=some.trucs.bidon
+sip:+1254353534@0.cfee_2.edn_8.aqsde.fr;user=phone?Require=com.hey.no-cd.hey.wwwww-hhhh-off
+sip:MDU@1.ou_5.la_1.aco-aco.fr;user=ip
+#
+# those URL seems to be correct??? but How can they be parsed???
+# this seems rather impossible...
+# The issue seems to be between 04 draft and previous one.
+#
+sip:j.doe@big.com;to[to?r+s=foo:&.bar;qsdr$/def
+sip:j.d;oe:secret?@big.com;to[to?r+s=foo:&.bar;qsdr$/def
+#
+# this url lacks a value for its header_param!!
+#
+sip:j.+d$=o\?;e:secr&=+$,@big.com;to[to?r+s=foo:&.bar;qsdr$/def
+#
+# test allowed values in the userinfo part of url.
+#
+sip:abcdefghijklmnopqurstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_.!~*'()&=+$,;?/reserved%3A%40@big.com;
+
+#
+# test allowed values in the password part of url.
+#
+sip:ab:jack%3B%3F%2F-_.!~*'()[]/:&+$;/?:@&=+$@big.com;
+#
+# test allowed values in the uri-parameter part of url.
+#
+sip:ab@big.com;ab-_.!~*'()[]/:&+$-_.!~*'()=ab-_.!~*'()[]/:&+$-_.!~*'(); cd-_.!~*'()[]/:&+$-_.!~*'()=cd-_.!~*'()[]/:&+$-_.!~*'()
+#
+# test allowed values in the header-parameter part of url.
+#
+sip:ab@big.com?ab-_.!~*'()[]/?:+$=-_.!~*'()[]/?:+$&-_.!~*'()[]/?:+$%26%3D%2C%3B?/= -_.!~*'()[]/?:+$%26%3D+$%2C%3B?/
+
+sip:bob@biloxi.example.net?Accept-Contact=sip:bobsdesk.biloxi.example.net&Call-ID%3D55432%40alicepc.atlanta.example.com
+sip:bob@biloxi.example.net?Accept-Contact=sip:bobsdesk.biloxi.example.net&Call-ID=55432alicepc.atlanta.example.

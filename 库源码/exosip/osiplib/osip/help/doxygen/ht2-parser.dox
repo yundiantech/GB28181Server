@@ -1,0 +1,261 @@
+/**
+ * @ingroup libosip2 The GNU oSIP stack
+ * @defgroup howto_parser How-To parse SIP message.
+
+ * @section howto_parser1 Parser API
+
+For the SIP parser, the API is documented in osip_message.h
+
+ * @section howto_parser2 Basic Parser operations
+
++ Here is the sequence needed to parse a given buffer containing
+a sip request or response. 
+
+Because the SIP message can contains binary data in its body part,
+the length of the buffer must be given to the API.
+
+~~~~~~~{.c}
+        osip_message_t *sip;
+	int i;
+
+	i=osip_message_init(&sip);
+	if (i!=0) { fprintf(stderr, "cannot allocate\n"); return -1; }
+	i=osip_message_parse(sip, buffer, length_of_buffer);
+	if (i!=0) { fprintf(stderr, "cannot parse sip message\n"); }
+	osip_message_free(sip);
+~~~~~~~
+
++ Here is the sequence needed to convert the message into a printable
+string.
+
+**Note**: dest is allocated dynamically and must be released at the end
+of the call sequence to avoid memory leaks.
+
+When converting SIP message, the final length of the allocated buffer
+will be returned in the third argument. You then have the knowledge of
+the length of the data received.
+
+~~~~~~~{.c}
+	char *dest=NULL;
+	int length=0;
+	i = osip_message_to_str(sip, &dest, &length);
+	if (i!=0) { fprintf(stderr, "cannot get printable message\n"); return -1; }
+	fprintf(stdout, "message:\n%s\n", dest);
+	osip_free(dest);
+~~~~~~~
+
++ Here is the code to directly create an event for osip2 transactions.
+
+When using libosip2 and its transaction management features, you'll generally
+only need to create a suitable events. Thus, you'll probably use this API (only
+for SIP message that you receive!):
+
+~~~~~~~{.c}
+	osip_event_t *evt;
+	int length = size_of_buffer;
+	evt = osip_parse(buffer, i);
+~~~~~~~
+
+**Note**: It is important to understand that the libosip2 parser will not check
+completely if the message is compliant and well formed. The application
+layer is still responsible for this. 
+
+The libosip2 parser will not detect all errors (like missing headers) and it will
+be up to you to verify at every action that things are as you are
+expecting them to be!
+
+ * @section howto_parser3 Built-in Header Operations
+
+osip_message_t structure contains pointers to most common headers. Other
+headers (Any of them, even ones not being defined by rfc) will be saved
+into a list of other headers.
+
++ Here is the list of parameters for headers with built-in support:
+
+~~~~~~~{.c}
+  struct osip_message {
+    ...
+    osip_list_t accepts;
+    osip_list_t accept_encodings;
+    osip_list_t accept_languages;
+    osip_list_t alert_infos;
+    osip_list_t allows;
+    osip_list_t authentication_infos;
+    osip_list_t authorizations;
+    osip_call_id_t *call_id;
+    osip_list_t call_infos;
+    osip_list_t contacts;
+    osip_list_t content_encodings;
+    osip_content_length_t *content_length;
+    osip_content_type_t *content_type;
+    osip_cseq_t *cseq;
+    osip_list_t error_infos;
+    osip_from_t *from;
+    osip_mime_version_t *mime_version;
+    osip_list_t proxy_authenticates;
+    osip_list_t proxy_authentication_infos:
+    osip_list_t proxy_authorizations;
+    osip_list_t record_routes;
+    osip_list_t routes;
+    osip_to_t *to;
+    osip_list_t vias;
+    osip_list_t www_authenticates;
+    ...
+  };
+~~~~~~~
+
+ * @section howto_parser4 Other Header Operations
+
+Any other headers will be saved into a list of other headers.
+
++ Here is the osip_list for headers without built-in support:
+
+~~~~~~~{.c}
+  struct osip_message {
+    ...
+    osip_list_t headers;
+    ...
+  };
+~~~~~~~
+
+**Note**: Those headers, even if not built-in, may have the same syntax
+as other headers (many contains URI for example)µ. So you can easily re-use
+already existing headers API to analyse them.
+
++ Here is code to add header in a sip message:
+
+~~~~~~~{.c}
+  osip_message_set_header (msg, "Refer-to", refer_to_header);
+~~~~~~~
+
+~~~~~~~{.c}
+  osip_message_set_header (msg, "Subscription-State", subscription_state_header);
+~~~~~~~
+
+~~~~~~~{.c}
+  osip_message_set_header (msg, "Require", "timer");
+~~~~~~~
+
+~~~~~~~{.c}
+  osip_message_set_header (msg, "RAck", rack_header);
+~~~~~~~
+
+~~~~~~~{.c}
+  osip_message_set_header (msg, "Min-SE", min_se_header);
+~~~~~~~
+
+~~~~~~~{.c}
+  osip_message_set_header (msg, "x-header", x_header);
+~~~~~~~
+
++ Here is code to find the FIRST specific header in a sip message:
+
+~~~~~~~{.c}
+  osip_message_header_get_byname (msg, "min-se", 0, &min_se_header);
+  if (min_se_header != NULL && min_se_header->hvalue != NULL) {
+~~~~~~~
+
+**Note**: if you are looking for all headers with same name,
+you need to find the first one and re-use the return position as
+a parameter to search for the next one.
+
++ Here is code to find all headers with same name in a sip message:
+
+~~~~~~~{.c}
+  int pos=0;
+  while (1) {
+    pos = osip_message_header_get_byname (msg, "x-header", pos, &min_se_new);
+    if (min_se_new == NULL) {
+       break; //no more headers
+    }
+  }
+~~~~~~~
+
++ Here is code to handle short header usage
+
+In some case, short name are used in SIP message for some headers.
+For example, "x" is equivalent to "session-expires". In that case,
+you need to search for both:
+
+~~~~~~~{.c}
+    osip_message_header_get_byname (msg, "session-expires", 0, &exp);
+    if (exp == NULL)
+      osip_message_header_get_byname (msg, "x", 0, &exp);
+~~~~~~~
+
+ * @section howto_parser5 Known header parser
+
+You can browse the API documentation to know more about header parser.
+libosipparser2 provides specific parser for the built-in headers (like
+via, from, to, call-id, route, etc... see above for full list)
+
+~~~~~~~{.c}
+  #include <osipparser2/headers/osip_header.h>
+  #include <osipparser2/headers/osip_accept.h>
+  #include <osipparser2/headers/osip_accept_encoding.h>
+  #include <osipparser2/headers/osip_accept_language.h>
+  #include <osipparser2/headers/osip_alert_info.h>
+  #include <osipparser2/headers/osip_allow.h>
+  #include <osipparser2/headers/osip_authentication_info.h>
+  #include <osipparser2/headers/osip_authorization.h>
+  #include <osipparser2/headers/osip_call_id.h>
+  #include <osipparser2/headers/osip_call_info.h>
+  #include <osipparser2/headers/osip_contact.h>
+  #include <osipparser2/headers/osip_content_disposition.h>
+  #include <osipparser2/headers/osip_content_encoding.h>
+  #include <osipparser2/headers/osip_content_length.h>
+  #include <osipparser2/headers/osip_content_type.h>
+  #include <osipparser2/headers/osip_cseq.h>
+  #include <osipparser2/headers/osip_error_info.h>
+  #include <osipparser2/headers/osip_from.h>
+  #include <osipparser2/headers/osip_mime_version.h>
+  #include <osipparser2/headers/osip_proxy_authenticate.h>
+  #include <osipparser2/headers/osip_proxy_authentication_info.h>
+  #include <osipparser2/headers/osip_proxy_authorization.h>
+  #include <osipparser2/headers/osip_record_route.h>
+  #include <osipparser2/headers/osip_route.h>
+  #include <osipparser2/headers/osip_to.h>
+  #include <osipparser2/headers/osip_via.h>
+  #include <osipparser2/headers/osip_www_authenticate.h>
+~~~~~~~
+
+Here are some sample code for Via.
+
++ Get Via from message:
+
+~~~~~~~{.c}
+  osip_via_t *dest;
+  osip_message_get_via (msg, 0, &dest);
+~~~~~~~
+
++ Add Via in message
+
+~~~~~~~{.c}
+  char tmp[200];
+  snprintf (tmp, 200, "SIP/2.0/UDP %s:%s;rport;branch=z9hG4bK%u", ip, port, osip_build_random_number ());
+  osip_message_set_via (msg, tmp);
+~~~~~~~
+
++ Parse Via:
+
+~~~~~~~{.c}
+  osip_via_t *header;
+
+  char tmp[200];
+  snprintf (tmp, 200, "SIP/2.0/UDP %s:%s;rport;branch=z9hG4bK%u", ip, port, osip_build_random_number ());
+
+  osip_via_init (&header);
+  osip_via_parse (header, tmp);
+
+  osip_free(header);
+~~~~~~~
+
++ Many other getter/setter API exists, see:
+
+~~~~~~~{.c}
+  #include <osipparser2/headers/osip_via.h>
+~~~~~~~
+
+
+*/
+

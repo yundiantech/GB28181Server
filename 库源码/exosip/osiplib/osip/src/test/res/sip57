@@ -1,0 +1,12 @@
+SIP/2.0 407 Proxy Authorization Required
+Via: SIP/2.0/UDP here.com:5060
+Record-Route: <sip:UserB@there.com;maddr=ss1.wcom.com>
+From: BigGuy <sip:UserA@here.com>
+To: LittleGuy <sip:UserB@there.com>;tag=2341d
+Call-ID: 12345600@here.com
+CSeq: 2 INVITE
+Proxy-Authenticate: Digest realm="MCI SIP",
+ domain="sip:ss2.mci.com", nonce="c1e22c41ae6cbe5ae983a9c8e88d359",
+ opaque="", stale=FALSE, algorithm=MD5
+Content-Length: 0
+

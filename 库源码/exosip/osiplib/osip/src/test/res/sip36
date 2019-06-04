@@ -1,0 +1,10 @@
+SIP/2.0 302 Moved temporarily
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>;tag=72538263
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:watson@h.bell-tel.com,
+ sip:watson@acm.org, sip:t.watson@x.bell-tel.com,
+ sip:watson@y.bell-tel.com
+

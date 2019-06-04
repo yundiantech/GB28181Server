@@ -1,0 +1,10 @@
+SIP/2.0 180 Ringing
+t: <sip:vijay@atosc.org>;tag=e18a3bd5
+f: <sip:amoizard@antisip.com>;tag=293a8
+i: 1960129851@one.ip.com
+CSeq: 1 INVITE
+v: SIP/2.0/UDP one.ip.com:5060;received=two.ip.org
+m: <sip:tcchiang@one.ip.com>
+Server: 3Com ICD 1.0.1.4.0
+l: 0
+

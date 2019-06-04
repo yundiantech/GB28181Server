@@ -1,0 +1,63 @@
+Oct 2015    : 5.0.0
+	This file is not maintained. oSIP is stil under dev. Keep looking
+	at the git on http://savannah.gnu.org/git/?group=osip and ChangeLog.
+
+Apr 2003    : 2.0.0
+	oSIP is becoming oSIP2. In fact, this new version is very close
+	to the previous one but the API has been completely renamed in
+	order to be more consistent. Source and include files have also
+	been renamed to be more consistent and make oSIP more readable.
+
+Jul 2002    : 0.8.8
+	I have never tested the windows version myself. In fact, previous
+	version	was broken du to a wrong contribution. This is now fixed
+	by using a new thread API (which Microsoft recommends to not use!).
+	Aside to this, this new revision is fully tested on a wide variety
+	of OS and several bugs and race conditions has been fixed.
+
+Feb 2002    : 0.8.1
+	Old API for fsm is broken. The finite state machines have been
+	entirely rewritten to be compliant with rfc2543bis-07. They
+	only contains what's defined for the TRANSACTION LAYER. Previously,
+	the finite state machines were only usable by endpoints. Now,
+	the UAS_UAC_core is removed from the finite state machines so
+	they can be used by Proxy_core as well as UAS_UAC_core as
+	defined by rfc2543bis-07.
+
+Jan 2002    : 0.8.0
+	The library now contains a full SDP parser and
+	its accessor API. The ./fsm also includes a new
+	(and optionnal) framework to be used for automatic
+	SDP negociation. This feature is targetted to SIP UA.
+
+Sept 2001   : 0.7.0
+	2 libraries are provided by now: the SIP parser
+	and the state machines.
+	Also, osip can now be compiled without any thread,
+	mutex, and semaphore support.
+	The API (parser and fsm) is now entirely fixed.
+
+Aug 2001    : 0.6.2
+	finite state machine has been optimized. Note
+	that it may not be free of bug as it has not been
+	tested heavily. This release also include many
+	improvements.
+
+Aug 2001    : 0.6.1
+        move some prototypes, correct BUGs, and began
+        the declaration of the accessor API.
+
+Aug 2001    : 0.6.0
+	This release has a completely NEW PARSER which is
+	a lot more compliant with draft-sip-rfc2543-03.txt.
+	The API for the parser is completely new and
+	ready for a better error management. The support
+	of multiple attachments (MIME) has been added.
+
+May/June 2001: 0.5.1 to 0.5.4
+	Those versions include some bug fixes but no major
+	improvements.
+
+April 2001   : first release of oSIP 0.5.0
+	This is the first release and is not complete but
+	yet usable to implement SIP agents.

@@ -1,0 +1,9 @@
+INVITE sip:watson@y.bell-tel.com SIP/2.0
+Via:     SIP/2.0/UDP sip.ieee.org ;branch=3d8a50dbf5a28d.4
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31415@c.bell-tel.com
+CSeq:    1 INVITE
+Contact: sip:a.g.bell@c.bell-tel.com
+

@@ -1,0 +1,7 @@
+SIP/2.0 200 OK
+Via:      SIP/2.0/UDP c.bell-tel.com
+From:     A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To:       T. Watson <sip:t.watson@ieee.org>;tag=35253448
+Call-ID:  31415@c.bell-tel.com
+CSeq:     2 BYE
+

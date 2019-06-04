@@ -1,0 +1,83 @@
+/**
+ * @ingroup libosip2 The GNU oSIP stack
+ * @defgroup howto_initialize How-To initialize libosip2.
+
+ * @section howto_initialize1 Initialize osip.
+
+When using osip, your first task is to initialize
+the parser and the state machine. This must be done
+prior to any use of libosip2.
+
+~~~~~~~{.c}
+	#include <osip2/osip.h>
+
+	int i;
+	osip_t *osip;
+	i=osip_init(&osip);
+	if (i!=0)
+	  return -1;
+~~~~~~~
+
+In case you want to use the state machines (transaction management),
+the second step will be to set a few callbacks which will inform
+you of any change in the state of a SIP transaction.
+
+Most of the following callbacks are optional. The following ones are
+usefull.
+
+~~~~~~~{.c}
+	// callback called when a SIP message must be sent.
+	osip_set_cb_send_message(osip, &cb_udp_snd_message);
+	
+	// callback called when a SIP transaction is TERMINATED.
+	osip_set_kill_transaction_callback(osip ,OSIP_ICT_KILL_TRANSACTION,
+				 &cb_ict_kill_transaction);
+	osip_set_kill_transaction_callback(osip ,OSIP_IST_KILL_TRANSACTION,
+				 &cb_ist_kill_transaction);
+	osip_set_kill_transaction_callback(osip ,OSIP_NICT_KILL_TRANSACTION,
+				 &cb_nict_kill_transaction);
+	osip_set_kill_transaction_callback(osip ,OSIP_NIST_KILL_TRANSACTION,
+				 &cb_nist_kill_transaction);
+
+	// callback called when the callback to send message have failed.
+	osip_set_transport_error_callback(osip ,OSIP_ICT_TRANSPORT_ERROR,
+				    &cb_transport_error);
+	osip_set_transport_error_callback(osip ,OSIP_IST_TRANSPORT_ERROR,
+				    &cb_transport_error);
+	osip_set_transport_error_callback(osip ,OSIP_NICT_TRANSPORT_ERROR,
+				    &cb_transport_error);
+	osip_set_transport_error_callback(osip ,OSIP_NIST_TRANSPORT_ERROR,
+				    &cb_transport_error);
+	
+	// callback called when a received answer has been accepted by the transaction.
+	osip_set_message_callback(osip ,OSIP_ICT_STATUS_1XX_RECEIVED, &cb_rcv1xx);
+	osip_set_message_callback(osip ,OSIP_ICT_STATUS_2XX_RECEIVED, &cb_rcv2xx);
+	osip_set_message_callback(osip ,OSIP_ICT_STATUS_3XX_RECEIVED, &cb_rcv3456xx);
+	osip_set_message_callback(osip ,OSIP_ICT_STATUS_4XX_RECEIVED, &cb_rcv3456xx);
+	osip_set_message_callback(osip ,OSIP_ICT_STATUS_5XX_RECEIVED, &cb_rcv3456xx);
+	osip_set_message_callback(osip ,OSIP_ICT_STATUS_6XX_RECEIVED, &cb_rcv3456xx);
+	
+	// callback called when a received answer has been accepted by the transaction.
+	osip_set_message_callback(osip ,OSIP_NICT_STATUS_1XX_RECEIVED, &cb_rcv1xx);
+	osip_set_message_callback(osip ,OSIP_NICT_STATUS_2XX_RECEIVED, &cb_rcv2xx);
+	osip_set_message_callback(osip ,OSIP_NICT_STATUS_3XX_RECEIVED, &cb_rcv3456xx);
+	osip_set_message_callback(osip ,OSIP_NICT_STATUS_4XX_RECEIVED, &cb_rcv3456xx);
+	osip_set_message_callback(osip ,OSIP_NICT_STATUS_5XX_RECEIVED, &cb_rcv3456xx);
+	osip_set_message_callback(osip ,OSIP_NICT_STATUS_6XX_RECEIVED, &cb_rcv3456xx);
+	    
+	// callback called when a received request has been accepted by the transaction.
+	osip_set_message_callback(osip ,OSIP_IST_INVITE_RECEIVED,     &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_IST_ACK_RECEIVED,        &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_REGISTER_RECEIVED,  &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_BYE_RECEIVED,       &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_CANCEL_RECEIVED,    &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_INFO_RECEIVED,      &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_OPTIONS_RECEIVED,   &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_SUBSCRIBE_RECEIVED, &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_NOTIFY_RECEIVED,    &cb_rcvreq);
+	osip_set_message_callback(osip ,OSIP_NIST_UNKNOWN_REQUEST_RECEIVED, &cb_rcvreq);
+
+	// other callbacks exists... They are optionnal.
+~~~~~~~
+
+*/

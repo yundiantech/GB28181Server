@@ -1,0 +1,120 @@
+<sip:ixion@62.254.248.117;method=INVITE>;description="OPEN";expires=28800
+<sip:ixion@62.254.248.117;method=INVITE>;description=OPEN;expires=28800
+"Mr. Watson" <sip:watson@worcester.bell-telephone.com>;q=0.7; expires=3600
+"Mr. Watson" <mailto:watson@bell-telephone.com> ;q=0.1
+Carol Lee <sip:carol.lee@example.com>
+Carol Lee <sip:carol.lee@example.com>
+Lee M. Foote <sip:lee.foote@example.com>
+sip:caller@callerspc.univ.edu
+sip:j_user@host32.div11.example.com
+sip:j_user@host32.div11.example.com
+<sip:watson@saturn.bell-tel.com:3890;transport=udp>
+*
+#
+# contact with tags and url without brackets
+#
+sip:j.doe@big.com;tag=34ytr34.2
+sip:+1-212-555-1212:1234@gateway.com;tag=34ytr34.2
+sip:1212@gateway.com;tag=34ytr34.2
+sip:alice@10.1.2.3;tag=34ytr34.2
+sip:alice@example.com;tag=34ytr34.2
+sip:alice%40example.com@gateway.com;tag=34ytr34.2
+#
+# url without url-parameter (contact parameter can be present)
+#
+sip:j.doe@big.com
+sip:j.doe@big.com
+sip:j.doe:secret@big.com
+sip:j.doe@big.com
+sip:+1-212-555-1212:1234@gateway.com
+sip:1212@gateway.com
+sip:alice@10.1.2.3
+sip:alice@example.com
+sip:alice%40example.com@gateway.com
+sip:alice@registrar.com
+sip:alice@registrar.com:5080
+sip:+1234@po4x80.com
+sip:+1254353534@0.cn_2.rn_8.suisacro.fr
+sip:MDU@1.kn_5.tn_1.suisacro.fr
+#
+# Valid contact fields without display names and brackets
+#
+<sip:j.doe@big.com>
+<sip:j.doe@big.com;maddr=239.255.255.1;ttl=15>
+<sip:j.doe:secret@big.com;transport=tcp>
+<sip:j.doe@big.com?subject=project>
+<sip:+1-212-555-1212:1234@gateway.com;user=phone>
+<sip:1212@gateway.com>
+<sip:alice@10.1.2.3>
+<sip:alice@example.com>
+<sip:alice%40example.com@gateway.com>
+<sip:alice@registrar.com;method=REGISTER>
+<sip:alice@registrar.com:5080;method=REGISTER?subject=project&retry-after=3600>
+<sip:+1234@po4x80.com;user=phone>
+<sip:+1234@po4x80.com;user=phone?require=com.po4x80.call-bonheur&Proxy-Require=com.po4x80.call-malheur>
+<sip:+1254353534@0.cn_2.rn_8.suisacro.fr;user=phone?Require=com.po4x80.y-rgbell.po4x80.artolatic-haka-off>
+<sip:MDU@1.kn_5.tn_1.suisacro.fr;user=ip>
+#
+# Valid contact fields without display names as token (not quoted strings)
+#
+alice<sip:alice@10.1.2.3>
+jack<sip:1212@gateway.com>
+j.doe <sip:j.doe@big.com;maddr=239.255.255.1;ttl=15>
+user<sip:+1-212-555-1212:1234@gateway.com;user=phone>;tag=54
+Alice <sip:alice@example.com>;tag=34ez2
+Alice<sip:alice%40example.com@gateway.com>;tag=345erye66
+A<sip:alice@registrar.com;method=REGISTER>
+a <sip:alice@registrar.com:5080;method=REGISTER?subject=project&retry-after=3600>
+#
+# Valid contact fields with display names as quoted strings
+#
+"j.doe" <sip:j.doe@big.com>
+"+1234"<sip:+1234@ipworld3700.com;user=phone>
+"user"<sip:+1-212-555-1212:1234@gateway.com;user=phone>;tag=54
+"Alice" <sip:alice@example.com>;tag=34ez2
+"Alice"<sip:alice%40example.com@gateway.com>;tag=345erye66
+"A"<sip:alice@registrar.com;method=REGISTER>
+"a" <sip:alice@registrar.com:5080;method=REGISTER?subject=project&retry-after=3600>
+#
+# valid cases with escaped characters
+#
+"j.doe\\\\" <sip:j.doe:secret@big.com;transport=tcp>
+"j.doe\\\"" <sip:j.doe:secret@big.com;transport=tcp>
+"j.doe\\\" <sip:j.doe:secret@big.com;transport=tcp>
+"j.doe\\"<sip:j.doe@big.com?subject=project>
+"j.doe\""<sip:j.doe@big.com?subject=project>
+"+1\"234"<sip:+1234@ipworld3700.com;user=phone>
+#
+# valid cases with utf8
+#
+"µi²éù^r@§è£¤" <sip:j.doe:secret@big.com;transport=tcp>
+"æþøð¢ðß" <sip:j.doe:secret@big.com;transport=tcp>
+"»¢ðnß·" <sip:j.doe:secret@big.com;transport=tcp>
+"¶Ðß«ØµÞ"<sip:j.doe@big.com?subject=project>
+"¶:?=@?Ð;ß«ØµÞ"<sip:j.doe@big.com?subject=project>
+"¶:;?=@?Ð;ß«ØµÞ"<sip:j.doe@big.com?subject=project>
+"<sip:j.doe@big.com?subject=project>"<sip:j.doe@big.com?subject=project>
+"\" \\qsd"<sip:j.doe@big.com?subject=project>
+#
+# valid case with a nasty bracket...
+#
+"jack<4>\\" <sip:jack@2;method=NOTIFY?subject=spamming>
+#
+# Are those URLs correct??? but How can they be parsed???
+# ....
+<sip:j.doe@big.com;to[to?r+s=foo:&.bar;qs=dr$/def>
+<sip:j.d;oe:secret?@big.com;to[to?r+s=foo:&.bar;qsd=r$/def>
+<sip:j.+d$=o\?;e:secr&=+$,@big.com;to[to?r+s=foo:&.ba=r;qsdr$/def>
+#
+#some bad cases
+#
+si
+<si>
+zer:alice@example.com
+<zer:alice@example.com>
+<sip:@@qsd;sqde_'>
+sip:@@qsd;sqde_'
+<sip:;qsde>
+sip:;qsde
+<sip:2?subject=spamming>
+#

@@ -1,0 +1,31 @@
+Install process for wince.
+_________________________
+
+latest tested:
+libosip2-3.0.1
+Pocket PC 2005/Smartphone 2005
+
+Installing Required Tools
+-------------------------
+
+You should install all programs required for windows CE dev.
+Among them, you need:
+
+Visual Studio .NET 2005
+Pocket PC 2005 SDK 
+Smartphone 2005 SDK 
+Microsoft ActiveSync 
+
+
+Downloading Required Library
+----------------------------
+1.  oSIP    
+Donwload Latest tested version: 3.0.1
+
+Compiling
+---------
+
+Create a new project file and add the 2 existing projects:
+
+   platform/wince/osipparser2.vcproj
+   platform/wince/osip2.vcproj

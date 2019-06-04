@@ -1,0 +1,13 @@
+<sip:caller.8jjs0@callerspc.univ.edu:5061;maddr=10.0.1.1>
+<sip:caller.8jjs@callerspc.univ.edu:5061;maddr=10.0.1.1>
+<sip:j_user@example.com:5061;maddr=10.0.1.1>
+#
+# routes with rr-params
+#
+<sip:caller.8jjs0@callerspc.univ.edu:5061;maddr=10.0.1.1>;ttii="qsd"
+<sip:caller.8jjs@callerspc.univ.edu:5061;maddr=10.0.1.1>;ttii="qsd"
+<sip:j_user@example.com:5061;maddr=10.0.1.1>;ttizedi=qsd-qsda27562;ouh-=ZDZRC
+#
+# Routes from draft-ietf-sip-call-flows-04.txt
+#
+<sip:UserA@here.com;maddr=ss1.wcom.com>,<sip:UserA@here.com>

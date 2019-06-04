@@ -1,0 +1,9 @@
+expected_error:0 INVITE with Unknown (Higher) Protocol Version in Start Line
+INVITE sip:t.watson@ieee.org SIP/7.0
+Via:     SIP/2.0/UDP c.bell-tel.com
+From:    A. Bell <sip:a.g.bell@bell-tel.com>
+To:      T. Watson <sip:t.watson@ieee.org>
+Call-ID: 31417@c.bell-tel.com
+CSeq:    1 INVITE
+Warning: Unknown-higher-protocol-version-in-start-line.
+

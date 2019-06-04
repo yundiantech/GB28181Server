@@ -1,0 +1,90 @@
+/**
+ * @ingroup libosip2 The GNU oSIP stack
+ * @defgroup howto_portability How-To handle portability.
+
+ * @section howto_portability1 Description.
+
+The libosip2 library also offer high portability through a common API
+for conditions variables, fifos, threads, mutex and semaphore: all you
+need to write portable applications.
+
+The target and active development platforms are: linux, windows, macosx,
+android and iOS. Those platforms are tested every day and you can use
+the git repository without fear!
+
+Additionnaly, wince, windows mobile, vxworks, unix, linux on arm -and more-
+have been also tested regularly. If you have troubles for some system,
+please ask the mailing list (osip-dev@gnu.org)
+
+~~~~~~~{.c}
+#include <osip2/osip_mt.h>
+#include <osip2/osip_fifo.h>
+#include <osip2/osip_condv.h>
+#include <osip2/osip_time.h>
+~~~~~~~
+
+ * @section howto_portability1 Threads
+
++ Here is code to show how to start a thread:
+
+~~~~~~~{.c}
+  void *_my_thread (void *arg)
+  {
+    struct sometype_t *excontext = (struct sometype_t *) arg;
+    int i;
+
+    while (stopthread == 0) {
+        do_actions (excontext);
+    }
+    osip_thread_exit ();
+    return NULL;
+  }
+
+
+  struct osip_thread *thread;
+  thread = osip_thread_create (20000, _my_thread, argpointer);
+~~~~~~~
+
++ Here is code to show how to terminate a thread:
+
+~~~~~~~{.c}
+  i = osip_thread_join (thread);
+  osip_free (thread);
+~~~~~~~
+
+ * @section howto_portability1 Mutex
+
++ Here is code to show how to create/lock/unlock/release:
+
+~~~~~~~{.c}
+  struct osip_mutex *mutex;
+  mutex = osip_mutex_init ();
+
+  osip_mutex_lock (mutex);
+  do_actions ();
+  osip_mutex_unlock (mutex);
+
+  osip_mutex_destroy (mutex);
+~~~~~~~
+
+ * @section howto_portability1 Time
+
+libosip2 is also providing a common time API.
+
+This is usefull to implement in various way
+a CLOCK_MONOTONIC time and make time adjustement
+when a drift is discovered against realtime
+clock.
+
+**Note**: It is required to call osip_compensatetime
+on Android which goes regularly into deep sleep mode.
+When this happens, the MONOTONIC clock is not
+increasing. This may also happen for other OS as
+well.
+
+~~~~~~~{.c}
+int osip_gettimeofday (struct timeval *tp, void *tz);
+void osip_compensatetime ();
+~~~~~~~
+
+*/

@@ -1,0 +1,84 @@
+
+To launch the complete test suite, try this:
+
+ $> make check
+
+The above command test all SIP messages from the "res/torture_msgs"
+file and all SDP messages from the "res/torture_sdps" file.
+
+
+
+
+
+Available test programs are:
+
+  *  ./test/torture_test: test the SIP parser.
+  *  ./test/torture_sdp : test the SDP parser, its accessor API and the
+                          framework for negotiation.
+
+  *  ./test/turl        : test the sip-urls parser.
+  *  ./test/tto         : test some 'to' fields
+  *  ./test/tfrom       : test some 'from' fields
+  *  ./test/tcontact    : test some 'contact' fields
+  *  ./test/tvia        : test some 'via' fields
+  *  ./test/tcallid     : test some 'call-id' fields
+  *  ./test/tcontentt   : test some 'content-type' fields
+
+
+
+
+
+
+How to use the test programs:
+
+--> the SIP parser test messages found in a file.
+
+  Some SIP Message samples are provided in res/torture_msgs
+                                           res/torture_msgs2
+
+	./test/torture_test res/torture_msgs 0
+	./test/torture_test res/torture_msgs 1 -v
+	./test/torture_test res/torture_msgs 3 -v -c
+
+
+   available options:
+
+    -v : print more info about messages.
+    -c : test the "osip_message_clone" method.
+
+
+
+
+
+
+
+--> the SIP url parser:
+
+	./test/turl res/urls.txt
+
+
+
+
+
+
+
+
+--> the SIP headers parser:
+
+	./test/tcallid conf/callids.txt
+	./test/tfrom  conf/froms.txt
+	./test/tto conf/tos.txt
+	./test/tvia conf/vias.txt
+	./test/tcontact conf/contacts.txt
+
+
+
+
+
+
+--> the SDP parser:
+
+  Some SDP Message samples are provided in res/torture_sdps
+
+	./test/torture_sdp res/torture_sdps 3
+	./test/torture_sdp res/torture_sdps 3 -v

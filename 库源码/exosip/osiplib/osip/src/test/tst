@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# This is a short-cut to execute tests on the parser.
+# ./conf/torture_msgs{,2} contain various kind of messages.
+
+#echo "=="
+#echo "== Testing the parser contained in libosip."
+#echo "== You can use the verbose mode (-v) to see the full message."
+#echo "=="
+
+ok=0
+nok=0
+total=0
+
+i=0
+while [ $i -lt 88 ]
+do
+    filename=$1/sip$i
+   #mpatrol -C -S -L -d --list -p --use-debug ./torture_test $1/sip$i 0 $2
+    ./torture_test $filename $2
+    code=$?
+   if [ "$code" -eq 0 ]; then
+       ok=`expr $ok + 1`;
+   else
+       nok=`expr $nok + 1`
+   fi;
+   i=`expr $i + 1`
+   total=`expr $total + 1`
+done
+
+i=0
+while [ $i -lt 13 ]
+do
+    filename=$1/sip-malformed$i
+    #   #mpatrol -C -S -L -d --list -p --use-debug ./torture_test $1/sip-malformed$i 0 $2
+    ./torture_test $filename $2
+   code=$?
+   if [ "$code" -eq 0 ]; then
+       ok=`expr $ok + 1`;
+   else
+       nok=`expr $nok + 1`
+   fi;
+   i=`expr $i + 1`
+   total=`expr $total + 1`
+done
+#
+
+echo "unit testing total :   $total"
+echo "unit testing passed:   $ok"
+echo "unit testing failed:   $nok"
+
+
+
+
+

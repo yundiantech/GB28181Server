@@ -1,0 +1,181 @@
+/**
+ * @ingroup libosip2 The GNU oSIP stack
+ * @defgroup howto_transaction How-To manage transactions.
+
+ * @section howto_transaction1 Description.
+
+The interesting and somewhat complex feature implemented
+by osip is the 4 states machines that applied to the different
+transactions defined by the SIP rfc.
+
+SIP defines the following 4 state machines, abreviations
+used in osip are provided below:
+
++ **ICT** : Invite Client Transaction (Section 17.1.1)
++ **NICT**: Non Invite Client Transaction (Section 17.1.2)
++ **IST** : Invite Server Transaction (Section 17.2.1)
++ **NIST**: Non Invite Server Transaction (Section 17.2.2)
+
+As you can notice if you have read the rfc (do it!), those
+4 state machines are provided as drawings within the SIP
+rfc3261.txt (section 17.1 and 17.2)
+
+As an exemple of what you'll find in the rfc3261, here is the
+drawing that apply to the "Invite Client Transaction" (page 127)
+
+<PRE>
+                               |INVITE from TU
+             Timer A fires     |INVITE sent
+             Reset A,          V                      Timer B fires
+             INVITE sent +-----------+                or Transport Err.
+               +---------|           |---------------+inform TU
+               |         |  Calling  |               |
+               +-------->|           |-------------->|
+                         +-----------+ 2xx           |
+                            |  |       2xx to TU     |
+                            |  |1xx                  |
+    300-699 +---------------+  |1xx to TU            |
+   ACK sent |                  |                     |
+resp. to TU |  1xx             V                     |
+            |  1xx to TU  -----------+               |
+            |  +---------|           |               |
+            |  |         |Proceeding |-------------->|
+            |  +-------->|           | 2xx           |
+            |            +-----------+ 2xx to TU     |
+            |       300-699    |                     |
+            |       ACK sent,  |                     |
+            |       resp. to TU|                     |
+            |                  |                     |      NOTE:
+            |  300-699         V                     |
+            |  ACK sent  +-----------+Transport Err. |  transitions
+            |  +---------|           |Inform TU      |  labeled with
+            |  |         | Completed |-------------->|  the event
+            |  +-------->|           |               |  over the action
+            |            +-----------+               |  to take
+            |              ^   |                     |
+            |              |   | Timer D fires       |
+            +--------------+   | -                   |
+                               |                     |
+                               V                     |
+                         +-----------+               |
+                         |           |               |
+                         | Terminated|<--------------+
+                         |           |
+                         +-----------+
+
+                 Figure 5: INVITE client transaction
+</PRE>
+
+As you can expect, with osip an Invite Client Transaction may be
+in the CALLING, PROCEEDING, COMPLETED or TERMINATED state. To
+"execute" the state machine, you will build events, provide them
+to the correct transaction context and the the state of the
+transaction will be updated if the event is allowed in the current
+state.
+
+Events are divided in three categories:
+
++ **SIP messages**
++ **Timers**
++ **Transport Errors**
+
+* @section howto_transaction2 Managing a new transaction.
+
+Let's assume you want to implement a User Agent and you want to
+start a REGISTER transaction. Using the parser library, you will first
+have to build a SIP compliant message. (oSIP, as a low layer library
+provides an interface to build SIP messages, but it's up to you to
+correctly fill all the required fields.)
+
+As soon as you have build the SIP message, you are ready to start a new
+transaction. Here is the code:
+
+~~~~~~~{.c}
+	osip_t *osip       = your_global_osip_context;
+	osip_transaction_t *transaction;
+	osip_message_t     *sip_register_message;
+	osip_event_t       *sipevent;
+
+	application_build_register(&sip_register_message);
+	osip_transaction_init(&transaction,
+		NICT, //a REGISTER is a Non-Invite-Client-Transaction
+		osip,
+		sip_register_message);
+
+	// If you have a special context that you want to associate to that
+	// transaction, you can use a special method that associate your context
+	// to the transaction context.
+
+	osip_transaction_set_your_instance(transaction, any_pointer);
+
+	// at this point, the transaction context exists in oSIP but you still have
+	// to give the SIP message to the finite state machine.   
+	sipevent = osip_new_outgoing_sipmessage (msg);
+	sipevent->transactionid =  transaction->transactionid;
+	osip_transaction_add_event (transaction, sipevent);
+	// at this point, the event will be handled by oSIP. (The memory resource will
+	// also be handled by oSIP). Note that no action is taken there. 
+~~~~~~~
+
+Adding new events in the fsm is made with similar code.
+
+* @section howto_transaction3 Consuming events.
+
+The previous step show how to create a transaction and one possible way
+to add a new event. (Note, that some events -the TIMEOUT_* ones- will be
+added by oSIP not by the application). In this step, we describe how the
+oSIP stack will consume events. In fact, this is very simple, but you
+should be aware that it's not always allowed to consume an event at any time!
+The fsm MUST consume events sequentially within a transaction. This means
+that when your are calling osip_transaction_execute(), it is forbidden to call
+this method again with the same transaction context until the first call
+has returned. In a multi threaded application, if one thread handles one
+transaction, the code will be the following:
+
+~~~~~~~{.c}
+  while (1)
+    {
+      se = (osip_event_t *) osip_fifo_get (transaction->transactionff);
+      if (se==NULL)
+	  osip_thread_exit ();
+      if ( osip_transaction_execute (transaction,se)<1)  // deletion asked
+	  osip_thread_exit ();
+  }
+</pre>
+
+* @section howto_transaction4 Announcing events to the application layer.
+
+Looking at the case of a usual outgoing REGISTER transaction, this behaviour
+is expected.
+
+When an event is seen as useful for the fsm, it means that a transition
+from one state to another has to be done on the transaction context. If the
+event is SND_REQUEST (this is the case for an outgoing REGISTER), the
+callback previously registered to announce this action will be called. This
+callback is useless for the application as no action has to be taken at this
+step. A more interesting announcement will be made when consuming the
+first final response received. If the callbacks associated to 2xx message
+is called, then the transaction has succeeded. Inside this callback, you
+will probably inform the user of the success of the registration if you want
+to do so...
+
+If the final response is not a 2xx, or the network callback is called, you'll
+probably want to take some actions. For example, if you receive a 302, you'll
+probably want to retry a registration at the new location. All that decision
+is up to you.
+
+When the transaction reach the TERMINATED state (when the *kill* callback
+is called, you must remove it from the list of known transactions with
+
+~~~~~~~{.c}
+	static void cb_ict_kill_transaction(int type, osip_transaction_t *tr) 
+	{
+	  int i;
+	  fprintf(stdout, "testosip: transaction is over\n");
+	  i = osip_remove_transaction (_osip, tr);
+	  if (i!=0) fprintf(stderr, "testosip: cannot remove transaction\n");
+	}
+~~~~~~~
+
+
+*/

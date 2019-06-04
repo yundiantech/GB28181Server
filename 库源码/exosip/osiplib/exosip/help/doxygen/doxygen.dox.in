@@ -1,0 +1,112 @@
+/**
+ * @mainpage
+ * Project Website: http://savannah.gnu.org/projects/exosip
+ *
+ * @verbinclude README
+ *
+ */
+
+/** 
+ * @defgroup libeXosip2 The eXtented eXosip stack
+ * @brief libeXosip2 Version @EXOSIP_VERSION@
+ *
+ * @see http://savannah.gnu.org/projects/exosip
+ *
+ * @section what_is_it What is eXosip
+ *
+ * libeXosip2 implements the Session Initiation Protocol (SIP -rfc3261-)
+ * libeXosip2 is GPL (COPYING). Please understand the licencing details
+ * before using it!
+ * 
+ * For any use of this library beyond the rights granted to you by the
+ * GPL license, please contact my company at <amoizard@antisip.com>.
+ * 
+ * @section what_is_relation_with_osip What is the relation between osip & eXosip2 
+ * 
+ * The GNU osip stack is the first step needed to implement SIP
+ * applications. As a low layer stack, there is no limitation in
+ * the way to use it, but the very large API makes it rather complex
+ * and not suitable for beginners.
+ *
+ * The eXtended eXosip library is based on osip and implements a lot
+ * more SIP stuff so you can quickly build compliant SIP applications.
+ * The API is enough flexible to allow you to control and complete SIP
+ * messages. Thus, it keeps the stack extensible.
+ *
+ * While osip can be used for any SIP applications, eXosip2 only
+ * provide APIs to control endpoints.
+ * 
+ * @section what_is_sip What is SIP
+ *
+ * SIP is an IP telephony protocol made by the IETF.
+ * It is an effort to create a simple (telephony is never
+ * simple) and powerfull protocol for next generation
+ * telephony systems.
+ *
+ * @section what_features SIP features
+ *
+ * SIP is not just about telephony. It's much more
+ * that what you expect from phones. SIP means mobility,
+ * video, textual call informations, file exchange,
+ * instant messaging, presence support and much more!
+ *
+ * @section what_freesoftware eXosip2 is free software
+ *
+ * As eXosip2 is GPL, you MUST choose to release your
+ * SIP applications based on eXosip2 under the GPL license.
+ *
+ * For any use of this library beyond the rights granted to you by the
+ * GPL license, please contact my company at <amoizard@antisip.com>.
+ * 
+ * With oSIP (which is LGPL), you still have the choice to implement
+ * close source application and link with oSIP. For the
+ * benefit of the community (and for your own benefit),
+ * please consider implementing your application in GPL.
+ *
+ * Still with osip, you have to respect the license terms.
+ * Mainly, users of your software must be able to fix bugs
+ * in osip themselves. (they must have the source code,
+ * be able to compile it and link your product with the new
+ * version.)
+ *
+ * @section what_thanks Thanks
+ *
+ * Thanks to all the contributors and to all bug reporters.
+ * Enjoy eXosip2/osip!
+ *
+ */
+
+/**
+ * @defgroup eXosip2_setup General purpose API.
+ * @brief general purpose API in libeXosip2-@VERSION@.
+ *
+ * XXX
+ */
+
+/**
+ * @defgroup eXosip2_msg SIP messages and call control API
+ * @brief The SIP messages and call control API.
+ *
+ * XXX
+ */
+
+/** 
+ * @page eXosip2_readme README 
+ * @verbinclude README
+ */
+
+/** 
+ * @page eXosip2_install INSTALL 
+ * @verbinclude INSTALL
+ */
+
+/** 
+ * @page eXosip2_license COPYING 
+ * @verbinclude COPYING
+ */
+
+/** 
+ * @page eXosip2_license ChangeLog 
+ * @verbinclude ChangeLog
+ */
+

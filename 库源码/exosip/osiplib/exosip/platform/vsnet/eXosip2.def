@@ -1,0 +1,72 @@
+LIBRARY "eXosip2.dll"
+
+
+EXPORTS
+
+     eXosip_init
+     eXosip_quit
+     eXosip_set_option
+     eXosip_lock
+     eXosip_unlock
+     eXosip_listen_addr
+     eXosip_set_socket
+     eXosip_set_user_agent
+     eXosip_enable_ipv6
+     eXosip_masquerade_contact
+     
+     eXosip_add_authentication_info
+     eXosip_clear_authentication_info
+     eXosip_default_action
+     eXosip_automatic_refresh
+     eXosip_automatic_action
+     eXosip_generate_random
+          
+     eXosip_event_free
+     eXosip_event_wait
+     eXosip_event_get
+     
+     eXosip_subscribe_build_initial_request
+     eXosip_subscribe_send_initial_request
+     eXosip_subscribe_build_refresh_request
+     eXosip_subscribe_send_refresh_request
+     
+     eXosip_insubscription_build_answer
+     eXosip_insubscription_send_answer
+     eXosip_insubscription_build_request
+     eXosip_insubscription_build_notify
+     eXosip_insubscription_send_request
+     
+     eXosip_register_build_initial_register
+     eXosip_register_build_initial_register_withqvalue
+     eXosip_register_build_register
+     eXosip_register_send_register
+     eXosip_register_remove
+     
+     eXosip_message_build_request
+     eXosip_message_send_request
+     eXosip_message_build_answer
+     eXosip_message_send_answer
+     
+     eXosip_refer_build_request
+     eXosip_refer_send_request
+     
+     eXosip_build_publish
+     eXosip_publish
+     
+     eXosip_options_build_request
+     eXosip_options_send_request
+     eXosip_options_build_answer
+     eXosip_options_send_answer
+     
+     eXosip_transport_set
+     eXosip_guess_localip
+     
+     eXosip_get_remote_sdp
+     eXosip_get_local_sdp
+     eXosip_get_remote_sdp_from_tid
+     eXosip_get_local_sdp_from_tid
+     eXosip_get_sdp_info
+     eXosip_get_audio_connection
+     eXosip_get_audio_media
+     eXosip_get_video_connection
+     eXosip_get_video_media

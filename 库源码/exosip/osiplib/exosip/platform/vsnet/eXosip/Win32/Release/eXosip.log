@@ -1,0 +1,93 @@
+﻿生成启动时间为 2019/5/14 15:48:31。
+     1>项目“E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\eXosip.vcxproj”在节点 3 上(Rebuild 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\..\osip\include /I..\..\..\exosip\include /I"..\..\..\c-ares" /I"..\..\..\win32-bin\include" /I"..\..\..\win32-bin\include\tsc" /nologo /W3 /WX- /O2 /Ob1 /Oy- /D TSC_OPENSSL /D TSC_WINDOWS /D CARES_STATICLIB /D HAVE_CARES_H /D SRV_RECORD /D _CRT_SECURE_NO_DEPRECATE /D ENABLE_TRACE /D WIN32 /D EXOSIP_EXPORTS /D _WINDOWS /D _USRDLL /D NDEBUG /D _VC80_UPGRADE=0x0710 /D _UNICODE /D UNICODE /GF- /Gm- /MT /GS- /Gy- /fp:precise /Zc:wchar_t /Zc:forScope /Fo"eXosip\Win32\Release\\" /Fd"eXosip\Win32\Release\eXosip-vc80.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\..\exosip\src\eXcall_api.c ..\..\..\exosip\src\eXconf.c ..\..\..\exosip\src\eXinsubscription_api.c ..\..\..\exosip\src\eXmessage_api.c ..\..\..\exosip\src\eXoptions_api.c ..\..\..\exosip\src\eXosip.c ..\..\..\exosip\src\eXpublish_api.c ..\..\..\exosip\src\eXrefer_api.c ..\..\..\exosip\src\eXregister_api.c ..\..\..\exosip\src\eXsubscription_api.c ..\..\..\exosip\src\eXtl_dtls.c ..\..\..\exosip\src\eXtl_tcp.c ..\..\..\exosip\src\eXtl_tls.c ..\..\..\exosip\src\eXtl_udp.c ..\..\..\exosip\src\eXtransport.c ..\..\..\exosip\src\eXutils.c ..\..\..\exosip\src\inet_ntop.c ..\..\..\exosip\src\jauth.c ..\..\..\exosip\src\jcall.c ..\..\..\exosip\src\jcallback.c ..\..\..\exosip\src\jdialog.c ..\..\..\exosip\src\jevents.c ..\..\..\exosip\src\jnotify.c ..\..\..\exosip\src\jpipe.c ..\..\..\exosip\src\jpublish.c ..\..\..\exosip\src\jreg.c ..\..\..\exosip\src\jrequest.c ..\..\..\exosip\src\jresponse.c ..\..\..\exosip\src\jsubscribe.c ..\..\..\exosip\src\milenage.c ..\..\..\exosip\src\misc.c ..\..\..\exosip\src\rijndael.c ..\..\..\exosip\src\sdp_offans.c ..\..\..\exosip\src\udp.c
+         eXcall_api.c
+         eXconf.c
+         eXinsubscription_api.c
+         eXmessage_api.c
+         eXoptions_api.c
+         eXosip.c
+         eXpublish_api.c
+         eXrefer_api.c
+     1>..\..\..\exosip\src\eXrefer_api.c(33): warning C4020: “_eXosip_generating_request_out_of_dialog”: 实参太多
+         eXregister_api.c
+         eXsubscription_api.c
+         eXtl_dtls.c
+         eXtl_tcp.c
+     1>..\..\..\exosip\src\eXtl_tcp.c(427): warning C4018: “>”: 有符号/无符号不匹配
+     1>..\..\..\exosip\src\eXtl_tcp.c(500): warning C4018: “>”: 有符号/无符号不匹配
+         eXtl_tls.c
+         eXtl_udp.c
+     1>..\..\..\exosip\src\eXtl_udp.c(138): warning C4996: 'GetVersionExW': 被声明为已否决
+                 C:\Program Files (x86)\Windows Kits\8.1\Include\um\sysinfoapi.h(442) : 参见“GetVersionExW”的声明
+     1>..\..\..\exosip\src\eXtl_udp.c(222): warning C4996: 'GetVersionExW': 被声明为已否决
+                 C:\Program Files (x86)\Windows Kits\8.1\Include\um\sysinfoapi.h(442) : 参见“GetVersionExW”的声明
+         eXtransport.c
+         eXutils.c
+     1>..\..\..\exosip\src\eXutils.c(1171): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+                 C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850) : 参见“inet_addr”的声明
+         inet_ntop.c
+         jauth.c
+         jcall.c
+         jcallback.c
+         正在生成代码...
+         正在编译...
+         jdialog.c
+         jevents.c
+         jnotify.c
+         jpipe.c
+     1>..\..\..\exosip\src\jpipe.c(155): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+                 C:\Program Files (x86)\Windows Kits\8.1\Include\um\winsock2.h(1850) : 参见“inet_addr”的声明
+         jpublish.c
+         jreg.c
+         jrequest.c
+         jresponse.c
+         jsubscribe.c
+         milenage.c
+         misc.c
+         rijndael.c
+         sdp_offans.c
+         udp.c
+         正在生成代码...
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\Lib.exe /OUT:"E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\eXosip.lib" /NOLOGO eXosip\Win32\Release\eXcall_api.obj
+         eXosip\Win32\Release\eXconf.obj
+         eXosip\Win32\Release\eXinsubscription_api.obj
+         eXosip\Win32\Release\eXmessage_api.obj
+         eXosip\Win32\Release\eXoptions_api.obj
+         eXosip\Win32\Release\eXosip.obj
+         eXosip\Win32\Release\eXpublish_api.obj
+         eXosip\Win32\Release\eXrefer_api.obj
+         eXosip\Win32\Release\eXregister_api.obj
+         eXosip\Win32\Release\eXsubscription_api.obj
+         eXosip\Win32\Release\eXtl_dtls.obj
+         eXosip\Win32\Release\eXtl_tcp.obj
+         eXosip\Win32\Release\eXtl_tls.obj
+         eXosip\Win32\Release\eXtl_udp.obj
+         eXosip\Win32\Release\eXtransport.obj
+         eXosip\Win32\Release\eXutils.obj
+         eXosip\Win32\Release\inet_ntop.obj
+         eXosip\Win32\Release\jauth.obj
+         eXosip\Win32\Release\jcall.obj
+         eXosip\Win32\Release\jcallback.obj
+         eXosip\Win32\Release\jdialog.obj
+         eXosip\Win32\Release\jevents.obj
+         eXosip\Win32\Release\jnotify.obj
+         eXosip\Win32\Release\jpipe.obj
+         eXosip\Win32\Release\jpublish.obj
+         eXosip\Win32\Release\jreg.obj
+         eXosip\Win32\Release\jrequest.obj
+         eXosip\Win32\Release\jresponse.obj
+         eXosip\Win32\Release\jsubscribe.obj
+         eXosip\Win32\Release\milenage.obj
+         eXosip\Win32\Release\misc.obj
+         eXosip\Win32\Release\rijndael.obj
+         eXosip\Win32\Release\sdp_offans.obj
+         eXosip\Win32\Release\udp.obj
+         eXosip.vcxproj -> E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\v120\Win32\Release\eXosip.lib
+     1>已完成生成项目“E:\GB28181\lib-src\osiplib\exosip\platform\vsnet\eXosip.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:13.81

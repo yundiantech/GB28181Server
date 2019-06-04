@@ -1,0 +1,7 @@
+ACK sip:bob@one.example.com SIP/2.0
+Via: SIP/2.0/UDP north.east.isi.edu
+From: Alice <sip:alice@wonderland.com>;tag=1
+To: Bob <sip:bob@example.com> ;tag=3141593
+Call-ID: 602214199@mouse.wonderland.com
+CSeq: 1 ACK
+

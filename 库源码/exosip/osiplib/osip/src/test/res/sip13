@@ -1,0 +1,8 @@
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP kton.bell-tel.com
+From: A. Bell <sip:a.g.bell@bell-tel.com>;tag=3
+To: T. Watson <sip:watson@bell-tel.com> ;tag=37462311
+Call-ID: 662606876@kton.bell-tel.com
+CSeq: 1 INVITE
+Content-Length: 0
+
