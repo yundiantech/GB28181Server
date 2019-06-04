@@ -8,6 +8,9 @@
 //xml
 #include <mxml.h>
 
+#include "AppConfig.h"
+#include "EventHandle/EventHandle.h"
+
 #if defined(WIN32)
     #include <winsock2.h>
     #include <windows.h>
@@ -15,45 +18,41 @@
     #include <pthread.h>
 #endif
 
-#include <QDebug>
-
 #if _MSC_VER
 #define snprintf _snprintf   //snprintf 找不到标识符
 #endif
 
 //#define APP_LOG printf
+#include <QDebug>
 #define APP_LOG qDebug
 
 char *GB_NONCE = (char *)"6fe9ba44a76be22a";
 
-#define RTP_PORT 8000
-
-#if defined(WIN32)
-static DWORD WINAPI thread_Func(LPVOID pM)
-#else
-static void *thread_Func(void *pM)
-#endif
-{
-    GB28181Server *pointer = (GB28181Server*)pM;
-
-    pointer->run();
-
-    return 0;
-}
-
 GB28181Server::GB28181Server()
 {
+#ifdef WIN32
+    WSADATA dat;
+    WSAStartup(MAKEWORD(2, 2), &dat);
+#endif // WIN32
+
     mIsStop = false;
     mIsThreadRunning = false;
+
+    mGB28181ServerEventHandle = nullptr;
+
+    mRtpReciever = new RtpReciever();
+
+    AppConfig::gGB28181Server = this;
+
 }
 
-void GB28181Server::setLocalIp(char *ip, int port)
+void GB28181Server::setLocalIp(const char *ip, const int &port)
 {
     strcpy(LOCAL_IP, ip);
     LOCAL_PORT = port;
 }
 
-void GB28181Server::setGBServerInfo(char *sipId, char *passwd, char *realm)
+void GB28181Server::setGBServerInfo(const char *sipId, const char *passwd, const char *realm)
 {
     strcpy(SERVER_SIP_ID, sipId);
     strcpy(GB_PASSWORD, passwd);
@@ -63,12 +62,16 @@ void GB28181Server::setGBServerInfo(char *sipId, char *passwd, char *realm)
 void GB28181Server::start()
 {
     mIsStop = false;
-#if defined(WIN32)
-     HANDLE handle = CreateThread(NULL, 0, thread_Func, this, 0, NULL);
-#else
-    pthread_t thread1;
-    pthread_create(&thread1,NULL,thread_Func,this);
-#endif
+
+    //启动新的线程实现读取视频文件
+    std::thread([&](GB28181Server *pointer)
+    {
+        pointer->run();
+
+    }, this).detach();
+
+    mRtpReciever->start(); //启动rtp监听线程
+
 }
 
 void GB28181Server::stop()
@@ -78,28 +81,41 @@ void GB28181Server::stop()
     {
         Sleep(100);
     }
+
+    mRtpReciever->stop();
 }
 
 ///设备注册成功
-void GB28181Server::deviceRegisted(DeviceNode node)
+void GB28181Server::deviceRegisted(const CameraDevice &device)
 {
-
+    if (mGB28181ServerEventHandle != nullptr)
+    {
+        mGB28181ServerEventHandle->onDeviceRegisted(device);
+    }
 }
 
 ///设备更新，catalog请求返回的设备信息更新
-void GB28181Server::deviceUpdate(DeviceNode node)
+void GB28181Server::deviceUpdate(const CameraDevice &device)
 {
-
+    if (mGB28181ServerEventHandle != nullptr)
+    {
+        mGB28181ServerEventHandle->onDeviceUpdate(device);
+    }
 }
 
 ///接收到消息
-void GB28181Server::receiveMessage(const char *deviceID, MessageType type, char *msgBody)
+void GB28181Server::receiveMessage(const char *deviceID, const MessageType &type, const char *msgBody)
 {
-
+    if (mGB28181ServerEventHandle != nullptr)
+    {
+        mGB28181ServerEventHandle->onReceiveMessage(deviceID, type, msgBody);
+    }
 }
 
 void GB28181Server::run()
 {
+    int RtpSSRC = 0;
+
     int iReturnCode = 0;
 
     //初始化跟踪信息
@@ -140,6 +156,13 @@ void GB28181Server::run()
             osip_usleep(100000);
             continue;
         }
+
+        int socketFd = eXosip_event_geteventsocket(eCtx);
+
+        char remoteIpAddr[1024] = {0};
+        int remotePort = 0;
+
+        int udpSsocketFd = eXosip_event_getUdpSocket(eCtx, remoteIpAddr, &remotePort);
 
         switch (je->type)
         {
@@ -235,7 +258,7 @@ void GB28181Server::run()
                                 char * ip = osip_via_get_host(s_via);
                                 char* port = osip_via_get_port(s_via);
 
-                                DeviceNode node;
+                                CameraDevice node;
                                 node.DeviceID = pUsername;
                                 node.IPAddress = ip;
                                 node.Port = atoi(port);
@@ -313,11 +336,11 @@ void GB28181Server::run()
 
                                     APP_LOG("Recv Keepalive DeviceId is:%s\n", DeviceID);
 
-                                    std::list<DeviceNode>::iterator iter;
+                                    std::list<CameraDevice>::iterator iter;
 
                                     for(iter = mDeviceList.begin(); iter != mDeviceList.end() ;iter++)
                                     {
-                                        DeviceNode node = *iter;
+                                        CameraDevice node = *iter;
                                         if (node.DeviceID.compare(DeviceID) == 0 && node.IPAddress.compare(ip) == 0)
                                         {
                                             isDeviceExist = true;
@@ -380,21 +403,21 @@ void GB28181Server::run()
 
                                             APP_LOG("Recv Catalog DeviceInfo is:%s %s %s %s\n", DeviceID, IPAddress, Port, Status);
 
-                                            std::list<DeviceNode> deviceListTmp;
+                                            std::list<CameraDevice> deviceListTmp;
 
-                                            std::list<DeviceNode>::iterator iter;
+                                            std::list<CameraDevice>::iterator iter;
                                             for(iter = mDeviceList.begin(); iter != mDeviceList.end() ;iter++)
                                             {
-                                                DeviceNode deviceNode = *iter;
+                                                CameraDevice deviceNode = *iter;
                                                 if (deviceNode.DeviceID.compare(ParentID) == 0 && deviceNode.IPAddress.compare(ip) == 0)
                                                 {
                                                     bool isExist = false;
 
-                                                    std::list<ChannelNode>::iterator iter;
+                                                    std::list<VideoChannel*>::iterator iter;
                                                     for(iter = deviceNode.channelList.begin(); iter != deviceNode.channelList.end() ;iter++)
                                                     {
-                                                        ChannelNode cameraNode = *iter;
-                                                        if (cameraNode.DeviceID.compare(DeviceID) == 0 && cameraNode.IPAddress.compare(ip) == 0)
+                                                        VideoChannel* cameraNode = *iter;
+                                                        if (cameraNode->DeviceID.compare(DeviceID) == 0 && cameraNode->IPAddress.compare(ip) == 0)
                                                         {
                                                             isExist = true;
                                                             break;
@@ -403,13 +426,38 @@ void GB28181Server::run()
 
                                                     if (!isExist)
                                                     {
-                                                        ChannelNode item;
-                                                        item.DeviceID = DeviceID;
-                                                        item.IPAddress = IPAddress;
-                                                        item.Port = atoi(Port);
-                                                        item.Status = Status;
+                                                        VideoChannel* item = new VideoChannel();
+                                                        item->RtpSSRC = ++RtpSSRC;
+                                                        item->DeviceID = DeviceID;
+                                                        if (IPAddress != NULL)
+                                                        {
+                                                            item->IPAddress = IPAddress;
+                                                        }
+                                                        else
+                                                        {
+                                                            item->IPAddress = remoteIpAddr;
+                                                        }
+                                                        if (Port != NULL)
+                                                        {
+                                                            item->Port = atoi(Port);
+                                                        }
+                                                        else
+                                                        {
+                                                            item->Port = remotePort;
+                                                        }
+
+                                                        item->Status = Status;
+
+                                                        if (mDeviceVideoChannelMap.find(item->RtpSSRC) != mDeviceVideoChannelMap.end())
+                                                        {
+                                                            mDeviceVideoChannelMap.erase(item->RtpSSRC);
+                                                        }
+
+                                                        mDeviceVideoChannelMap.insert(std::make_pair(item->RtpSSRC, item));
 
                                                         deviceNode.channelList.push_back(item);
+
+                                                        item->start(); //启动解码h264的线程
                                                     }
 
                                                     deviceUpdate(deviceNode);
@@ -470,6 +518,8 @@ void GB28181Server::run()
                 osip_message_get_contact(je->request, 0, &contact);
 
                 receiveMessage(contact->url->username, MessageType_CallAnswer, body->body);
+
+                setCallFinished(je->cid);
 
                 ResponseCallAck(eCtx, je);
                 break;
@@ -665,18 +715,18 @@ static const char *whitespace_cb(mxml_node_t *node, int where)
     return NULL;
 }
 
-void GB28181Server::doSendCatalog(DeviceNode node)
+void GB28181Server::doSendCatalog(const CameraDevice &device)
 {
-    SendQueryCatalog(eCtx, node);
+    SendQueryCatalog(eCtx, device);
 }
 
-void GB28181Server::doSendInvitePlay(ChannelNode node)
+void GB28181Server::doSendInvitePlay(const VideoChannel *channelNode)
 {
-    SendInvitePlay(eCtx, node);
+    SendInvitePlay(eCtx, channelNode);
 }
 
 //发送请求catalog信息
-int GB28181Server::SendQueryCatalog(struct eXosip_t *peCtx, DeviceNode deviceNode)
+int GB28181Server::SendQueryCatalog(struct eXosip_t *peCtx, CameraDevice deviceNode)
 {
     fprintf(stderr,"sendQueryCatalog\n");
 
@@ -743,10 +793,10 @@ int GB28181Server::SendQueryCatalog(struct eXosip_t *peCtx, DeviceNode deviceNod
 }
 
 //请求视频信息，SDP信息
-int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, ChannelNode cameraNode)
+int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, const VideoChannel *channelNode)
 {
-    const char *playSipId = cameraNode.DeviceID.c_str();
-    int rtp_recv_port = RTP_PORT;
+    const char *playSipId = channelNode->DeviceID.c_str();
+    int rtp_recv_port = MEDIASERVER_RTP_PORT;
 
     char dest_call[256] = {0};
     char source_call[256] = {0};
@@ -756,8 +806,8 @@ int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, ChannelNode cameraNode
     osip_message_t *invite = NULL;
     int ret;
 
-    const char *platformIpAddr= cameraNode.IPAddress.c_str();
-    int platformSipPort = cameraNode.Port;
+    const char *platformIpAddr= channelNode->IPAddress.c_str();
+    int platformSipPort = channelNode->Port;
 
     char *localSipId = SERVER_SIP_ID;
     char *localIpAddr= LOCAL_IP;
@@ -779,7 +829,7 @@ int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, ChannelNode cameraNode
     osip_via_t *via = NULL;
     osip_message_get_via(invite, 0, &via);
 
-    int mRtpSSRC = 0;
+    int mRtpSSRC = channelNode->RtpSSRC;
     char ssrcStr[32]={0};
     sprintf(ssrcStr,"0%d",mRtpSSRC+100000000);
 
@@ -807,5 +857,41 @@ int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, ChannelNode cameraNode
 
     fprintf(stderr,"send invite %s \n call_id=%d\n", body, call_id);
 
+    ((VideoChannel *)channelNode)->setCallId(call_id);
+
     return call_id;
+}
+
+///设置发送invite请求结束
+bool GB28181Server::setCallFinished(int callId)
+{
+    bool isSucceed = false;
+
+    for(const CameraDevice &deviceNode : mDeviceList)
+    {
+        for(VideoChannel* channelNode : deviceNode.channelList)
+        {
+            if (channelNode->getCallId() == callId)
+            {
+                channelNode->setCallId(-1);
+                isSucceed = true;
+//                break;
+            }
+        }
+
+    }
+
+    return isSucceed;
+}
+
+VideoChannel* GB28181Server::getVideoChannel(int ssrc)
+{
+    VideoChannel* channel = nullptr;
+
+    if (mDeviceVideoChannelMap.find(ssrc) != mDeviceVideoChannelMap.end())
+    {
+        channel = mDeviceVideoChannelMap[ssrc];
+    }
+
+    return channel;
 }

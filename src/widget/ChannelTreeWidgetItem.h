@@ -4,6 +4,7 @@
 #include <QTreeWidgetItem>
 
 #include "GB28181Server/GB28181Server.h"
+#include "ShowVideoWidget.h"
 
 class ChannelTreeWidgetItem : public QTreeWidgetItem
 {
@@ -11,11 +12,13 @@ public:
     explicit ChannelTreeWidgetItem(QObject *parent = 0);
     ~ChannelTreeWidgetItem();
 
-    ChannelNode getChannelNode(){return mChannelNode;}
-    void setChannelNode(ChannelNode node){mChannelNode = node;}
+    VideoChannel* getChannelNode(){return mChannelNode;}
+    void setChannelNode(const VideoChannel* node);
 
 private:
-    ChannelNode mChannelNode;
+    VideoChannel *mChannelNode;
+
+    ShowVideoWidget *mShowVideoWidget;
 
 };
 

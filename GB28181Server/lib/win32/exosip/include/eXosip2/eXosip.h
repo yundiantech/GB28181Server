@@ -415,6 +415,12 @@ extern "C" {
  */
   int eXosip_event_geteventsocket (struct eXosip_t *excontext);
 
+  /// add by HUIHUI 2018-06-01 16:17
+   /*
+   *get the last udp message remote ip addr
+   */
+   int eXosip_event_getUdpSocket(struct eXosip_t *excontext, char * remoteIpAddr, int *remotePort);
+
 /** @} */
 
 #ifdef __cplusplus

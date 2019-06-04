@@ -5,6 +5,7 @@
 #include <QTreeWidgetItem>
 
 #include "GB28181Server/GB28181Server.h"
+#include "EventHandle/EventHandle.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,7 +18,7 @@ struct MessageNode
     QString msgBody;
 };
 
-class MainWindow : public QMainWindow, GB28181Server
+class MainWindow : public QMainWindow, GB28181ServerEventHandle
 {
     Q_OBJECT
 
@@ -26,21 +27,24 @@ public:
     ~MainWindow();
 
 protected:
-    void deviceRegisted(DeviceNode deviceNode); //设备注册成功
-    void deviceUpdate(DeviceNode deviceNode);   //设备更新，catalog请求返回的设备信息更新
-    void receiveMessage(const char *deviceID, MessageType type, char *msgBody);  //接收到消息
+    void onDeviceRegisted(const CameraDevice &deviceNode); //设备注册成功
+    void onDeviceUpdate(const CameraDevice &deviceNode);   //设备更新，catalog请求返回的设备信息更新
+    void onReceiveMessage(const char *deviceID, const MessageType &type, const char *msgBody);  //接收到消息
 
     /// 以上三个函数是在子线程中调用的，因此不能在函数中直接操作界面，
     /// 需要转移到主线程函数中操作，采用信号槽的方式来转移到主线程
 signals:
-    void sig_deviceRegisted(DeviceNode deviceNode); //设备注册成功
-    void sig_deviceUpdate(DeviceNode deviceNode);   //设备更新，catalog请求返回的设备信息更新
-    void sig_receiveMessage(QString deviceID, MessageType type, QString msgBody);  //接收到消息
+    void sig_deviceRegisted(const CameraDevice &deviceNode); //设备注册成功
+    void sig_deviceUpdate(const CameraDevice &deviceNode);   //设备更新，catalog请求返回的设备信息更新
+    void sig_receiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody);  //接收到消息
 
 private slots:
-    void slotDeviceRegisted(DeviceNode deviceNode); //设备注册成功
-    void slotDeviceUpdate(DeviceNode deviceNode);   //设备更新，catalog请求返回的设备信息更新
-    void slotReceiveMessage(QString deviceID, MessageType type, QString msgBody);  //接收到消息
+    void slotDeviceRegisted(const CameraDevice &deviceNode); //设备注册成功
+    void slotDeviceUpdate(const CameraDevice &deviceNode);   //设备更新，catalog请求返回的设备信息更新
+    void slotReceiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody);  //接收到消息
+
+private:
+    GB28181Server *mGB28181Server; //28181服务
 
 private:
     Ui::MainWindow *ui;

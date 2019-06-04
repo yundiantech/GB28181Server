@@ -9,7 +9,7 @@
 #include <QDebug>
 
 Q_DECLARE_METATYPE(MessageType);
-Q_DECLARE_METATYPE(DeviceNode);
+Q_DECLARE_METATYPE(CameraDevice);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,8 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    mGB28181Server = nullptr;
+
     connect(ui->pushButton_start, &QPushButton::clicked, this, &MainWindow::slotBtnClicked);
     connect(ui->pushButton_stop,  &QPushButton::clicked, this, &MainWindow::slotBtnClicked);
+
+    connect(ui->pushButton_catlog, &QPushButton::clicked, this, &MainWindow::slotBtnClicked);
+    connect(ui->pushButton_invite, &QPushButton::clicked, this, &MainWindow::slotBtnClicked);
 
     ui->pushButton_stop->setEnabled(false);
 
@@ -37,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->treeWidget, &QTreeWidget::itemPressed, this, &MainWindow::slotItemClicked);
 
     qRegisterMetaType<MessageType>();
-    qRegisterMetaType<DeviceNode>();
+    qRegisterMetaType<CameraDevice>();
 
     connect(this, &MainWindow::sig_deviceRegisted, this, &MainWindow::slotDeviceRegisted);
     connect(this, &MainWindow::sig_deviceUpdate, this, &MainWindow::slotDeviceUpdate);
@@ -47,6 +52,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tableWidget->setColumnWidth(1, 100);
     ui->tableWidget->setColumnWidth(2, 200);
     ui->tableWidget->setColumnWidth(3, 160);
+
+    ui->pushButton_catlog->setEnabled(false);
+    ui->pushButton_invite->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -55,7 +63,7 @@ MainWindow::~MainWindow()
 }
 
 ///设备注册成功
-void MainWindow::deviceRegisted(DeviceNode deviceNode)
+void MainWindow::onDeviceRegisted(const CameraDevice &deviceNode)
 {
     qDebug("%s %s %s \n", __FUNCTION__, deviceNode.DeviceID.c_str(), deviceNode.IPAddress.c_str());
 
@@ -64,20 +72,20 @@ void MainWindow::deviceRegisted(DeviceNode deviceNode)
 }
 
 ///设备更新，catalog请求返回的设备信息更新
-void MainWindow::deviceUpdate(DeviceNode deviceNode)
+void MainWindow::onDeviceUpdate(const CameraDevice &deviceNode)
 {
     emit sig_deviceUpdate(deviceNode);
 }
 
 ///接收到消息
-void MainWindow::receiveMessage(const char *deviceID, MessageType type, char *msgBody)
+void MainWindow::onReceiveMessage(const char *deviceID, const MessageType &type, const char *msgBody)
 {
 //    qDebug()<<__FUNCTION__<<deviceID<<type<<msgBody;
     emit sig_receiveMessage(QString(deviceID), type, QString(msgBody));
 }
 
 ///设备注册成功
-void MainWindow::slotDeviceRegisted(DeviceNode deviceNode)
+void MainWindow::slotDeviceRegisted(const CameraDevice &deviceNode)
 {
     DeviceTreeWidgetItem *item = new DeviceTreeWidgetItem;
     item->setText(0, QString("%1(%2)").arg(QString::fromStdString(deviceNode.DeviceID)).arg(QString::fromStdString(deviceNode.IPAddress)));
@@ -87,7 +95,7 @@ void MainWindow::slotDeviceRegisted(DeviceNode deviceNode)
 }
 
 ///设备更新，catalog请求返回的设备信息更新
-void MainWindow::slotDeviceUpdate(DeviceNode deviceNode)
+void MainWindow::slotDeviceUpdate(const CameraDevice &deviceNode)
 {
     int count = ui->treeWidget->topLevelItemCount();
 
@@ -97,27 +105,27 @@ void MainWindow::slotDeviceUpdate(DeviceNode deviceNode)
 
         DeviceTreeWidgetItem *deviceItem = (DeviceTreeWidgetItem*)item;
 
-        DeviceNode node = deviceItem->getDeviceNode();
+        CameraDevice node = deviceItem->getDeviceNode();
 
         if (node == deviceNode)
         {
+            ///先清空流列表
             while(deviceItem->childCount() > 0)
             {
                 QTreeWidgetItem *item = deviceItem->takeChild(0);
                 delete item;
             }
 
-            std::list<ChannelNode>::iterator iter;
-            for (iter=deviceNode.channelList.begin();iter!=deviceNode.channelList.end();iter++)
+            ///再新建流列表
+            for (const VideoChannel* videoChannelNode : deviceNode.channelList)
             {
-                ChannelNode cameraNode = *iter;
-
-                ChannelTreeWidgetItem *cameraItem = new ChannelTreeWidgetItem;
-                cameraItem->setText(0, QString::fromStdString(cameraNode.DeviceID));
-                cameraItem->setChannelNode(cameraNode);
-                item->addChild(cameraItem);
+                ChannelTreeWidgetItem *videoChannelItem = new ChannelTreeWidgetItem;
+                videoChannelItem->setText(0, QString::fromStdString(videoChannelNode->DeviceID));
+                videoChannelItem->setChannelNode(videoChannelNode);
+                item->addChild(videoChannelItem);
             }
 
+            ///展开全部流列表
             ui->treeWidget->expandItem(deviceItem);
         }
     }
@@ -125,7 +133,7 @@ void MainWindow::slotDeviceUpdate(DeviceNode deviceNode)
 }
 
 ///接收到消息
-void MainWindow::slotReceiveMessage(QString deviceID, MessageType type, QString msgBody)
+void MainWindow::slotReceiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody)
 {
 //    qDebug()<<__FUNCTION__<<deviceID<<type<<msgBody;
     MessageNode node;
@@ -173,10 +181,14 @@ void MainWindow::slotBtnClicked(bool isChecked)
 {
     if (QObject::sender() == ui->pushButton_start)
     {
+        mGB28181Server = new GB28181Server();
+
+        mGB28181Server->setEventHandle(this);
+
         char ip[36] = {0};
         strcpy(ip, ui->lineEdit_ip->text().toUtf8().data());
         int port = ui->lineEdit_port->text().toInt();
-        this->setLocalIp(ip, port);
+        mGB28181Server->setLocalIp(ip, port);
 
         char sipId[256] = {0};
         strcpy(sipId, ui->lineEdit_sip_id->text().toUtf8().data());
@@ -184,17 +196,19 @@ void MainWindow::slotBtnClicked(bool isChecked)
         strcpy(passwd, ui->lineEdit_password->text().toUtf8().data());
         char realm[36] = {0};
         strcpy(realm, ui->lineEdit_realm->text().toUtf8().data());
-        this->setGBServerInfo(sipId, passwd, realm);
+        mGB28181Server->setGBServerInfo(sipId, passwd, realm);
 
-        this->start(); //启动GB28181监听服务
+        mGB28181Server->start(); //启动GB28181监听服务
 
         ui->widget_param->setEnabled(false);
         ui->pushButton_start->setEnabled(false);
         ui->pushButton_stop->setEnabled(true);
     }
-    else
+    else if (QObject::sender() == ui->pushButton_stop)
     {
-        this->stop();
+        mGB28181Server->stop();
+        delete mGB28181Server;
+        mGB28181Server = nullptr;
 
         ui->treeWidget->clear();
 
@@ -202,26 +216,56 @@ void MainWindow::slotBtnClicked(bool isChecked)
         ui->pushButton_start->setEnabled(true);
         ui->pushButton_stop->setEnabled(false);
     }
+    else if (QObject::sender() == ui->pushButton_catlog)
+    {
+        DeviceTreeWidgetItem *item = (DeviceTreeWidgetItem*)mCurrentSelectedItem;
+        mGB28181Server->doSendCatalog(item->getDeviceNode());
+    }
+    else if (QObject::sender() == ui->pushButton_invite)
+    {
+        ChannelTreeWidgetItem *item = (ChannelTreeWidgetItem*)mCurrentSelectedItem;
+        mGB28181Server->doSendInvitePlay(item->getChannelNode());
+    }
 }
 
 void MainWindow::slotItemClicked(QTreeWidgetItem *item, int column)
 {
-    qDebug()<<__FUNCTION__<<column<<item->parent();
-
-    if (!(QGuiApplication::mouseButtons() & Qt::RightButton)) return;
+//    qDebug()<<__FUNCTION__<<column<<item->parent();
 
     QTreeWidgetItem *item1 = item->parent();
 
     if (item1 == NULL) //选中的是设备
     {
         mCurrentSelectedItem = item;
-        mDevicePopMenu->exec(QCursor::pos());
+        ui->pushButton_catlog->setEnabled(true);
+        ui->pushButton_invite->setEnabled(false);
     }
     else
     {
         mCurrentSelectedItem = item;
-        mChannelPopMenu->exec(QCursor::pos());
+        ui->pushButton_catlog->setEnabled(false);
+        ui->pushButton_invite->setEnabled(true);
     }
+
+    if (QGuiApplication::mouseButtons() & Qt::RightButton)
+    {
+        QTreeWidgetItem *item1 = item->parent();
+
+        if (item1 == NULL) //选中的是设备
+        {
+            mCurrentSelectedItem = item;
+            mDevicePopMenu->exec(QCursor::pos());
+        }
+        else
+        {
+            mCurrentSelectedItem = item;
+            mChannelPopMenu->exec(QCursor::pos());
+
+            ui->pushButton_catlog->setEnabled(false);
+            ui->pushButton_invite->setEnabled(true);
+        }
+    }
+
 }
 
 void MainWindow::slotActionTriggered(bool checked)
@@ -229,13 +273,13 @@ void MainWindow::slotActionTriggered(bool checked)
     if (QObject::sender() == mCatalogAction)
     {
         DeviceTreeWidgetItem *item = (DeviceTreeWidgetItem*)mCurrentSelectedItem;
-        this->doSendCatalog(item->getDeviceNode());
+        mGB28181Server->doSendCatalog(item->getDeviceNode());
         mCurrentSelectedItem = NULL;
     }
     else if (QObject::sender() == mPlayVideoAction)
     {
         ChannelTreeWidgetItem *item = (ChannelTreeWidgetItem*)mCurrentSelectedItem;
-        this->doSendInvitePlay(item->getChannelNode());
+        mGB28181Server->doSendInvitePlay(item->getChannelNode());
         mCurrentSelectedItem = NULL;
     }
 }

@@ -11,11 +11,11 @@ public:
     explicit DeviceTreeWidgetItem(QObject *parent = 0);
     ~DeviceTreeWidgetItem();
 
-    DeviceNode getDeviceNode(){return mDeviceNode;}
-    void setDeviceNode(DeviceNode node){mDeviceNode = node;}
+    CameraDevice getDeviceNode(){return mDeviceNode;}
+    void setDeviceNode(CameraDevice node){mDeviceNode = node;}
 
 private:
-    DeviceNode mDeviceNode;
+    CameraDevice mDeviceNode;
 
 };
 
