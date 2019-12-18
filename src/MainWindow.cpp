@@ -120,7 +120,7 @@ void MainWindow::slotDeviceUpdate(const CameraDevice &deviceNode)
             for (const VideoChannel* videoChannelNode : deviceNode.channelList)
             {
                 ChannelTreeWidgetItem *videoChannelItem = new ChannelTreeWidgetItem;
-                videoChannelItem->setText(0, QString::fromStdString(videoChannelNode->DeviceID));
+                videoChannelItem->setText(0, QString("%1(%2)").arg(QString::fromStdString(videoChannelNode->DeviceID)).arg(QString::fromStdString(videoChannelNode->DeviceName)));
                 videoChannelItem->setChannelNode(videoChannelNode);
                 item->addChild(videoChannelItem);
             }

@@ -381,27 +381,28 @@ void GB28181Server::run()
 
                                     for (int i=0; i<count; i++)
                                     {
-                                        mxml_node_t * OneItem = mxmlGetNextSibling(DeviceListNode);
-
-                                        if (OneItem == NULL) break;
+//                                        mxml_node_t * OneItem = mxmlGetNextSibling(DeviceListNode);
+//                                        if (OneItem == NULL) break;
 
                                         mxml_node_t * ItemNode = mxmlFindElement(DeviceListNode, DeviceListNode,"Item",NULL,NULL,MXML_DESCEND);
 
                                         if(ItemNode != NULL)
                                         {
+                                            mxml_node_t * DeviceNameNode = mxmlFindElement(ItemNode, ItemNode,"Name",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * DeviceIDNode = mxmlFindElement(ItemNode, ItemNode,"DeviceID",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * ParentIDNode = mxmlFindElement(ItemNode, ItemNode,"ParentID",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * IPAddressNode = mxmlFindElement(ItemNode, ItemNode,"IPAddress",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * PortNode = mxmlFindElement(ItemNode, ItemNode,"Port",NULL,NULL,MXML_DESCEND);
                                             mxml_node_t * StatusNode = mxmlFindElement(ItemNode, ItemNode,"Status",NULL,NULL,MXML_DESCEND);
 
+                                            const char *DeviceName = mxmlGetText(DeviceNameNode, NULL);
                                             const char *DeviceID = mxmlGetText(DeviceIDNode, NULL);
                                             const char *ParentID = mxmlGetText(ParentIDNode, NULL);
                                             const char *IPAddress = mxmlGetText(IPAddressNode, NULL);
                                             const char *Port = mxmlGetText(PortNode, NULL);
                                             const char *Status = mxmlGetText(StatusNode, NULL);
 
-                                            APP_LOG("Recv Catalog DeviceInfo is:%s %s %s %s\n", DeviceID, IPAddress, Port, Status);
+                                            APP_LOG("Recv Catalog DeviceInfo is:%s %s %s %s %s\n", DeviceName, DeviceID, IPAddress, Port, Status);
 
                                             std::list<CameraDevice> deviceListTmp;
 
@@ -428,6 +429,7 @@ void GB28181Server::run()
                                                     {
                                                         VideoChannel* item = new VideoChannel();
                                                         item->RtpSSRC = ++RtpSSRC;
+                                                        item->DeviceName = DeviceName;
                                                         item->DeviceID = DeviceID;
                                                         if (IPAddress != NULL)
                                                         {

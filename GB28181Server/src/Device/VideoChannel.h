@@ -63,6 +63,7 @@ protected:
 
 public:
     int RtpSSRC; //rtp身份标志，用于invite请求，用来区分多个rtp流。
+    std::string DeviceName;
     std::string DeviceID;
     std::string IPAddress;
     int Port;
