@@ -47,6 +47,9 @@ win32{
 
     LIBS += WS2_32.lib Dnsapi.lib Iphlpapi.lib Qwave.lib delayimp.lib AdvAPI32.lib
 
+    #解决vs2017报 无法解析的外部符号 __vsnprintf
+    LIBS += legacy_stdio_definitions.lib
+
     contains(QT_ARCH, i386) {
         message("32-bit")
         INCLUDEPATH += $$PWD/lib/win32/ffmpeg/include \

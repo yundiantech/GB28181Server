@@ -1,4 +1,4 @@
-#ifndef GB28181SERVER_H
+ï»¿#ifndef GB28181SERVER_H
 #define GB28181SERVER_H
 
 #include <stdio.h>
@@ -7,6 +7,10 @@
 #include <map>
 #include <thread>
 
+#if defined(WIN32)
+    #include <winsock2.h>
+    #include <windows.h>
+#endif
 #include <eXosip2/eXosip.h>
 
 #include "types.h"
@@ -21,23 +25,23 @@ public:
     GB28181Server();
 
     /**
-     * @brief setEventHandle ÉèÖÃ»Øµ÷º¯Êı
+     * @brief setEventHandle è®¾ç½®å›è°ƒå‡½æ•°
      * @param handle
      */
     void setEventHandle(const GB28181ServerEventHandle *handle){mGB28181ServerEventHandle = (GB28181ServerEventHandle *)handle;}
 
     /**
-     * @brief setLocalIp ÉèÖÃ±¾µØIP£¨´ËIPÓÃÓÚÓëÏà»ú½»»¥Ê±£¬Ğ´ÔÚsourceÀïÃæµÄIP£©
+     * @brief setLocalIp è®¾ç½®æœ¬åœ°IPï¼ˆæ­¤IPç”¨äºä¸ç›¸æœºäº¤äº’æ—¶ï¼Œå†™åœ¨sourceé‡Œé¢çš„IPï¼‰
      * @param ip
      * @param port
      */
     void setLocalIp(const char *ip, const int &port);
 
     /**
-     * @brief setGBServerInfo ÉèÖÃGB·şÎñÆ÷ĞÅÏ¢
-     * @param sipId    [in] ipµØÖ·
-     * @param passwd   [in] ÃÜÂë
-     * @param realm    [in] Óò
+     * @brief setGBServerInfo è®¾ç½®GBæœåŠ¡å™¨ä¿¡æ¯
+     * @param sipId    [in] ipåœ°å€
+     * @param passwd   [in] å¯†ç 
+     * @param realm    [in] åŸŸ
      */
     void setGBServerInfo(const char *sipId, const char *passwd, const char *realm);
 
@@ -49,11 +53,11 @@ public:
 
     std::list<CameraDevice> getDeviceList(){return mDeviceList;}
 
-    ///¸ù¾İssrc²éÕÒ¶ÔÓ¦µÄvideoChannel
+    ///æ ¹æ®ssrcæŸ¥æ‰¾å¯¹åº”çš„videoChannel
     VideoChannel* getVideoChannel(int ssrc);
 
 protected:
-    void run(); //Ïß³ÌÖ´ĞĞº¯Êı
+    void run(); //çº¿ç¨‹æ‰§è¡Œå‡½æ•°
 
 private:
     char SERVER_SIP_ID[256];
@@ -66,39 +70,39 @@ private:
     int SN = 1;
     struct eXosip_t *eCtx;
 
-    RtpReciever *mRtpReciever; //½ÓÊÕrtpÁ÷µÄÏß³Ì
+    RtpReciever *mRtpReciever; //æ¥æ”¶rtpæµçš„çº¿ç¨‹
 
-    bool mIsStop;          //ÊÇ·ñÊÕµ½Í£Ö¹ÃüÁî
-    bool mIsThreadRunning; //ÏÖÔÚÊÇ·ñÔÚÔËĞĞ
+    bool mIsStop;          //æ˜¯å¦æ”¶åˆ°åœæ­¢å‘½ä»¤
+    bool mIsThreadRunning; //ç°åœ¨æ˜¯å¦åœ¨è¿è¡Œ
 
-    std::map<int, VideoChannel*>  mDeviceVideoChannelMap; //rtp inviteµÄssrcºÍChannelNodeµÄÓ³Éä±í
-    std::list<CameraDevice> mDeviceList; //Éè±¸ÁĞ±í
+    std::map<int, VideoChannel*>  mDeviceVideoChannelMap; //rtp inviteçš„ssrcå’ŒChannelNodeçš„æ˜ å°„è¡¨
+    std::list<CameraDevice> mDeviceList; //è®¾å¤‡åˆ—è¡¨
 
     void Register401Unauthorized(struct eXosip_t * peCtx, eXosip_event_t *je);
     void RegisterSuccess(struct eXosip_t * peCtx,eXosip_event_t *je);
     void RegisterFailed(struct eXosip_t * peCtx,eXosip_event_t *je);
 
-    void Response(struct eXosip_t * peCtx,eXosip_event_t *je, int value); //´ğ¸´Ïà»úµÄÃüÁî
-    void Response403(struct eXosip_t * peCtx,eXosip_event_t *je); //´ğ¸´403
-    void Response200(struct eXosip_t * peCtx,eXosip_event_t *je); //´ğ¸´200OK
+    void Response(struct eXosip_t * peCtx,eXosip_event_t *je, int value); //ç­”å¤ç›¸æœºçš„å‘½ä»¤
+    void Response403(struct eXosip_t * peCtx,eXosip_event_t *je); //ç­”å¤403
+    void Response200(struct eXosip_t * peCtx,eXosip_event_t *je); //ç­”å¤200OK
 
     void ResponseCallAck(struct eXosip_t * peCtx, eXosip_event_t *je);
 
-    int SendQueryCatalog(struct eXosip_t *peCtx , CameraDevice deviceNode); //ÇëÇóÉè±¸Ä¿Â¼
+    int SendQueryCatalog(struct eXosip_t *peCtx , CameraDevice deviceNode); //è¯·æ±‚è®¾å¤‡ç›®å½•
 
-    //ÇëÇóÊÓÆµĞÅÏ¢£¬SDPĞÅÏ¢
+    //è¯·æ±‚è§†é¢‘ä¿¡æ¯ï¼ŒSDPä¿¡æ¯
     int SendInvitePlay(struct eXosip_t *peCtx, const VideoChannel *channelNode);
 
-    ///ÉèÖÃinviteÇëÇó½áÊø
+    ///è®¾ç½®inviteè¯·æ±‚ç»“æŸ
     bool setCallFinished(int callId);
 
-    ///ÓÃÓÚÊä³öµ½½çÃæÉÏµÄ»Øµ÷º¯Êı
+    ///ç”¨äºè¾“å‡ºåˆ°ç•Œé¢ä¸Šçš„å›è°ƒå‡½æ•°
 private:
-    GB28181ServerEventHandle *mGB28181ServerEventHandle; //»Øµ÷º¯Êı ÓÃÓÚ´«µİĞÅÏ¢¸ø½çÃæ
+    GB28181ServerEventHandle *mGB28181ServerEventHandle; //å›è°ƒå‡½æ•° ç”¨äºä¼ é€’ä¿¡æ¯ç»™ç•Œé¢
 
-    void deviceRegisted(const CameraDevice &device); //Éè±¸×¢²á³É¹¦
-    void deviceUpdate(const CameraDevice &device);   //Éè±¸¸üĞÂ£¬catalogÇëÇó·µ»ØµÄÉè±¸ĞÅÏ¢¸üĞÂ
-    void receiveMessage(const char *deviceID, const MessageType &type, const char *msgBody);  //½ÓÊÕµ½ÏûÏ¢
+    void deviceRegisted(const CameraDevice &device); //è®¾å¤‡æ³¨å†ŒæˆåŠŸ
+    void deviceUpdate(const CameraDevice &device);   //è®¾å¤‡æ›´æ–°ï¼Œcatalogè¯·æ±‚è¿”å›çš„è®¾å¤‡ä¿¡æ¯æ›´æ–°
+    void receiveMessage(const char *deviceID, const MessageType &type, const char *msgBody);  //æ¥æ”¶åˆ°æ¶ˆæ¯
 
 };
 

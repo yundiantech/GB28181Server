@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+ï»¿#include "MainWindow.h"
 #include "ui_MainWindow.h"
 
 #include <QDateTime>
@@ -30,12 +30,12 @@ MainWindow::MainWindow(QWidget *parent) :
     mCurrentSelectedItem = NULL;
 
     mDevicePopMenu = new QMenu;
-    mCatalogAction = new QAction(QIcon("images/open.png"), QStringLiteral("ÇëÇóÉè±¸Ä¿Â¼"),this);
+    mCatalogAction = new QAction(QIcon("images/open.png"), QStringLiteral("è¯·æ±‚è®¾å¤‡ç›®å½•"),this);
     mDevicePopMenu->addAction(mCatalogAction);
     connect(mCatalogAction, &QAction::triggered, this, &MainWindow::slotActionTriggered);
 
     mChannelPopMenu = new QMenu;
-    mPlayVideoAction = new QAction(QIcon("images/open.png"), QStringLiteral("²¥·ÅÊÓÆµÁ÷"),this);
+    mPlayVideoAction = new QAction(QIcon("images/open.png"), QStringLiteral("æ’­æ”¾è§†é¢‘æµ"),this);
     mChannelPopMenu->addAction(mPlayVideoAction);
     connect(mPlayVideoAction, &QAction::triggered, this, &MainWindow::slotActionTriggered);
 
@@ -62,7 +62,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-///Éè±¸×¢²á³É¹¦
+///è®¾å¤‡æ³¨å†ŒæˆåŠŸ
 void MainWindow::onDeviceRegisted(const CameraDevice &deviceNode)
 {
     qDebug("%s %s %s \n", __FUNCTION__, deviceNode.DeviceID.c_str(), deviceNode.IPAddress.c_str());
@@ -71,20 +71,20 @@ void MainWindow::onDeviceRegisted(const CameraDevice &deviceNode)
 
 }
 
-///Éè±¸¸üĞÂ£¬catalogÇëÇó·µ»ØµÄÉè±¸ĞÅÏ¢¸üĞÂ
+///è®¾å¤‡æ›´æ–°ï¼Œcatalogè¯·æ±‚è¿”å›çš„è®¾å¤‡ä¿¡æ¯æ›´æ–°
 void MainWindow::onDeviceUpdate(const CameraDevice &deviceNode)
 {
     emit sig_deviceUpdate(deviceNode);
 }
 
-///½ÓÊÕµ½ÏûÏ¢
+///æ¥æ”¶åˆ°æ¶ˆæ¯
 void MainWindow::onReceiveMessage(const char *deviceID, const MessageType &type, const char *msgBody)
 {
 //    qDebug()<<__FUNCTION__<<deviceID<<type<<msgBody;
     emit sig_receiveMessage(QString(deviceID), type, QString(msgBody));
 }
 
-///Éè±¸×¢²á³É¹¦
+///è®¾å¤‡æ³¨å†ŒæˆåŠŸ
 void MainWindow::slotDeviceRegisted(const CameraDevice &deviceNode)
 {
     DeviceTreeWidgetItem *item = new DeviceTreeWidgetItem;
@@ -94,7 +94,7 @@ void MainWindow::slotDeviceRegisted(const CameraDevice &deviceNode)
     ui->treeWidget->addTopLevelItem(item);
 }
 
-///Éè±¸¸üĞÂ£¬catalogÇëÇó·µ»ØµÄÉè±¸ĞÅÏ¢¸üĞÂ
+///è®¾å¤‡æ›´æ–°ï¼Œcatalogè¯·æ±‚è¿”å›çš„è®¾å¤‡ä¿¡æ¯æ›´æ–°
 void MainWindow::slotDeviceUpdate(const CameraDevice &deviceNode)
 {
     int count = ui->treeWidget->topLevelItemCount();
@@ -109,14 +109,14 @@ void MainWindow::slotDeviceUpdate(const CameraDevice &deviceNode)
 
         if (node == deviceNode)
         {
-            ///ÏÈÇå¿ÕÁ÷ÁĞ±í
+            ///å…ˆæ¸…ç©ºæµåˆ—è¡¨
             while(deviceItem->childCount() > 0)
             {
                 QTreeWidgetItem *item = deviceItem->takeChild(0);
                 delete item;
             }
 
-            ///ÔÙĞÂ½¨Á÷ÁĞ±í
+            ///å†æ–°å»ºæµåˆ—è¡¨
             for (const VideoChannel* videoChannelNode : deviceNode.channelList)
             {
                 ChannelTreeWidgetItem *videoChannelItem = new ChannelTreeWidgetItem;
@@ -125,14 +125,14 @@ void MainWindow::slotDeviceUpdate(const CameraDevice &deviceNode)
                 item->addChild(videoChannelItem);
             }
 
-            ///Õ¹¿ªÈ«²¿Á÷ÁĞ±í
+            ///å±•å¼€å…¨éƒ¨æµåˆ—è¡¨
             ui->treeWidget->expandItem(deviceItem);
         }
     }
 
 }
 
-///½ÓÊÕµ½ÏûÏ¢
+///æ¥æ”¶åˆ°æ¶ˆæ¯
 void MainWindow::slotReceiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody)
 {
 //    qDebug()<<__FUNCTION__<<deviceID<<type<<msgBody;
@@ -198,7 +198,7 @@ void MainWindow::slotBtnClicked(bool isChecked)
         strcpy(realm, ui->lineEdit_realm->text().toUtf8().data());
         mGB28181Server->setGBServerInfo(sipId, passwd, realm);
 
-        mGB28181Server->start(); //Æô¶¯GB28181¼àÌı·şÎñ
+        mGB28181Server->start(); //å¯åŠ¨GB28181ç›‘å¬æœåŠ¡
 
         ui->widget_param->setEnabled(false);
         ui->pushButton_start->setEnabled(false);
@@ -234,7 +234,7 @@ void MainWindow::slotItemClicked(QTreeWidgetItem *item, int column)
 
     QTreeWidgetItem *item1 = item->parent();
 
-    if (item1 == NULL) //Ñ¡ÖĞµÄÊÇÉè±¸
+    if (item1 == NULL) //é€‰ä¸­çš„æ˜¯è®¾å¤‡
     {
         mCurrentSelectedItem = item;
         ui->pushButton_catlog->setEnabled(true);
@@ -251,7 +251,7 @@ void MainWindow::slotItemClicked(QTreeWidgetItem *item, int column)
     {
         QTreeWidgetItem *item1 = item->parent();
 
-        if (item1 == NULL) //Ñ¡ÖĞµÄÊÇÉè±¸
+        if (item1 == NULL) //é€‰ä¸­çš„æ˜¯è®¾å¤‡
         {
             mCurrentSelectedItem = item;
             mDevicePopMenu->exec(QCursor::pos());

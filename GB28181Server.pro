@@ -15,7 +15,7 @@ UI_DIR  = obj/Gui
 MOC_DIR = obj/Moc
 OBJECTS_DIR = obj/Obj
 
-#将输出文件直接放到源码目录下的bin目录下，将dll都放在了次目录中，用以解决运行后找不到dll的问
+#灏嗚緭鍑烘枃浠剁洿鎺ユ斁鍒版簮鐮佺洰褰曚笅鐨刡in鐩綍涓嬶紝灏哾ll閮芥斁鍦ㄤ簡娆＄洰褰曚腑锛岀敤浠ヨВ鍐宠繍琛屽悗鎵句笉鍒癲ll鐨勯棶
 #DESTDIR=$$PWD/bin/
 contains(QT_ARCH, i386) {
     message("32-bit")

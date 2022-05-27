@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+ï»¿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -27,40 +27,40 @@ public:
     ~MainWindow();
 
 protected:
-    void onDeviceRegisted(const CameraDevice &deviceNode); //Éè±¸×¢²á³É¹¦
-    void onDeviceUpdate(const CameraDevice &deviceNode);   //Éè±¸¸üĞÂ£¬catalogÇëÇó·µ»ØµÄÉè±¸ĞÅÏ¢¸üĞÂ
-    void onReceiveMessage(const char *deviceID, const MessageType &type, const char *msgBody);  //½ÓÊÕµ½ÏûÏ¢
+    void onDeviceRegisted(const CameraDevice &deviceNode); //è®¾å¤‡æ³¨å†ŒæˆåŠŸ
+    void onDeviceUpdate(const CameraDevice &deviceNode);   //è®¾å¤‡æ›´æ–°ï¼Œcatalogè¯·æ±‚è¿”å›çš„è®¾å¤‡ä¿¡æ¯æ›´æ–°
+    void onReceiveMessage(const char *deviceID, const MessageType &type, const char *msgBody);  //æ¥æ”¶åˆ°æ¶ˆæ¯
 
-    /// ÒÔÉÏÈı¸öº¯ÊıÊÇÔÚ×ÓÏß³ÌÖĞµ÷ÓÃµÄ£¬Òò´Ë²»ÄÜÔÚº¯ÊıÖĞÖ±½Ó²Ù×÷½çÃæ£¬
-    /// ĞèÒª×ªÒÆµ½Ö÷Ïß³Ìº¯ÊıÖĞ²Ù×÷£¬²ÉÓÃĞÅºÅ²ÛµÄ·½Ê½À´×ªÒÆµ½Ö÷Ïß³Ì
+    /// ä»¥ä¸Šä¸‰ä¸ªå‡½æ•°æ˜¯åœ¨å­çº¿ç¨‹ä¸­è°ƒç”¨çš„ï¼Œå› æ­¤ä¸èƒ½åœ¨å‡½æ•°ä¸­ç›´æ¥æ“ä½œç•Œé¢ï¼Œ
+    /// éœ€è¦è½¬ç§»åˆ°ä¸»çº¿ç¨‹å‡½æ•°ä¸­æ“ä½œï¼Œé‡‡ç”¨ä¿¡å·æ§½çš„æ–¹å¼æ¥è½¬ç§»åˆ°ä¸»çº¿ç¨‹
 signals:
-    void sig_deviceRegisted(const CameraDevice &deviceNode); //Éè±¸×¢²á³É¹¦
-    void sig_deviceUpdate(const CameraDevice &deviceNode);   //Éè±¸¸üĞÂ£¬catalogÇëÇó·µ»ØµÄÉè±¸ĞÅÏ¢¸üĞÂ
-    void sig_receiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody);  //½ÓÊÕµ½ÏûÏ¢
+    void sig_deviceRegisted(const CameraDevice &deviceNode); //è®¾å¤‡æ³¨å†ŒæˆåŠŸ
+    void sig_deviceUpdate(const CameraDevice &deviceNode);   //è®¾å¤‡æ›´æ–°ï¼Œcatalogè¯·æ±‚è¿”å›çš„è®¾å¤‡ä¿¡æ¯æ›´æ–°
+    void sig_receiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody);  //æ¥æ”¶åˆ°æ¶ˆæ¯
 
 private slots:
-    void slotDeviceRegisted(const CameraDevice &deviceNode); //Éè±¸×¢²á³É¹¦
-    void slotDeviceUpdate(const CameraDevice &deviceNode);   //Éè±¸¸üĞÂ£¬catalogÇëÇó·µ»ØµÄÉè±¸ĞÅÏ¢¸üĞÂ
-    void slotReceiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody);  //½ÓÊÕµ½ÏûÏ¢
+    void slotDeviceRegisted(const CameraDevice &deviceNode); //è®¾å¤‡æ³¨å†ŒæˆåŠŸ
+    void slotDeviceUpdate(const CameraDevice &deviceNode);   //è®¾å¤‡æ›´æ–°ï¼Œcatalogè¯·æ±‚è¿”å›çš„è®¾å¤‡ä¿¡æ¯æ›´æ–°
+    void slotReceiveMessage(const QString &deviceID, const MessageType &type, const QString &msgBody);  //æ¥æ”¶åˆ°æ¶ˆæ¯
 
 private:
-    GB28181Server *mGB28181Server; //28181·şÎñ
+    GB28181Server *mGB28181Server; //28181æœåŠ¡
 
 private:
     Ui::MainWindow *ui;
 
-    ///Éè±¸²Ù×÷µÄµ¯³ö²Ëµ¥
+    ///è®¾å¤‡æ“ä½œçš„å¼¹å‡ºèœå•
     QMenu* mDevicePopMenu;
     QAction *mCatalogAction;
 
-    ///Éè±¸Í¨µÀ²Ù×÷µÄµ¯³ö²Ëµ¥
+    ///è®¾å¤‡é€šé“æ“ä½œçš„å¼¹å‡ºèœå•
     QMenu* mChannelPopMenu;
     QAction *mPlayVideoAction;
 
-    ///°´ÏÂ²Ëµ¥µÄÊ±ºò£¬µ±Ç°Ñ¡ÖĞµÄÌõÄ¿
-    QTreeWidgetItem *mCurrentSelectedItem; //¼ÇÂ¼µ±Ç°Ñ¡ÖĞµÄÌõÄ¿
+    ///æŒ‰ä¸‹èœå•çš„æ—¶å€™ï¼Œå½“å‰é€‰ä¸­çš„æ¡ç›®
+    QTreeWidgetItem *mCurrentSelectedItem; //è®°å½•å½“å‰é€‰ä¸­çš„æ¡ç›®
 
-    QList<MessageNode> mMessageList; //ÊÕµ½µÄÏûÏ¢ÁĞ±í
+    QList<MessageNode> mMessageList; //æ”¶åˆ°çš„æ¶ˆæ¯åˆ—è¡¨
 
 private slots:
     void slotBtnClicked(bool isChecked);

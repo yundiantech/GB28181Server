@@ -1,6 +1,7 @@
-#include "AppConfig.h"
+ï»¿#include "AppConfig.h"
 
 #if defined(WIN32)
+#include <winsock2.h>
 #include <windows.h>
 #include <direct.h>
 #include <io.h> //C (Windows)    access
@@ -29,13 +30,13 @@ AppConfig::AppConfig()
 void AppConfig::mkdir(char *dirName)
 {
 #if defined(WIN32)
-    ///Èç¹ûÄ¿Â¼²»´æÔÚ Ôò´´½¨
+    ///å¦‚æœç›®å½•ä¸å­˜åœ¨ åˆ™åˆ›å»º
     if (access(dirName, 0)!=0)
     {
         _mkdir(dirName);
     }
 #else
-    ///Èç¹ûÄ¿Â¼²»´æÔÚ Ôò´´½¨
+    ///å¦‚æœç›®å½•ä¸å­˜åœ¨ åˆ™åˆ›å»º
     if (access(dirName, R_OK)!=0)
     {
         char cmd[128] = {0};
@@ -48,13 +49,13 @@ void AppConfig::mkdir(char *dirName)
 void AppConfig::mkpath(char *path)
 {
 #if defined(WIN32)
-        ///windows´´½¨ÎÄ¼ş¼ĞÃüÁî Â·¾¶µÃÊÇ·´Ğ±¸Ü Òò´ËÕâÀïĞèÒªÌæ»»Ò»ÏÂ
+        ///windowsåˆ›å»ºæ–‡ä»¶å¤¹å‘½ä»¤ è·¯å¾„å¾—æ˜¯åæ–œæ  å› æ­¤è¿™é‡Œéœ€è¦æ›¿æ¢ä¸€ä¸‹
         char dirPath[128] = {0};
         strcpy(dirPath, path);
 
         AppConfig::replaceChar(dirPath, '/', '\\');
 
-        ///Èç¹ûÄ¿Â¼²»´æÔÚ Ôò´´½¨Ëü
+        ///å¦‚æœç›®å½•ä¸å­˜åœ¨ åˆ™åˆ›å»ºå®ƒ
         if (access(dirPath, 0)!=0)
         {
     //        _mkdir(dirPath);
@@ -64,7 +65,7 @@ void AppConfig::mkpath(char *path)
         }
 
 #else
-    ///Èç¹ûÄ¿Â¼²»´æÔÚ Ôò´´½¨Ëü
+    ///å¦‚æœç›®å½•ä¸å­˜åœ¨ åˆ™åˆ›å»ºå®ƒ
     if (access(path,R_OK)!=0)
     {
         char cmd[128];
@@ -78,14 +79,14 @@ void AppConfig::removeDir(char *dirName)
 {
     if (strlen(dirName) <= 0) return;
 
-    if (access(dirName, 0) != 0 ) //ÎÄ¼ş¼Ğ²»´æÔÚ
+    if (access(dirName, 0) != 0 ) //æ–‡ä»¶å¤¹ä¸å­˜åœ¨
     {
         return;
     }
 
 #if defined(WIN32)
 
-    ///É¾³ı±¾µØÎÄ¼ş
+    ///åˆ é™¤æœ¬åœ°æ–‡ä»¶
     char cmd[128];
     sprintf(cmd,"rd /s /q \"%s\"", dirName);
     system(cmd);
@@ -105,11 +106,11 @@ void AppConfig::removeFile(const char *filePath)
 
 #if defined(WIN32)
 
-        ///É¾³ı±¾µØÎÄ¼ş
+        ///åˆ é™¤æœ¬åœ°æ–‡ä»¶
         remove(filePath);
 
 #else
-        ///É¾³ı±¾µØÎÄ¼ş
+        ///åˆ é™¤æœ¬åœ°æ–‡ä»¶
         char cmd[128] = {0};
         sprintf(cmd,"rm -rf \"%s\"",filePath);
         system(cmd);
@@ -123,7 +124,7 @@ void AppConfig::copyFile(const char *srcFile, const char *destFile)
         CopyFileA(srcFile, destFile, FALSE);
 #else
 
-        ///½«ÎÄ¼ş¿½±´µ½Ô¶¶Ë·şÎñÆ÷
+        ///å°†æ–‡ä»¶æ‹·è´åˆ°è¿œç«¯æœåŠ¡å™¨
         char copyfilecmd[512];
         sprintf(copyfilecmd,"cp \"%s\" \"%s\"", srcFile, destFile);
         system(copyfilecmd);
@@ -166,7 +167,7 @@ void AppConfig::mSleep(int mSecond)
 int64_t AppConfig::getTimeStamp_MilliSecond()
 {
 
-    int mSecond = 0; //µ±Ç°ºÁÃëÊı
+    int mSecond = 0; //å½“å‰æ¯«ç§’æ•°
 
 #if defined(WIN32)
 

@@ -1,4 +1,4 @@
-#include "GB28181Server.h"
+ï»¿#include "GB28181Server.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +19,7 @@
 #endif
 
 #if _MSC_VER
-#define snprintf _snprintf   //snprintf ÕÒ²»µ½±êÊ¶·û
+#define snprintf _snprintf   //snprintf æ‰¾ä¸åˆ°æ ‡è¯†ç¬¦
 #endif
 
 //#define APP_LOG printf
@@ -27,6 +27,18 @@
 #define APP_LOG qDebug
 
 char *GB_NONCE = (char *)"6fe9ba44a76be22a";
+
+#if _MSC_VER>=1900
+#include "stdio.h"
+_ACRTIMP_ALT FILE* __cdecl __acrt_iob_func(unsigned);
+#ifdef __cplusplus
+extern "C"
+#endif
+FILE* __cdecl __iob_func(unsigned i)
+{
+    return __acrt_iob_func(i);
+}
+#endif /* _MSC_VER>=1900 */
 
 GB28181Server::GB28181Server()
 {
@@ -63,14 +75,14 @@ void GB28181Server::start()
 {
     mIsStop = false;
 
-    //Æô¶¯ĞÂµÄÏß³ÌÊµÏÖ¶ÁÈ¡ÊÓÆµÎÄ¼ş
+    //å¯åŠ¨æ–°çš„çº¿ç¨‹å®ç°è¯»å–è§†é¢‘æ–‡ä»¶
     std::thread([&](GB28181Server *pointer)
     {
         pointer->run();
 
     }, this).detach();
 
-    mRtpReciever->start(); //Æô¶¯rtp¼àÌıÏß³Ì
+    mRtpReciever->start(); //å¯åŠ¨rtpç›‘å¬çº¿ç¨‹
 
 }
 
@@ -85,7 +97,7 @@ void GB28181Server::stop()
     mRtpReciever->stop();
 }
 
-///Éè±¸×¢²á³É¹¦
+///è®¾å¤‡æ³¨å†ŒæˆåŠŸ
 void GB28181Server::deviceRegisted(const CameraDevice &device)
 {
     if (mGB28181ServerEventHandle != nullptr)
@@ -94,7 +106,7 @@ void GB28181Server::deviceRegisted(const CameraDevice &device)
     }
 }
 
-///Éè±¸¸üĞÂ£¬catalogÇëÇó·µ»ØµÄÉè±¸ĞÅÏ¢¸üĞÂ
+///è®¾å¤‡æ›´æ–°ï¼Œcatalogè¯·æ±‚è¿”å›çš„è®¾å¤‡ä¿¡æ¯æ›´æ–°
 void GB28181Server::deviceUpdate(const CameraDevice &device)
 {
     if (mGB28181ServerEventHandle != nullptr)
@@ -103,7 +115,7 @@ void GB28181Server::deviceUpdate(const CameraDevice &device)
     }
 }
 
-///½ÓÊÕµ½ÏûÏ¢
+///æ¥æ”¶åˆ°æ¶ˆæ¯
 void GB28181Server::receiveMessage(const char *deviceID, const MessageType &type, const char *msgBody)
 {
     if (mGB28181ServerEventHandle != nullptr)
@@ -118,10 +130,10 @@ void GB28181Server::run()
 
     int iReturnCode = 0;
 
-    //³õÊ¼»¯¸ú×ÙĞÅÏ¢
+    //åˆå§‹åŒ–è·Ÿè¸ªä¿¡æ¯
     TRACE_INITIALIZE(6, NULL);
 
-    //³õÊ¼»¯eXosipºÍosipÕ»
+    //åˆå§‹åŒ–eXosipå’Œosipæ ˆ
     eCtx = eXosip_malloc();
     iReturnCode = eXosip_init(eCtx);
     if (iReturnCode != OSIP_SUCCESS)
@@ -134,7 +146,7 @@ void GB28181Server::run()
         APP_LOG("eXosip_init successfully!\n");
     }
 
-    //´ò¿ªÒ»¸öUDP socket ½ÓÊÕĞÅºÅ
+    //æ‰“å¼€ä¸€ä¸ªUDP socket æ¥æ”¶ä¿¡å·
     iReturnCode = eXosip_listen_addr(eCtx, IPPROTO_UDP, NULL, LOCAL_PORT, AF_INET, 0);
     if (iReturnCode != OSIP_SUCCESS)
     {
@@ -144,12 +156,12 @@ void GB28181Server::run()
 
     mIsThreadRunning = true;
 
-    //ÓëÏà»ú½øĞĞÏûÏ¢½»»»µÄÖ÷Ïß³Ì
-    //¼àÌı²¢»Ø¸´ÉãÏñ»úÏûÏ¢
+    //ä¸ç›¸æœºè¿›è¡Œæ¶ˆæ¯äº¤æ¢çš„ä¸»çº¿ç¨‹
+    //ç›‘å¬å¹¶å›å¤æ‘„åƒæœºæ¶ˆæ¯
     while (!mIsStop)
     {
         eXosip_event_t *je = NULL;
-        //´¦ÀíÊÂ¼ş
+        //å¤„ç†äº‹ä»¶
         je = eXosip_event_wait(eCtx, 0, 4);
         if (je == NULL)
         {
@@ -166,19 +178,19 @@ void GB28181Server::run()
 
         switch (je->type)
         {
-            case EXOSIP_MESSAGE_NEW:				//ĞÂÏûÏ¢µ½À´
+            case EXOSIP_MESSAGE_NEW:				//æ–°æ¶ˆæ¯åˆ°æ¥
             {
                 APP_LOG("new msg method:%s\n", je->request->sip_method);
 
-                //´¦Àí×¢²áÏûÏ¢
+                //å¤„ç†æ³¨å†Œæ¶ˆæ¯
                 if ( MSG_IS_REGISTER(je->request) )
                 {
-                    //ÌáÈ¡³ö¸÷¸ö×Ö¶ÎÖµ,½øĞĞ MD5 ¼ÆËã
+                    //æå–å‡ºå„ä¸ªå­—æ®µå€¼,è¿›è¡Œ MD5 è®¡ç®—
                     osip_authorization_t * Sdest = NULL;
                     osip_message_get_authorization(je->request,0,&Sdest);
 
                     if ( Sdest == NULL )
-                    {   ///×¢²áĞÅÏ¢ÖĞ²»´ø¼øÈ¨ĞÅÏ¢£¬Ôò·µ»Ø401 Unauthorized£¨ÎŞÈ¨ÏŞ£©ÏìÓ¦
+                    {   ///æ³¨å†Œä¿¡æ¯ä¸­ä¸å¸¦é‰´æƒä¿¡æ¯ï¼Œåˆ™è¿”å›401 Unauthorizedï¼ˆæ— æƒé™ï¼‰å“åº”
                         Register401Unauthorized(eCtx,je);
                     }
                     else
@@ -217,7 +229,7 @@ void GB28181Server::run()
                             pUri = osip_strdup_without_quote(Sdest->uri);
                         }
 
-                        ///¿Í»§¶ËÇëÇóµÄresponseÄÚÈİ
+                        ///å®¢æˆ·ç«¯è¯·æ±‚çš„responseå†…å®¹
                         char *request_response = NULL;
                         if ( Sdest->response != NULL )
                         {
@@ -231,26 +243,26 @@ void GB28181Server::run()
                                 || pRealm == NULL
                                 || pNonce == NULL)
                         {
-                            RegisterFailed(eCtx,je); //ÈÏÖ¤Ê§°Ü
+                            RegisterFailed(eCtx,je); //è®¤è¯å¤±è´¥
                         }
                         else
                         {
-                            ///1.¼ÆËã³öresponse
-                            ///2.Óë¿Í»§¶ËÇëÇó¹ıÀ´µÄresponse×ö±È½Ï£¬Èç¹ûÒ»Ñù£¬ÔòÍ¨¹ı×¢²á£¬»Ø¸´200.·ñÔò»Ø¸´401Ê§°Ü
-                            //ĞèÒªÈ¥µôÁ½¶Ë¶àÓàµÄÒıºÅ
+                            ///1.è®¡ç®—å‡ºresponse
+                            ///2.ä¸å®¢æˆ·ç«¯è¯·æ±‚è¿‡æ¥çš„responseåšæ¯”è¾ƒï¼Œå¦‚æœä¸€æ ·ï¼Œåˆ™é€šè¿‡æ³¨å†Œï¼Œå›å¤200.å¦åˆ™å›å¤401å¤±è´¥
+                            //éœ€è¦å»æ‰ä¸¤ç«¯å¤šä½™çš„å¼•å·
                             HASHHEX HA1={0};
                             DigestCalcHA1(pAlgorithm,pUsername,pRealm,GB_PASSWORD,pNonce,
                                           pNonce_count, HA1);
 
                             HASHHEX Response={0};
                             HASHHEX HA2={0};
-                            //ÔÚÏÂÃæÕâ¸öº¯ÊıÀïÃæ£¬ÒÑ¾­¼ÆËãÁË H(A2),ËùÒÔ²»ĞèÒª×Ô¼º¼ÆËã H(A2)
+                            //åœ¨ä¸‹é¢è¿™ä¸ªå‡½æ•°é‡Œé¢ï¼Œå·²ç»è®¡ç®—äº† H(A2),æ‰€ä»¥ä¸éœ€è¦è‡ªå·±è®¡ç®— H(A2)
                             DigestCalcResponse(HA1,pNonce,pNonce_count,Sdest->cnonce,Sdest->message_qop,0,
                                                pcMethod,pUri,HA2,Response);
 
                             if ( memcmp(request_response, Response, HASHHEXLEN) == 0 )
                             {
-                                //·¢ËÍ×¢²á³É¹¦µÄÏûÏ¢
+                                //å‘é€æ³¨å†ŒæˆåŠŸçš„æ¶ˆæ¯
                                 RegisterSuccess(eCtx, je);
 
                                 osip_via_t * s_via = NULL;
@@ -272,7 +284,7 @@ void GB28181Server::run()
 
                                 SendQueryCatalog(eCtx, node);
                             }
-                            else  //ÈÏÖ¤Ê§°Ü
+                            else  //è®¤è¯å¤±è´¥
                             {
                                 RegisterFailed(eCtx,je);
 
@@ -305,10 +317,10 @@ void GB28181Server::run()
                     {
                         APP_LOG("msg body is:%s\n", body->body);
 
-                        //´Óbody->bodyÖĞ¼ÓÔØxml
+                        //ä»body->bodyä¸­åŠ è½½xml
                         mxml_node_t *xml = mxmlLoadString(NULL,body->body,MXML_NO_CALLBACK);
 
-                        //´Óxml¿ªÊ¼ÏòÏÂ²éÕÒ name=CmdType attrr=""
+                        //ä»xmlå¼€å§‹å‘ä¸‹æŸ¥æ‰¾ name=CmdType attrr=""
                         mxml_node_t * CmdTypeNode = mxmlFindElement(xml, xml,"CmdType",NULL,NULL,MXML_DESCEND);
 
                         if(CmdTypeNode != NULL)
@@ -322,7 +334,7 @@ void GB28181Server::run()
 
                             APP_LOG("CmdType=%s \n", CmdType);
 
-                            ///ĞÄÌø°ü
+                            ///å¿ƒè·³åŒ…
                             if ( 0 == strcmp(CmdType, "Keepalive"))
                             {
 
@@ -357,7 +369,7 @@ void GB28181Server::run()
                                 }
                                 else
                                 {
-                                    Response403(eCtx, je); //Éè±¸Ã»ÓĞ¼ÇÂ¼£¬Ôò´ğ¸´403£¬ÈÃÉè±¸ÖØĞÂ·¢Æğ×¢²á
+                                    Response403(eCtx, je); //è®¾å¤‡æ²¡æœ‰è®°å½•ï¼Œåˆ™ç­”å¤403ï¼Œè®©è®¾å¤‡é‡æ–°å‘èµ·æ³¨å†Œ
                                 }
                             }
                             else if ( 0 == strcmp(CmdType, "Catalog"))
@@ -459,11 +471,11 @@ void GB28181Server::run()
 
                                                         deviceNode.channelList.push_back(item);
 
-                                                        item->start(); //Æô¶¯½âÂëh264µÄÏß³Ì
+                                                        item->start(); //å¯åŠ¨è§£ç h264çš„çº¿ç¨‹
                                                     }
 
                                                     deviceUpdate(deviceNode);
-//                                                    break; //²»ÒªÍË³ö£¬°ÑÊ£ÏÂµÄÉè±¸Ò²¼ÓÈëĞÂµÄÁĞ±í
+//                                                    break; //ä¸è¦é€€å‡ºï¼ŒæŠŠå‰©ä¸‹çš„è®¾å¤‡ä¹ŸåŠ å…¥æ–°çš„åˆ—è¡¨
                                                 }
 
                                                 deviceListTmp.push_back(deviceNode);
@@ -490,7 +502,7 @@ void GB28181Server::run()
 
                 break;
             }
-            case EXOSIP_MESSAGE_ANSWERED:			//²éÑ¯
+            case EXOSIP_MESSAGE_ANSWERED:			//æŸ¥è¯¢
             {
                 APP_LOG("msg EXOSIP_MESSAGE_ANSWERED\n");
 
@@ -557,7 +569,7 @@ void GB28181Server::run()
                 Response200(eCtx, je);
                 break;
             }
-            case EXOSIP_CALL_RELEASED:         //ÇëÇóÊÓÆµÁ÷»Ø¸´³É¹¦
+            case EXOSIP_CALL_RELEASED:         //è¯·æ±‚è§†é¢‘æµå›å¤æˆåŠŸ
             {
                 APP_LOG("recv EXOSIP_CALL_RELEASED %d %d %d %d %d\n",je->request,je->response,je->ack,je->cid,je->did);
                 Response200(eCtx, je);
@@ -590,7 +602,7 @@ void GB28181Server::run()
 
 void GB28181Server::Register401Unauthorized(struct eXosip_t * peCtx,eXosip_event_t *je)
 {
-    ///·µ»Ø401 Unauthorized£¨ÎŞÈ¨ÏŞ£©ÏìÓ¦,±íÃ÷ÒªÇó¶ÔUAC½øĞĞÓÃ»§ÈÏÖ¤£¬²¢ÇÒÍ¨¹ıWWW-Authenticate×Ö¶ÎĞ¯´øUASÖ§³ÖµÄÈÏÖ¤·½Ê½£¬²úÉú±¾´ÎÈÏÖ¤µÄnonce
+    ///è¿”å›401 Unauthorizedï¼ˆæ— æƒé™ï¼‰å“åº”,è¡¨æ˜è¦æ±‚å¯¹UACè¿›è¡Œç”¨æˆ·è®¤è¯ï¼Œå¹¶ä¸”é€šè¿‡WWW-Authenticateå­—æ®µæºå¸¦UASæ”¯æŒçš„è®¤è¯æ–¹å¼ï¼Œäº§ç”Ÿæœ¬æ¬¡è®¤è¯çš„nonce
     int iReturnCode = 0;
     osip_message_t * pSRegister = NULL;
 
@@ -690,7 +702,7 @@ void GB28181Server::Response(struct eXosip_t * peCtx,eXosip_event_t *je, int val
     }
 }
 
-//´ğ¸´403
+//ç­”å¤403
 void GB28181Server::Response403(struct eXosip_t * peCtx,eXosip_event_t *je)
 {
     Response(peCtx, je, 403);
@@ -701,7 +713,7 @@ void GB28181Server::Response200(struct eXosip_t * peCtx,eXosip_event_t *je)
     Response(peCtx, je, 200);
 }
 
-//´ğ¸´Ïà»ú¿ªÊ¼·¢ÊÓÆµ
+//ç­”å¤ç›¸æœºå¼€å§‹å‘è§†é¢‘
 void GB28181Server::ResponseCallAck(struct eXosip_t * peCtx, eXosip_event_t *je)
 {
     osip_message_t *ack = NULL;
@@ -727,7 +739,7 @@ void GB28181Server::doSendInvitePlay(const VideoChannel *channelNode)
     SendInvitePlay(eCtx, channelNode);
 }
 
-//·¢ËÍÇëÇócatalogĞÅÏ¢
+//å‘é€è¯·æ±‚catalogä¿¡æ¯
 int GB28181Server::SendQueryCatalog(struct eXosip_t *peCtx, CameraDevice deviceNode)
 {
     fprintf(stderr,"sendQueryCatalog\n");
@@ -794,7 +806,7 @@ int GB28181Server::SendQueryCatalog(struct eXosip_t *peCtx, CameraDevice deviceN
     return 0;
 }
 
-//ÇëÇóÊÓÆµĞÅÏ¢£¬SDPĞÅÏ¢
+//è¯·æ±‚è§†é¢‘ä¿¡æ¯ï¼ŒSDPä¿¡æ¯
 int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, const VideoChannel *channelNode)
 {
     const char *playSipId = channelNode->DeviceID.c_str();
@@ -864,7 +876,7 @@ int GB28181Server::SendInvitePlay(struct eXosip_t *peCtx, const VideoChannel *ch
     return call_id;
 }
 
-///ÉèÖÃ·¢ËÍinviteÇëÇó½áÊø
+///è®¾ç½®å‘é€inviteè¯·æ±‚ç»“æŸ
 bool GB28181Server::setCallFinished(int callId)
 {
     bool isSucceed = false;
